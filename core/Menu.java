@@ -155,7 +155,7 @@ public class Menu {
 			private JLabel radioLabelFormat = new JLabel();
 			
 			private JPanel radioPanelisIO = new JPanel();
-			private JRadioButton radio1isIO = new JRadioButton (),radio2isIO = new JRadioButton (), radio3isIO = new JRadioButton ();
+			private JRadioButton radio1isIO = new JRadioButton (),radio2isIO = new JRadioButton (), radio3isIO = new JRadioButton (), radio4isIO = new JRadioButton ();
 			private ButtonGroup bgisIO  = new ButtonGroup();	
 			private JLabel radioLabelisIO = new JLabel();
 			private JLabel boxIsIOLabel= new JLabel();
@@ -430,12 +430,12 @@ public class Menu {
 
 	       
 	        // Radio Button isIO        
-	        bgisIO.add(radio1isIO);		bgisIO.add(radio2isIO);		bgisIO.add(radio3isIO);	
+	        bgisIO.add(radio1isIO);		bgisIO.add(radio2isIO);		bgisIO.add(radio3isIO);		bgisIO.add(radio4isIO);		
 	        radio1isIO.addActionListener(new RadioListener());	radio2isIO.addActionListener(new RadioListener());	
 	        radio1isIO.setSelected(true);
 	        //radioPanelisIO.setLayout(new GridLayout(6,1));
 	        radioPanelisIO.setPreferredSize(new Dimension(200, 180));
-	        radioPanelisIO.add(radioLabelisIO);	radioPanelisIO.add(radio1isIO);	radioPanelisIO.add(radio2isIO);	radioPanelisIO.add(radio3isIO);		radioPanelisIO.add(boxIsIOLabel);		radioPanelisIO.add(boxIsIO);	
+	        radioPanelisIO.add(radioLabelisIO);	radioPanelisIO.add(radio1isIO);	radioPanelisIO.add(radio2isIO);	radioPanelisIO.add(radio3isIO);	radioPanelisIO.add(radio4isIO);	radioPanelisIO.add(boxIsIOLabel);		radioPanelisIO.add(boxIsIO);	
 	        radioLabelisIO.setHorizontalAlignment(SwingConstants.CENTER);
 	        radioLabelisIO.setVerticalAlignment(SwingConstants.TOP);
 
@@ -939,6 +939,8 @@ public class Menu {
 		this.radio1isIO .setText(Langue.translate(new String[] {"radioisIO", "1"}));
 		this.radio2isIO .setText(Langue.translate(new String[] {"radioisIO", "2"}));
 		this.radio3isIO .setText(Langue.translate(new String[] {"radioisIO", "3"}));
+		this.radio4isIO .setText(Langue.translate(new String[] {"radioisIO", "4"}));
+
 		
 		this.boxIsIOLabel .setText(Langue.translate(new String[] {"radioisIO", "box"}));	
         this.boxIsIOLabel.setToolTipText(Langue.translate(new String[] {"radioisIO", "tooltip"}));

@@ -148,7 +148,7 @@ public class Presentation extends JPanel{
 
 			WriteLog.writeMeans( myTask, "data/log_");
 			
-			Signal.sendSignal("instruction", myTask.getImagerie());
+			if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}
 			
 			myTask.getBackground().setProperties(xOrigin, yOrigin, true);
 			
@@ -540,7 +540,7 @@ public class Presentation extends JPanel{
 				
 				if (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SPG")
 				{
-					Signal.sendSignal("SPG", myTask.getImagerie());
+					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SPG", myTask.getImagerie());}
 					tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
 					x =  myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
@@ -551,7 +551,7 @@ public class Presentation extends JPanel{
 				}
 				else if (myTask.getMySlide().getSoloOtherStimulus().getSPG_SPD_SM_DM() == "SPD")
 				{
-					Signal.sendSignal("SPD", myTask.getImagerie());
+					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SPD", myTask.getImagerie());}
 					tempImageBox =  myTask.getMyImages().get(otherStim.get(count).getName())[rgen.nextInt(3)];
 					x =  myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
@@ -561,7 +561,7 @@ public class Presentation extends JPanel{
 				}
 				else if  (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SM" )
 				{
-					Signal.sendSignal("SM", myTask.getImagerie());
+					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SM", myTask.getImagerie());}
 					tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
 					x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
@@ -571,8 +571,7 @@ public class Presentation extends JPanel{
 				}				
 				else if  (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "DM" )
 				{
-					Signal.sendSignal("DM", myTask.getImagerie());
-
+					if (myTask.getImagerie() == "IO"){Signal.sendSignal("DM", myTask.getImagerie());}
 					tempImageBox = myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
 					x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
@@ -616,8 +615,7 @@ public class Presentation extends JPanel{
 		
 		
 			else if (myTask.getMySlide().getSlideName() == "reminderExplanation"){
-				
-				Signal.sendSignal("instruction", myTask.getImagerie());
+				if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}
 				myWindow.addKeyListener(new keyMenuListener (myTask.getMySlide().getSync()));
 
 
@@ -1362,7 +1360,7 @@ GraphicEngine.setModifying(false);
 				x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);
-				Signal.sendSignal("pause", myTask.getImagerie());
+				if (myTask.getImagerie() == "IO"){Signal.sendSignal("pause", myTask.getImagerie());}
 			}
 			if (this.tic >= this.pauseT)
 			{

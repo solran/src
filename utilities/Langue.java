@@ -84,8 +84,8 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "radioFormat", new String[]{"0", "1", "2", "3"}, new String[]{"<html><font size = 4>Modalité de réponse</font></html>", "Clavier standard", "Sans pavé numérique",
 			"Tablette (Ipad, Android)"});
 	
-			Utilities.iniHashMap(expression, "radioisIO", new String[]{"0", "1", "2", "3", "box", "box1", "box2", "box3", "box4", "box5", "box6", "tooltip"}, new String[]{"<html><font size = 4>Imagerie cérébrale</font></html>", "Sans imagerie cérébrale", 
-			"Optique (IO)", "Résonnance (IRM)", "<html><p align=\"center\"><font size = 3>Durée de chaque pause*</font></p></html>", "aucun", "15 sec" , "30 sec" , "45 sec" , "1:00 min" , "1:15 min", "Les pauses sont accessibles en imagerie seulement. Les pauses précèdent chaqu'un des blocs"});
+			Utilities.iniHashMap(expression, "radioisIO", new String[]{"0", "1", "2", "3", "4", "box", "box1", "box2", "box3", "box4", "box5", "box6", "tooltip"}, new String[]{"<html><font size = 4>Imagerie cérébrale</font></html>", "Sans imagerie cérébrale", 
+			"Optique (IO)", "Résonnance (IRM)", "EEG", "<html><p align=\"center\"><font size = 3>Durée de chaque pause*</font></p></html>", "aucun", "15 sec" , "30 sec" , "45 sec" , "1:00 min" , "1:15 min", "Les pauses sont accessibles en imagerie seulement. Les pauses précèdent chaqu'un des blocs"});
 			
 			Utilities.iniHashMap(expression, "output", new String[]{"0", "1"}, new String[]{"Indiquer une sortie si vous désirer enregistrer vos préférences: ", "Parcourir/Enregistrer..."});
 			
@@ -143,8 +143,8 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "radioFormat", new String[]{"0", "1", "2", "3"}, new String[]{"<html><font size = 4>Response Modality</font></html>", "Standard keyboard", "Without numpad",
 			"Tablet (Ipad, Android)"});
 			
-			Utilities.iniHashMap(expression, "radioisIO", new String[]{"0", "1", "2", "3", "box", "box1", "box2", "box3", "box4", "box5", "box6", "tooltip"}, new String[]{"<html><font size = 4>Brain Imaging</font></html>", "Without imaging", 
-					"NIRS", "IRM", "<html><p align=\"center\"><font size = 3>Breaks length*</font></p></html>", "aucun", "15 sec" , "30 sec" , "45 sec" , "1:00 min" , "1:15 min", "Les pauses sont accessibles en imagerie seulement et sont réparties avant chaque bloc."});
+			Utilities.iniHashMap(expression, "radioisIO", new String[]{"0", "1", "2", "3", "4", "box", "box1", "box2", "box3", "box4", "box5", "box6", "tooltip"}, new String[]{"<html><font size = 4>Brain Imaging</font></html>", "Without imaging", 
+					"NIRS", "IRM", "EEG", "<html><p align=\"center\"><font size = 3>Breaks length*</font></p></html>", "aucun", "15 sec" , "30 sec" , "45 sec" , "1:00 min" , "1:15 min", "Les pauses sont accessibles en imagerie seulement et sont réparties avant chaque bloc."});
 					
 			
 			Utilities.iniHashMap(expression, "output", new String[]{"0", "1"}, new String[]{"Please choose a directory if you want to save your settings: ", "Run/Save..."});

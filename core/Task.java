@@ -326,6 +326,8 @@ public class Task {
 			this.imagerie = "IO";
 		else if (myParameters.get("isIO") == 3)
 			this.imagerie = "IRM";
+		else if (myParameters.get("isIO") == 4)
+			this.imagerie = "EEG";
 		
 		// �gal le nombre de tic (1 tic = 30sec)
 		this.pauseT = (myParameters.get("pauseT"))-1;
@@ -566,7 +568,7 @@ public class Task {
 		slideStack[slideCpt++] = new Slide("goodbye");
 		
 		//note du d�part
-		Signal.sendSignal("start", this.imagerie);
+		if (imagerie == "IO"){Signal.sendSignal("start", this.imagerie);}
 		this.session = ReadLog.trouveSession(this.sujetID, "data/log_" )+1;
 		WriteLog.writing (this, "data/log_");
 		WriteLog.writeMeans( this, "data/log_");
@@ -846,7 +848,8 @@ public class Task {
 				{
 					new Animate(new String[]{"fadein",""}, 3000, Main.myWindow.getBigPanel().getWidth()/2 -urgency.getWidth()/2, Main.myWindow.getBigPanel().getHeight()/2-urgency.getHeight()/2, urgency, Main.myWindow.getMainPanel());
 
-					Signal.sendSignal("urgency", this.imagerie);
+					if (imagerie == "IO"){Signal.sendSignal("urgency", this.imagerie);}
+
 					onOff=0;
 				}
 				else if (onOff==0)
