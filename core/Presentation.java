@@ -541,6 +541,33 @@ public class Presentation extends JPanel{
 				if (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SPG")
 				{
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SPG", myTask.getImagerie());}
+			
+					if (myTask.getImagerie() == "EEG")
+					{
+						if (myTask.getMySlide().getSoloStimulus().getMatch()== "isMatching")
+						{
+								if (myTask.getnBack()== 0)
+									{Signal.sendSignal("0backMatch", myTask.getImagerie());}
+								if (myTask.getnBack()== 1)
+									{Signal.sendSignal("1backMatch", myTask.getImagerie());}
+								if (myTask.getnBack()== 2)
+									{Signal.sendSignal("2backMatch", myTask.getImagerie());}
+								if (myTask.getnBack()== 3)
+									{Signal.sendSignal("3backMatch", myTask.getImagerie());}
+						}
+						if (myTask.getMySlide().getSoloStimulus().getMatch()== "notMatching")
+						{
+								if (myTask.getnBack()== 0)
+									{Signal.sendSignal("0backNotMatch", myTask.getImagerie());}
+								if (myTask.getnBack()== 1)
+									{Signal.sendSignal("1backNotMatch", myTask.getImagerie());}
+								if (myTask.getnBack()== 2)
+									{Signal.sendSignal("2backNotMatch", myTask.getImagerie());}
+								if (myTask.getnBack()== 3)
+									{Signal.sendSignal("3backNotMatch", myTask.getImagerie());}
+						}
+					}
+
 					tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
 					x =  myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
@@ -1077,7 +1104,9 @@ GraphicEngine.setModifying(false);
 				// bonne r�ponse
 				if(key == expectedKey)
 				{
-
+					
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("goodAnsMatch", myTask.getImagerie());}
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}	
 					writeStimInfo(true, System.currentTimeMillis() -time, System.currentTimeMillis() -Task.syncTime, key, System.currentTimeMillis(), stimulus);
 					
 					if (otherNearKeys.contains("" + key)){
@@ -1126,6 +1155,9 @@ GraphicEngine.setModifying(false);
 				else if (!ignore.contains(""+key))
 				{
 					SoundClip.play(myTask.getErrorSound());
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("goodAnsMatch", myTask.getImagerie());}
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}
+
 					/*try
 					{
 						myTask.getErrorSound().run();
