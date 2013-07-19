@@ -377,7 +377,7 @@ public class Task {
 		reminderExplanation3 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 450, 500, Langue.translate("reminderExplanation3"), "reminderExplanation3");
 
 		
-		urgency = new ImageBox(Color.RED, new Font("Arial", Font.BOLD, 30), 0, 0, 550, 500, Langue.translate("urgency"), "urgency");
+		urgency = new ImageBox(Color.RED, new Font("Arial", Font.BOLD, 30), 0, 0, 650, 500, Langue.translate("urgency"), "urgency");
 		
 		
 		andString = new ImageBox(Color.BLACK, 48, Langue.translate("and"), 0, 0, 90, "and");
@@ -846,13 +846,13 @@ public class Task {
 				System.out.println("before: " +onOff);
 				if (onOff==1)
 				{
-					new Animate(new String[]{"fadein",""}, 3000, Main.myWindow.getBigPanel().getWidth()/2 -urgency.getWidth()/2, Main.myWindow.getBigPanel().getHeight()/2-urgency.getHeight()/2, urgency, Main.myWindow.getMainPanel());
+					new Animate(new String[]{"fadein",""}, 300, Main.myWindow.getBigPanel().getWidth()/2 -urgency.getWidth()/2, Main.myWindow.getBigPanel().getHeight()/2-urgency.getHeight()/2, urgency, Main.myWindow.getMainPanel());
 
 					if (imagerie == "IO"){Signal.sendSignal("urgency", this.imagerie);}
 
 					onOff=0;
 				}
-				else if (onOff==0)
+				else if (onOff == 0)
 					onOff=1;
 				System.out.println("after: " +onOff);
 
