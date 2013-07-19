@@ -1,0 +1,222 @@
+package utilities;
+import graphic.AnimateBar;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+import javax.swing.JOptionPane;
+
+import overview.SimplifiedTask;
+
+import core.Stimulus;
+import core.Task;
+
+
+
+public class WriteLog {
+	
+	private static int  nbColomn = 0;
+	private static String  sChariot = System.getProperty("line.separator");
+	private static String sTab = "\t";
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+	private static Date date = new Date();
+	//private static ArrayList fullFile = new ArrayList();
+
+	public static void writing (Stimulus stim, Task task, String location)
+	{
+		String s = "";
+		try
+		{           
+			FileWriter fic = new FileWriter(location + task.getSujetID() + ".txt", true);
+			PrintWriter out = new PrintWriter(fic);
+			s += task.getSujetID() + sTab; 
+			s += task.getSession() + sTab;
+			s += dateFormat.format(date) + sTab;
+			s += task.getType() + sTab; 
+			s += "non-applicable"+ sTab; 
+			s += Langue.translate(new String[] {"radioVersion",""+ task.getVersion()}) + sTab;
+			s += task.getQte() + sTab; 
+			s += task.getLangue() + sTab;
+			s += task.getStimT()*100 + sTab;
+			s += task.getAnswerT()*100 + sTab;
+			s += task.getISI()*100 + sTab;
+			s += task.getnBack() + sTab;
+			s += task.getTypeNback() + sTab;
+			s += task.getMixedPourc() + sTab;
+			s += stim.getBloc().getBlocID() + sTab;
+			s += stim.getStimulusLocCpt() + sTab;
+			s += stim.getStimulusLocUniqueCpt() + sTab;
+			s += stim.getStimulusAbsCpt() + sTab;
+			s += stim.getStimulusAbsUniqueCpt() + sTab;
+			s += stim.getSPG_SPD_SM_DM() + sTab;
+			if (stim.getSPG_SPD_SM_DM()== "SPG" ||stim.getSPG_SPD_SM_DM()== "SPD" )
+			{
+				s += false + sTab;
+				s += false + sTab;
+			}
+			else if (stim.getSPG_SPD_SM_DM()== "SM")
+			{
+				s += true + sTab;
+				s += false + sTab;
+			}
+			else if (stim.getSPG_SPD_SM_DM()== "DM")
+			{
+				s += true + sTab;
+				s += true + sTab;
+			}
+			s += stim.getIsLeft() + sTab;
+			s += stim.getName() + sTab;
+			s += stim.getMatch() + sTab;
+			s += stim.getKey() + sTab;
+			s += stim.getKeyPressed() + sTab;
+			s += stim.getIsAcc() + sTab;
+			s += stim.getRt() + sTab;
+			s += stim.getRtt() + sTab;
+			s += stim.getRtSync() + sTab;
+			s += stim.getStimDisplaySync() + sTab;
+			s += stim.getStimRemovedSync() + sTab;	
+			s += stim.getBarRang() + sTab;	
+			for (int i=0; i < stim.getPercentiles().length; i++)
+			{
+				s += stim.getPercentiles()[i] + " ";
+			}
+			s += sTab;
+			s += stim.getWeight() + sTab;
+			out.write(s + sChariot);
+			
+		    // Fermeture du fichier
+		    out.close();
+		}
+		catch (IOException E)
+		{
+			Utilities.msgErreur("Le programme a g�n�r� une erreur lors de l'�criture des donn�es !");
+		}
+	}
+	
+	
+	public static void writeMeans (Task task, String location)
+	{
+		ArrayList fullFile = ReadLog.readFullFile (task, location);
+		//fullFile.set(fullFile.size()-1,"REPLACED ELEMENT");
+		//System.out.print("size + " + fullFile.size());
+		String lastline =  (String) fullFile.get(fullFile.size()-1);
+		String[] aLastline = lastline.split("\t");
+		
+		String s = "";
+		for (int i = 0; i < nbColomn; i++)
+		{
+			s += aLastline[i] + sTab;
+		}	
+		//rt
+		s += AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good") + sTab; ;
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good") + sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good")+ sTab; 
+		
+		//acc
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left","error")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "error")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "error")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "error")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "error")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "error")+ sTab; 
+		
+		//retard
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left", "late")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "late")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "late")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "late")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "late")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "late")+ sTab;
+		
+		//total
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left", "all")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "all")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "all")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "all")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "all")+ sTab; 
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "all")+ sTab;
+		
+		fullFile.set(fullFile.size()-1, s);
+		
+		try
+		{   
+			FileWriter fic = new FileWriter(location + task.getSujetID() + ".txt", false);
+			PrintWriter out = new PrintWriter(fic);
+			for (int i = 0 ; i< fullFile.size(); i++)
+			{
+				out.write((String) fullFile.get(i) + sChariot);
+			}
+			
+		    // Fermeture du fichier
+		    out.close();
+		}
+		catch (IOException E)
+		{
+			Utilities.msgErreur("Le programme a g�n�r� une erreur lors de l'�criture des donn�es !");
+		}
+	}
+	
+	// �criture du Log
+	public static void writing (Task task, String location)
+	{
+		String s = "";
+		try
+		{           
+			FileWriter fic = new FileWriter(location + task.getSujetID() + ".txt", true);
+			PrintWriter out = new PrintWriter(fic);
+			s += task.getSujetID() + sTab;  		nbColomn ++;
+			s += task.getSession() + sTab;  		nbColomn ++;
+			s += dateFormat.format(date) + sTab;  		nbColomn ++;
+			s += task.getType() + sTab;   		nbColomn ++;
+			s += task.getIsCompleted() + sTab; 	nbColomn ++;
+			s += Langue.translate(new String[] {"radioVersion",""+ task.getVersion()}) + sTab;  		nbColomn ++;
+			s += task.getQte() + sTab;   		nbColomn ++;
+			s += task.getLangue() + sTab;  		nbColomn ++;
+			s += task.getStimT()*100 + sTab;  		nbColomn ++;
+			s += task.getAnswerT()*100 + sTab;  		nbColomn ++;
+			s += task.getISI()*100 + sTab;  		nbColomn ++;
+			s += task.getnBack() + sTab;  		nbColomn ++;
+			s += task.getTypeNback() + sTab;	nbColomn ++;
+			s += task.getMixedPourc() + sTab;	nbColomn ++;
+
+
+			out.write(s + sChariot);  		
+			
+		    // Fermeture du fichier
+		    out.close();
+		}
+		catch (IOException E)
+		{
+			Utilities.msgErreur("Le programme a généré une erreur lors de l'écriture des données !");
+		}
+	}
+	
+	public static void writingStuff (String s, String location)
+	{
+		try
+		{           
+			FileWriter fic = new FileWriter(location + ".txt", true);
+			PrintWriter out = new PrintWriter(fic);
+			out.write(s + sChariot);  		
+			
+		    // Fermeture du fichier
+		    out.close();
+		}
+		catch (IOException E)
+		{
+			Utilities.msgErreur("Le programme a généré une erreur lors de l'écriture des données !");
+		}
+	}
+
+}
