@@ -577,6 +577,7 @@ public class Langue extends HashMap {
 	{			
 		if (langue == "francais")
 		{
+			expression.put("matching0back", "D= # cible, F= # autre");
 			expression.put("matchingInstG", "D=Pareil, F= Différent");
 			expression.put("matchingInstD", "K=Pareil, L= Différent");
 			expression.put("allStimuliHeader", "<html><br /><p align=\"center\">Lors de cette exercice, %stim1% vont apparaître au centre de l'écran. Les symboles (%stim2%) peuvent légèrement varier comme suit :</p></html>");
@@ -648,6 +649,7 @@ public class Langue extends HashMap {
 		}
 		if (langue == "english")
 		{
+			expression.put("matching0back", "D= target #, F= other #");
 			expression.put("matchingInstG", "D=Same, F= Different");
 			expression.put("matchingInstD", "K=Same, L= Different");
 			expression.put("allStimuliHeader", "<html><br /><p align=\"center\">During this exercise, %stim1% will appear in the centre of the screen. Symbols (%stim2%) can vary as shown below :</p></html>");
