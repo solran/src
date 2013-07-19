@@ -9,18 +9,19 @@ public class Signal {
 	
 	public static void sendSignal(String type, String imagerie)
 	{
-		if (imagerie == "IO")
+		if (imagerie == "IO" || imagerie == "EEG" )
 		{
-			if (type != lastSignal)
+			if ((imagerie == "IO" && type != lastSignal)||imagerie == "EEG" )
 			{
 				try {
 					String cmd = "C:\\Ruby186\\bin\\ruby.exe C:/ruby_executable/send.rb " + converter(type, imagerie);
 					Runtime.getRuntime().exec(cmd);
 					WriteLog.writingStuff("Signal : " + converter(type, imagerie), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+					
 				} catch (IOException e) {
 					WriteLog.writingStuff("Signal : " + converter(type, imagerie) + " " +  e.getMessage(), "data/console_" + Task.mainTask.getSujetID() + ".txt");
 				}
-				lastSignal = type;
+				if (imagerie == "IO"){ lastSignal = type;}
 			}
 		}
 	}
@@ -55,7 +56,11 @@ public class Signal {
 		}
 		if (imagerie == "EEG")
 		{
-			if (s == "neutre")
+			if (s == "urgency")
+				return 6;
+			else if (s == "pause")
+				return 5;
+			else if (s == "neutre")
 				return 4;
 			else if (s == "bloc0back")
 				return 0;
@@ -65,14 +70,6 @@ public class Signal {
 				return 2;
 			else if (s == "bloc3back")
 				return 3;
-			else if (s == "bloc0backPra")
-				return 30;
-			else if (s == "bloc1backPra")
-				return 31;	
-			else if (s=="bloc2backPra")
-				return 32;
-			else if (s=="bloc3backPra")
-				return 33;
 			
 			else if (s == "0backMatch")
 				return 10;

@@ -521,12 +521,24 @@ public class Presentation extends JPanel{
 				
 			}
 			else if (myTask.getMySlide().getSlideName() == "countdown"){
-
+				if (myTask.getImagerie() == "EEG")
+				{
+					if (myTask.getnBack()== 0)
+						{Signal.sendSignal("bloc0back", myTask.getImagerie());}
+					if (myTask.getnBack()== 1)
+						{Signal.sendSignal("bloc1back", myTask.getImagerie());}
+					if (myTask.getnBack()== 2)
+						{Signal.sendSignal("bloc2back", myTask.getImagerie());}
+					if (myTask.getnBack()== 3)
+						{Signal.sendSignal("bloc3back", myTask.getImagerie());}
+				}
+				
 				new Animate(new String[]{"fadein",""}, 1500, 100, myWindow.getBigPanel().getWidth()/2 - 85, myWindow.getBigPanel().getHeight()/2 - 25, 100, 100, "III", new Callable<Integer>(){ 
 					public Integer call() { 
 						return callback(); 
 					} 
 				});
+				
 				//prepareForNextSlide(myTask);
 			}
 			else if (myTask.getMySlide().getSlideName() == "stimulus"){
@@ -548,22 +560,22 @@ public class Presentation extends JPanel{
 						{
 								if (myTask.getnBack()== 0)
 									{Signal.sendSignal("0backMatch", myTask.getImagerie());}
-								if (myTask.getnBack()== 1)
+								else if (myTask.getnBack()== -1)
 									{Signal.sendSignal("1backMatch", myTask.getImagerie());}
-								if (myTask.getnBack()== 2)
+								else if (myTask.getnBack()== -2)
 									{Signal.sendSignal("2backMatch", myTask.getImagerie());}
-								if (myTask.getnBack()== 3)
+								else if (myTask.getnBack()== -3)
 									{Signal.sendSignal("3backMatch", myTask.getImagerie());}
 						}
-						if (myTask.getMySlide().getSoloStimulus().getMatch()== "notMatching")
+						else if (myTask.getMySlide().getSoloStimulus().getMatch()== "notMatching")
 						{
 								if (myTask.getnBack()== 0)
 									{Signal.sendSignal("0backNotMatch", myTask.getImagerie());}
-								if (myTask.getnBack()== 1)
+								else if (myTask.getnBack()== -1)
 									{Signal.sendSignal("1backNotMatch", myTask.getImagerie());}
-								if (myTask.getnBack()== 2)
+								else if (myTask.getnBack()== -2)
 									{Signal.sendSignal("2backNotMatch", myTask.getImagerie());}
-								if (myTask.getnBack()== 3)
+								else if (myTask.getnBack()== -3)
 									{Signal.sendSignal("3backNotMatch", myTask.getImagerie());}
 						}
 					}
@@ -1104,7 +1116,6 @@ GraphicEngine.setModifying(false);
 				// bonne r�ponse
 				if(key == expectedKey)
 				{
-					
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("goodAnsMatch", myTask.getImagerie());}
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}	
 					writeStimInfo(true, System.currentTimeMillis() -time, System.currentTimeMillis() -Task.syncTime, key, System.currentTimeMillis(), stimulus);
@@ -1155,8 +1166,8 @@ GraphicEngine.setModifying(false);
 				else if (!ignore.contains(""+key))
 				{
 					SoundClip.play(myTask.getErrorSound());
-					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("goodAnsMatch", myTask.getImagerie());}
-					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("goodAnsNotMatch", myTask.getImagerie());}
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsNotMatch", myTask.getImagerie());}
 
 					/*try
 					{
@@ -1404,6 +1415,8 @@ GraphicEngine.setModifying(false);
 				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);
 				if (myTask.getImagerie() == "IO"){Signal.sendSignal("pause", myTask.getImagerie());}
+				if (myTask.getImagerie() == "EEG"){Signal.sendSignal("pause", myTask.getImagerie());}
+
 			}
 			if (this.tic >= this.pauseT)
 			{

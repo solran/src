@@ -630,7 +630,7 @@ public class Task {
 
 		Random rgen = new Random();
 		int random;
-		 if (this.imagerie == "IO" & this.pauseT > 0)
+		 if ((this.imagerie == "IO"||this.imagerie == "EEG") & this.pauseT > 0)
 		 {
 				this.slideStack[this.slideCpt++] = new Slide("pauseInstruction");			
 				this.slideStack[this.slideCpt++] = new Slide("countdown");
@@ -849,6 +849,8 @@ public class Task {
 					new Animate(new String[]{"fadein",""}, 300, Main.myWindow.getBigPanel().getWidth()/2 -urgency.getWidth()/2, Main.myWindow.getBigPanel().getHeight()/2-urgency.getHeight()/2, urgency, Main.myWindow.getMainPanel());
 
 					if (imagerie == "IO"){Signal.sendSignal("urgency", this.imagerie);}
+					if (imagerie == "EEG"){Signal.sendSignal("urgency", this.imagerie);}
+
 
 					onOff=0;
 				}
