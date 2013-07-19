@@ -467,6 +467,9 @@ public class Task {
 		{
 			leftReminder = Langue.translate("matchingInstG");
 			rightReminder = Langue.translate("matchingInstD");
+			if (this.version ==5)
+				leftReminder = Langue.translate("matching0back");
+				rightReminder = Langue.translate("matching0back");
 		}
 		else
 		{
