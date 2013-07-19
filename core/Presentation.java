@@ -525,11 +525,11 @@ public class Presentation extends JPanel{
 				{
 					if (myTask.getnBack()== 0)
 						{Signal.sendSignal("bloc0back", myTask.getImagerie());}
-					if (myTask.getnBack()== 1)
+					if (myTask.getnBack()== -1)
 						{Signal.sendSignal("bloc1back", myTask.getImagerie());}
-					if (myTask.getnBack()== 2)
+					if (myTask.getnBack()== -2)
 						{Signal.sendSignal("bloc2back", myTask.getImagerie());}
-					if (myTask.getnBack()== 3)
+					if (myTask.getnBack()== -3)
 						{Signal.sendSignal("bloc3back", myTask.getImagerie());}
 				}
 				
@@ -1117,7 +1117,7 @@ GraphicEngine.setModifying(false);
 				if(key == expectedKey)
 				{
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("goodAnsMatch", myTask.getImagerie());}
-					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}	
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("goodAnsNotMatch", myTask.getImagerie());}	
 					writeStimInfo(true, System.currentTimeMillis() -time, System.currentTimeMillis() -Task.syncTime, key, System.currentTimeMillis(), stimulus);
 					
 					if (otherNearKeys.contains("" + key)){
@@ -1166,7 +1166,7 @@ GraphicEngine.setModifying(false);
 				else if (!ignore.contains(""+key))
 				{
 					SoundClip.play(myTask.getErrorSound());
-					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("goodAnsNotMatch", myTask.getImagerie());}
+					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsNotMatch", myTask.getImagerie());}
 
 					/*try
