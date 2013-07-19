@@ -145,11 +145,11 @@ public class Bloc {
 			if(nBack == 0){
 				myList = myList_0back;
 			}else if(nBack == 1){
-				myList = myList_0back;
+				myList = myList_1back;
 			}else if(nBack == 2){
-				myList = myList_0back;
+				myList = myList_2back;
 			}else{
-				myList = myList_0back;
+				myList = myList_3back;
 			}
 			
 			

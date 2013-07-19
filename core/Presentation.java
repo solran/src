@@ -1295,8 +1295,18 @@ GraphicEngine.setModifying(false);
 					myTask.getMySlide().getSoloOtherStimulus().setStimRemovedSync(System.currentTimeMillis()- Task.syncTime);
 			
 			}
+			
+			if(myTask.getVersion() == 5 && this.tic < myTask.getAnswerT() && this.tic > myTask.getStimT()){
+				if(myTask.getMySlide().getSoloStimulus().getIsAnswered()){
+					this.tic = myTask.getAnswerT();
+				}
+			}
+			
+			
+			
 			if (this.tic == myTask.getAnswerT())
 			{
+
 				if ( (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SPG" || (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SM" && myTask.getMySlide().getSoloStimulus().getIsLeft())  || myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "DM") && !myTask.getMySlide().getSoloStimulus().getIsAnswered())
 				{
 					//label.setVisible(false);
@@ -1317,6 +1327,7 @@ GraphicEngine.setModifying(false);
 					new Animate(new String[]{"color", "255,0,0, 255"}, 100, otherLabel, myTask.getMyGUI());
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
 				}
+
 				myWindow.removeKeyListener(taskListener);
 				myWindow.removeKeyListener(taskListener2);
 				ImageBox tempImageBox = myTask.getCross();
