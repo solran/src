@@ -129,7 +129,15 @@ public class Bloc {
 
 		markSPG_SPD_SM_DM(myStimulus, sPG_SPD_SM_DM);	
 		
-		if (!typeNback.equals ("matching"))
+		
+		boolean fixedList = false;
+		
+		
+		
+		if(fixedList == true){
+			
+			
+		}else if (!typeNback.equals ("matching"))
 		{
 		     for (int i = 0; i<stimulusComplet.length ; i+=myStimulus.length )
 		     {
@@ -398,6 +406,4 @@ public class Bloc {
 	public void incrementNbSmDmStimuli() {
 		nbSmDmStimuli++;
 	}
-	
-
 }
