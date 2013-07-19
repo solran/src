@@ -235,7 +235,8 @@ public class Task {
 		else if (myParameters.get("format") == 2)
 			this.format = "noNumpad";
 		
-		if (nBack<0)
+		//Phil - exception pour la tâche 5
+		if (nBack<0 || version == 5)
 		{
 			if (myParameters.get("boxNback") == 1)
 				this.typeNback = "noNBack";
@@ -497,11 +498,11 @@ public class Task {
 		otherBlocsDM = new Bloc[d+2];
 		for (int i =0; i<d+2 ; i++)
 		{
-			blocsSPG[i] = new Bloc (myStimulus, "SPG", this.nBack, this.typeNback, "left");
-			blocsSPD[i] = new Bloc (myOtherStimulus, "SPD", this.nBack, this.typeNback, "right");
-			blocsSM[i] = new Bloc (myStimulus, myOtherStimulus, "SM", this.nBack, this.typeNback);
-			blocsDM[i] =new Bloc (myStimulus, "DM", this.nBack, this.typeNback, "left");
-			otherBlocsDM[i] =new Bloc (myOtherStimulus, "DM", this.nBack, this.typeNback, "right");
+			blocsSPG[i] = new Bloc (myStimulus, "SPG", this.nBack, this.typeNback, "left", this.version);
+			blocsSPD[i] = new Bloc (myOtherStimulus, "SPD", this.nBack, this.typeNback, "right", this.version);
+			blocsSM[i] = new Bloc (myStimulus, myOtherStimulus, "SM", this.nBack, this.typeNback, this.version);
+			blocsDM[i] =new Bloc (myStimulus, "DM", this.nBack, this.typeNback, "left", this.version);
+			otherBlocsDM[i] =new Bloc (myOtherStimulus, "DM", this.nBack, this.typeNback, "right", this.version);
 		}
 		
 		//les blocs et les instructions associ�es sont ordonnés ici
@@ -674,24 +675,37 @@ public class Task {
 		{
 			this.slideStack[this.slideCpt++] = new Slide("feedback");
 		}
-		if (myBloc.getStimulusComplet()[0].getnBack()<0)
-		{
+		
 			//this.slideStack[this.slideCpt++] = new Slide("nBackExplanation", mainStim, secondStim);
-			if (this.typeNback == "matching")
+		if (this.typeNback == "matching")
+		{
+			this.slideStack[this.slideCpt++] = new Slide("allStimuliNback", mainStim, secondStim);
+			if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM")
 			{
-				this.slideStack[this.slideCpt++] = new Slide("allStimuliNback", mainStim, secondStim);
-				if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM")
-				{
-					this.slideStack[this.slideCpt++] = new Slide("allStimuliNback", secondStim, mainStim);
-				}
- 			}
-
+				this.slideStack[this.slideCpt++] = new Slide("allStimuliNback", secondStim, mainStim);
+			}
+ 		}
+		if (this.typeNback == "matching" || this.typeNback == "retrival")
+		{
 			this.slideStack[this.slideCpt++] = new Slide("nBackAsterisk", mainStim, secondStim);  
 		}
+		
 		this.slideStack[slideCpt++] = new Slide("reminderExplanation");
 
 		this.slideStack[this.slideCpt++] = new Slide("countdown");				
 
+		
+		//temp ArrayList tempListForShuffling = new ArrayList();
+		
+		
+		int nbI = 0;
+		
+
+		if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM" && isMixed)
+		{
+			nbI = this.slideCpt;
+		}
+		
 		
 		for (int i = 0; i < myBloc.getStimulusComplet().length; i++, this.slideCpt++){
 			if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "SPG" || myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "SM")
@@ -704,17 +718,25 @@ public class Task {
 				this.slideStack[this.slideCpt] = new Slide("stimulus", VIDE, myBloc.getStimulusComplet()[i]);
 				myBloc.getStimulusComplet()[i].setStimulusCpts();
 			}
+			
+			
 			if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM")
 			{
 				//divise en 2 le % mixed choisi par l'expérimentateur. Par example, pour 10%, on roule un dé-100 à chaque essai DM. Entre 0 à 5 = un essai SM à gauche, 5 à 10 pour une essai SM à droite, et 10 et + un double mixte.
 				//shuffle
 				if (isMixed)
 				{
+
+					myBloc.incrementNbSmDmStimuli();
+					
+					System.out.println(myBloc.getNbSmDmStimuli());
+					this.slideCpt--;
+					/*
 					//faire de snotes ici pcq ca fait 50%
 					random = rgen.nextInt(100);
 					 if ( random <= Math.ceil(mixedPourc/2) )
 			    	 {
-							this.slideStack[this.slideCpt] = new Slide("stimulus", myBloc.getStimulusComplet()[i], VIDE);			    		 	myBloc.getStimulusComplet()[i].setSPG_SPD_SM_DM("SM");
+							this.slideStack[this.slideCpt] = new Slide("stimulus", myBloc.getStimulusComplet()[i], VIDE);			    		 	//myBloc.getStimulusComplet()[i].setSPG_SPD_SM_DM("SM");
 							this.slideStack[this.slideCpt].getSoloStimulus().setSPG_SPD_SM_DM("SM");
 							this.slideStack[this.slideCpt].getSoloStimulus().setStimulusCpts();
 			    	 }
@@ -728,7 +750,7 @@ public class Task {
 			    	 {
 							slideStack[slideCpt] = new Slide("stimulus", myBloc.getStimulusComplet()[i], myOtherBloc.getStimulusComplet()[i]);		//essai ii deux fois? pour la DT
 							Stimulus.setStimulusCpts(myBloc.getStimulusComplet()[i], myOtherBloc.getStimulusComplet()[i]);
-			    	 }
+			    	 }*/
 				}
 				else
 				{
@@ -736,6 +758,54 @@ public class Task {
 					Stimulus.setStimulusCpts(myBloc.getStimulusComplet()[i], myOtherBloc.getStimulusComplet()[i]);
 				}  
 			}
+			
+			
+		}
+		
+		
+		// EverydayImShuffling
+		if(myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM" && isMixed){
+		
+			System.out.println("isMixed");
+			
+			// Calculate the number of each type of trial
+			int nombre_total_essai = myBloc.getNbSmDmStimuli();
+			int nombre_total_essai_SM_Gauche = nombre_total_essai * mixedPourc/200 ;
+			int nombre_total_essai_SM_Droite = nombre_total_essai * mixedPourc/200 ;
+			String[] allStimArray = new String[nombre_total_essai];
+			
+			//Create a list accordingly
+			for(int i = 0; i < nombre_total_essai;i++){
+				if(i < nombre_total_essai_SM_Gauche)
+					allStimArray[i] = "SMG";
+				else if(i < nombre_total_essai_SM_Gauche + nombre_total_essai_SM_Droite)
+					allStimArray[i] = "SMD";
+				else
+					allStimArray[i] = "DM";
+				//System.out.println(allStimArray[i]);	//verif
+			}
+			//Shuffle the list
+			Collections.shuffle(Arrays.asList(allStimArray));
+			
+			//Assign the slide to slidestack accordingly to the list
+			for(int i = 0; i < allStimArray.length; i++){
+				if(allStimArray[i] == "SMG"){
+					this.slideStack[this.slideCpt] = new Slide("stimulus", myBloc.getStimulusComplet()[i], VIDE);			    		 	//myBloc.getStimulusComplet()[i].setSPG_SPD_SM_DM("SM");
+					this.slideStack[this.slideCpt].getSoloStimulus().setSPG_SPD_SM_DM("SM");
+					this.slideStack[this.slideCpt++].getSoloStimulus().setStimulusCpts();
+				}
+				else if(allStimArray[i] == "SMD"){
+					this.slideStack[this.slideCpt] = new Slide("stimulus", myOtherBloc.getStimulusComplet()[i], VIDE);
+					this.slideStack[this.slideCpt].getSoloStimulus().setSPG_SPD_SM_DM("SM");
+					this.slideStack[this.slideCpt++].getSoloStimulus().setStimulusCpts();
+				}
+				else if(allStimArray[i] == "DM"){
+					this.slideStack[slideCpt++] = new Slide("stimulus", myBloc.getStimulusComplet()[i], myOtherBloc.getStimulusComplet()[i]);
+					Stimulus.setStimulusCpts(myBloc.getStimulusComplet()[i], myOtherBloc.getStimulusComplet()[i]);
+				}
+			}
+
+			//System.out.println("NbSmDmStimuli: " + myBloc.getNbSmDmStimuli());  //?
 		}
 	}
 	

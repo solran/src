@@ -33,8 +33,8 @@ public class Langue extends HashMap {
 		{			
 			expression.put("title", "Programme d'entraînement cognitif");
 			
-			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "DIRECTIONS"});				
-			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "MOTS"});		
+			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS"});				
+			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f"});		
 			
 			Utilities.iniHashMap(expression, "input", new String[]{"0", "1"}, new String[]{"Ma configuration (optionnelle): ", "Parcourir/Sélectionner..."});
 
@@ -59,7 +59,7 @@ public class Langue extends HashMap {
 					"Débutant : 2 par mains", "Intermédiaire : 3 par mains", "Expert : 4 par mains"});
 			
 			Utilities.iniHashMap(expression, "radioNBack", new String[]{"0", "1", "2", "3", "4",  "boxLabel", "box1", "box2", "box3" }, new String[]{"<html><font size = 4>Réponse à rebours (n-back)</font></html>", "Débutant : 0 rebours",
-					"Intermédiaire : 1 rebourd","Avancé : 2 rebours", "Expert : 3 rebours", "Type de n-back", "Aucun N-back", "Matching", "Retrieval"});
+					"Intermédiaire : 1 rebours","Avancé : 2 rebours", "Expert : 3 rebours", "Type de n-back", "Aucun N-back", "Matching", "Retrieval"});
 			
 			Utilities.iniHashMap(expression, "radioisDT", new String[]{"info", "0", "1", "2"}, new String[]{"<html><p align=\"center\"><font size = 4>Blocs</font></p></html>", 
 					"<html>Avec simple pur</html>", "<html>Avec simple mixte</html>", "<html>Avec double mixte<br/></html>" });
@@ -111,7 +111,7 @@ public class Langue extends HashMap {
 					"French", "English" });
 			
 			Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5"}, new String[]{"<html><font size = 4>Version of the Task</font></html>", "1: Astronomy/Arrows",  "2: Letters/Colors", "3: Numbers/Shapes", "4: Dices/Patterns", 
-			"5: Directions/Words (audio)"});
+			"5: Phillips"});
 			
 			Utilities.iniHashMap(expression, "radioQte", new String[]{"0", "1", "2", "3" }, new String[]{"<html><font size = 4>Task-set per hand</font></html>", 
 					"Begginer : 2 per hand", "Intermediaire : 3 per hand", "Expert : 4 per hand"});
@@ -579,7 +579,7 @@ public class Langue extends HashMap {
 		{
 			expression.put("matchingInstG", "D=Pareil, F= Différent");
 			expression.put("matchingInstD", "K=Pareil, L= Différent");
-			expression.put("allStimuliHeader", "<html><br /><p align=\"center\">Lors de cette exercise, %stim1% vont apparaître au centre de l'écran. Les symboles (%stim2%) peuvent légèrement varier comme suit :</p></html>");
+			expression.put("allStimuliHeader", "<html><br /><p align=\"center\">Lors de cette exercice, %stim1% vont apparaître au centre de l'écran. Les symboles (%stim2%) peuvent légèrement varier comme suit :</p></html>");
 			expression.put("allStimuliFooter", "<html><p align=\"center\">Appuyez sur la barre d’espacement pour avancer dans le menu.</p></html>");
 			
 			/*expression.put("nBackExplanationHeader1Back", "<html><p align=\"center\"><b>Votre tâche est de déterminer si l'image que vous voyez " +
@@ -596,6 +596,12 @@ public class Langue extends HashMap {
 					"est la même que l'avant-avant dernière image vue.</b></p>" +
 					"<br />" +
 					"<p align=\"center\">Voici un exemple:</p></html>");*/
+			
+					expression.put("nBackExplanationHeader0Back", "<html><p align=\"center\">Votre tâche est de déterminer si l'image que vous voyez " +
+							"est un 3." +
+							"<br />" +
+							"Si un 3 apparaît, appuyez sur sur la touche <b>%key1%</b>. Sinon appuyez sur la touche <b>%key2%</b>.</p></html>");
+			
 			
 					expression.put("nBackExplanationHeader1Back", "<html><p align=\"center\">Votre tâche est de déterminer si l'image que vous voyez " +
 							"est la même que celle qui la précédait." +

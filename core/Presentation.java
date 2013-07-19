@@ -376,15 +376,27 @@ public class Presentation extends JPanel{
 				// hGap and vGap
 				y = yOrigin + 1 * 200;
 						
-				tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[0];
+				
+				
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0){
+					
+				}else{
+					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[0];
 						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[0].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
-						
-						tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[1];
+				}
+				
+				
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0)
+					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[2].getName())[1];
+				else
+					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[1];
 						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[1].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
+						
+				
 						
 						tempImageBox = myTask.getEqual()[0];
 						x = (x + ((int)((myWindow.getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin))/2 ;
@@ -401,12 +413,20 @@ public class Presentation extends JPanel{
 						tempImageBox.setProperties(x, y + 15, true);
 						
 					y = yOrigin+ 2 * 200;
-						tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[2];
-						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
-						myTask.getBlackSquareSmall()[2].setProperties(x, y, true);
-						tempImageBox.setProperties(x, y, true);
+					
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0){
+					
+				}else{	
+					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[2];
+					x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
+					myTask.getBlackSquareSmall()[2].setProperties(x, y, true);
+					tempImageBox.setProperties(x, y, true);
+				}	
 						
-						tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[1].getName())[2];
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0)
+					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[6].getName())[2];
+				else
+					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[1].getName())[2];
 						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[3].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);

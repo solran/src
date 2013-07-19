@@ -12,12 +12,16 @@ public class Bloc {
 	private static int DMLength;		
 	private static int blocActuel=0;
 	private Stimulus[] stimulusComplet;
+	
+	//Phil
+	private int nbSmDmStimuli = 0;
+	
 	private int blocID;
 	private int nBack;
 	//private String typeNback = "";
 
 	//constructeur de bloc SM
-	public Bloc (Stimulus[] myStimulus, Stimulus[] myOtherStimulus, String sPG_SPD_SM_DM, int nBack, String typeNback){
+	public Bloc (Stimulus[] myStimulus, Stimulus[] myOtherStimulus, String sPG_SPD_SM_DM, int nBack, String typeNback, int version){
 		Random rgen = new Random();
 		//this.typeNback = typeNback;
 		int compteur=0;
@@ -50,7 +54,7 @@ public class Bloc {
 			//on place un nombre d'essai équivalent au nback en question
 			for (;compteur + nBack < 0; compteur ++)
 			{
-				if (compteur<myStimulus.length)
+				if (compteur < myStimulus.length)
 					stimulusComplet[compteur] = CopieSansPointeur(myStimulus[compteur]);
 				else 
 					stimulusComplet[compteur] = CopieSansPointeur(myStimulus[0]);
@@ -58,21 +62,51 @@ public class Bloc {
 			//ensuite on complet avec des stimuli équivalent dans 40% des cas sinon on choisi un différent parmi les choix restants 
 		    for (;compteur <stimulusComplet.length; compteur ++ )
 		    {
-		    	//ici le matching arrive 40% du temps
+
+		    	 //ici le matching arrive 40% du temps
 		    	 if (rgen.nextInt(100) <40)
 		    	 {
-		 			stimulusComplet[compteur] = CopieSansPointeur(stimulusComplet[compteur+nBack]);
-		 			stimulusComplet[compteur].setMatch("isMatching") ;
-		    	 }
-		    	 else
-		    	 {
-		    		 do {
-		    			 rgen = new Random();
-		    			 hasard = rgen.nextInt(myStimulus.length);
+		    		 //Exception pour la tâche de Phillips où le stim est hardcodé 3
+		    		 if(version == 5 && nBack == 0){
+		    			 stimulusComplet[compteur] = CopieSansPointeur(myStimulus[2]); 
+		    		 }else{
+		    			stimulusComplet[compteur] = CopieSansPointeur(stimulusComplet[compteur+nBack]);
 		    		 }
-		    		 while (stimulusComplet[compteur+nBack].getName() == myStimulus[hasard].getName());
-			 		stimulusComplet[compteur] = CopieSansPointeur(myStimulus[hasard]);
-		 			stimulusComplet[compteur].setMatch("notMatching") ;
+		    		 stimulusComplet[compteur].setMatch("isMatching") ;
+		    	 }
+		    	 else{
+			    	 
+			    	 //***//Phil
+			    	 boolean first = true;
+			    	 String lastStimulusName = "";
+			    	 if(version == 5 && nBack == 0){
+		    			 if(first == true)
+		    				 first = false;
+		    			 else
+		    				 lastStimulusName = stimulusComplet[compteur - 1].getName();
+		    				 
+		    			 
+	    				 do { hasard = randomStim(myStimulus.length); }
+			    		 while (lastStimulusName == myStimulus[hasard].getName() || hasard == 2);
+	    			 
+		    			 first = false;
+		    		 }else{
+			    		 do {
+			    			 rgen = new Random();
+			    			 hasard = rgen.nextInt(myStimulus.length);
+			    		 }
+			    		 while (stimulusComplet[compteur+nBack].getName() == myStimulus[hasard].getName());
+		    	 	 }
+		    		 
+		    		 if(version == 5 && nBack == 0){
+		    			 stimulusComplet[compteur] = CopieSansPointeur(myStimulus[hasard]);
+				 		 stimulusComplet[compteur].setMatch("notMatching") ;
+		    			 stimulusComplet[compteur].setKey("f");
+		    		 }else{
+				 		 stimulusComplet[compteur] = CopieSansPointeur(myStimulus[hasard]);
+			 			 stimulusComplet[compteur].setMatch("notMatching") ;
+		    		 }
+		    		 //***//
 		    	 }
 		    }
 		}
@@ -83,7 +117,7 @@ public class Bloc {
 	//constructeur de bloc SP et DM
 	
 
-	public Bloc (Stimulus[] myStimulus, String sPG_SPD_SM_DM, int nBack, String typeNback, String main){
+	public Bloc (Stimulus[] myStimulus, String sPG_SPD_SM_DM, int nBack, String typeNback, String main, int version){
 		
 		Random rgen = new Random();
 		int compteur=0;
@@ -108,7 +142,7 @@ public class Bloc {
 		     }
 		     stimulusComplet = randomization(stimulusComplet);
 		}
-		else
+		else	// Matching
 		{		
 			//on place un nombre d'essai équivalent au nback en question
 			for (;compteur + nBack < 0; compteur ++)
@@ -117,25 +151,57 @@ public class Bloc {
 					stimulusComplet[compteur] = CopieSansPointeur(myStimulus[compteur]);
 				else 
 					stimulusComplet[compteur] = CopieSansPointeur(myStimulus[0]);
+				System.out.println("Entre dans le pré-nBack");
 			}
-			//ensuite on complet avec des stimuli équivalent dans 40% des cas sinon on choisi un différent parmi les choix restants 
+			
+
+			//ensuite on complète avec des stimuli équivalent dans 40% des cas sinon on choisi un différent parmi les choix restants 
 		    for (;compteur <stimulusComplet.length; compteur ++ )
 		    {
 		    	//ici le matching arrive 40% du temps
 		    	 if (rgen.nextInt(100) <40)
 		    	 {
-		 			stimulusComplet[compteur] = CopieSansPointeur(stimulusComplet[compteur+nBack]);
-		 			stimulusComplet[compteur].setMatch("isMatching") ;
+		    		 //Exception pour la tâche de Phillips où le stim est hardcodé 3
+		    		 if(version == 5 && nBack == 0)
+		    			 stimulusComplet[compteur] = CopieSansPointeur(myStimulus[2]); 
+		    		 else
+		    			stimulusComplet[compteur] = CopieSansPointeur(stimulusComplet[compteur+nBack]);
+		    		 stimulusComplet[compteur].setMatch("isMatching") ;
 		    	 }
 		    	 else
 		    	 {
-		    		 do {
-		    			 rgen = new Random();
-		    			 hasard = rgen.nextInt(myStimulus.length);
+		    		 
+		    		 //***//Phil
+		    		 boolean first = true;
+			    	 String lastStimulusName = "";
+			    	 if(version == 5 && nBack == 0){
+		    			 if(first == true)
+		    				 first = false;
+		    			 else
+		    				 lastStimulusName = stimulusComplet[compteur - 1].getName();
+		    				 
+		    			 
+	    				 do { hasard = randomStim(myStimulus.length); }
+			    		 while (lastStimulusName == myStimulus[hasard].getName() || hasard == 2);
+	    			 
+		    			 first = false;
+		    		 }else{
+			    		 do {
+			    			 rgen = new Random();
+			    			 hasard = rgen.nextInt(myStimulus.length);
+			    		 }
+			    		 while (stimulusComplet[compteur+nBack].getName() == myStimulus[hasard].getName());
+		    	 	 }
+		    		 
+		    		 if(version == 5 && nBack == 0){
+		    			 stimulusComplet[compteur] = CopieSansPointeur(myStimulus[hasard]);
+				 		 stimulusComplet[compteur].setMatch("notMatching") ;
+		    			 stimulusComplet[compteur].setKey("f");
+		    		 }else{
+				 		 stimulusComplet[compteur] = CopieSansPointeur(myStimulus[hasard]);
+			 			 stimulusComplet[compteur].setMatch("notMatching") ;
 		    		 }
-		    		 while (stimulusComplet[compteur+nBack].getName() == myStimulus[hasard].getName());
-			 		stimulusComplet[compteur] = CopieSansPointeur(myStimulus[hasard]);
-		 			stimulusComplet[compteur].setMatch("notMatching") ;
+		    		 //***//
 		    	 }
 		    }
 		}
@@ -146,6 +212,16 @@ public class Bloc {
 	    	 stimulusComplet = Arrays.copyOfRange(stimulusComplet, 0, SPLength);
 
 	}
+	
+	//Phil
+	private int randomStim(int upperLimit){
+		Random rgen = new Random();
+		rgen = new Random(); 
+		int hasard = rgen.nextInt(upperLimit);
+				
+		return hasard;
+	}
+	
 	
 
 	public void markSPG_SPD_SM_DM (Stimulus[] input, String sPG_SPD_SM_DM){
@@ -310,5 +386,18 @@ public class Bloc {
 	/*public String getTypeNback() {
 		return typeNback;
 	}*/
+
+
+	//Phil
+	public int getNbSmDmStimuli() {
+		return nbSmDmStimuli;
+	}
+	public void setNbSmDmStimuli(int nbSmDmStimuli) {
+		this.nbSmDmStimuli = nbSmDmStimuli;
+	}
+	public void incrementNbSmDmStimuli() {
+		nbSmDmStimuli++;
+	}
+	
 
 }

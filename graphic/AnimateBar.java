@@ -23,7 +23,6 @@ import core.Task;
 
 
 
-
 public class AnimateBar {
 
 	private static int MINMS = 100;
@@ -56,15 +55,13 @@ public class AnimateBar {
 	private int barWidth = 60;
 	private int barX1, barY1;
 
-	
 	public static double[] percentilesLeft = new double[]{0,0,0,0,0,0};
-	
-
 	public static double[] percentilesRight= new double[]{0,0,0,0,0,0};
 	
+	private boolean first = true;
 	
 
-
+	// ----- Constructor for first bar -----
 	public AnimateBar(int baseX, int baseY, int lastHeight1, int lastHeight2, int newHeight1, int newHeight2, int duration, Graphics2D dstBuffer, JPanel panel, boolean isLeft){
 
 		buffImage = new BufferedImage( 1000, 1000, BufferedImage.TYPE_INT_ARGB);
@@ -92,6 +89,7 @@ public class AnimateBar {
 		this.panel = panel;
 	}
 		
+	// for second bar
 	public AnimateBar(int baseX, int baseY, int lastHeight1, int lastHeight2, int newHeight1, int newHeight2, int duration, Graphics2D dstBuffer, JPanel panel, boolean second, boolean isLeft){
 
 		buffImage = new BufferedImage( baseWidth, maxHeight, BufferedImage.TYPE_INT_ARGB);
@@ -116,6 +114,7 @@ public class AnimateBar {
 		this.graphic = dstBuffer;
 		this.panel = panel;
 	}
+	// ----- -----
 	
 	
 	public void update(int newHeight, boolean isVisible){
@@ -123,6 +122,7 @@ public class AnimateBar {
 		if(this.newHeight1 != newHeight){
 			this.newHeight1  = newHeight;				
 			count = 0;
+			System.out.println("Count remis à 0 ------------------");
 		}
 		
 		if(isVisible)
@@ -130,24 +130,29 @@ public class AnimateBar {
 	}
 
 	public void refresh(){
-
-		if(count * easing > duration){		//end
+		
+		if(count == 0){
+			step = (float)duration/(float)easing;
+			stepHeight1 = (newHeight1 - lastHeight1)/step;
+			System.out.println("stepHeight: " + stepHeight1);
+			System.out.println("newHeight1: " + newHeight1);
+		}
+		
+		// count * easing > duration
+		
+		if(barHeight1 > newHeight1 - Math.abs(stepHeight1) && barHeight1 < newHeight1 + Math.abs(stepHeight1) ){		//end of the animation
 			lastHeight1 = barHeight1 = newHeight1;
 
 		}else{
 			if(count == 0){
-				step = (float)duration/(float)easing;
-
-				stepHeight1 = (newHeight1 - lastHeight1)/step;
 				tempHeight1 = barHeight1;
-				
 			}else{
 				tempHeight1 += stepHeight1;
 				barHeight1 =  (int)tempHeight1;
 			}
 		}
 		
-		//Clear
+		// Clear
 		tempGraphic.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR));
 		Rectangle2D.Double rect = new Rectangle2D.Double(0, 0, barWidth, maxHeight); 
 		tempGraphic.fill(rect);
@@ -162,7 +167,7 @@ public class AnimateBar {
 		graphic.drawImage(buffImage, barX1, barY1 - barHeight1, null);
 		
 		
-		//barre blanche (base) des barres de r�troaction
+		// ligne blanche horizontale
 		if(isVisible){
 			graphic.setColor(baseColor);
 			graphic.fillRect(baseX, baseY, baseWidth, baseHeight);
@@ -185,10 +190,15 @@ public class AnimateBar {
 		percentiles[1] = rts.get((int)(rts.size()*50/100))*1.75;
 		percentiles[0] = rts.get((int)(rts.size()*50/100))*2;
 		
-		if (isLeft)
+		
+		//temp
+		if (isLeft){
 			percentilesLeft = percentiles;
-		else 
+			System.out.println("Percent: " + percentilesLeft);
+		}else{
 			percentilesRight = percentiles;
+			System.out.println("Percent: " + percentilesRight);
+		}
 	}
 	
 	public static int getRang (double[] percentile, double moyenne)
@@ -279,16 +289,15 @@ public class AnimateBar {
 		double weigth = 0;
 		for (int i = 0; i < stimulus.length; i++)
 		{
-			System.out.println ("i :" + i);
+			//System.out.println ("i :" + i);
 
 			if (stimulus[i]!= null && stimulus[i].getRt()!= 0)
 			{
-				System.out.println ("i2 :" + i + "rt: " + stimulus[i].getRt() );
+				//System.out.println ("i2 :" + i + "rt: " + stimulus[i].getRt() );
 
 				weigth ++;
 				values += stimulus[i].getRt()*weigth;
 			}
-			//System.out.println("values : " + values);
 		}
 		return values/((weigth+1)*(weigth/2));
 	}
@@ -296,13 +305,8 @@ public class AnimateBar {
 	public static double[] getPercentilesLeft() {
 		return percentilesLeft;
 	}
-
 	public static double[] getPercentilesRight() {
 		return percentilesRight;
 	}
-
-
-	
-	
 }
 
