@@ -219,6 +219,12 @@ public class Task {
 		{
 			Bloc.setSPLength(48);	Bloc.setSMLength(48);	Bloc.setDMLength(48);
 		}
+		
+		//Harcodé pour la tâche de Phillips
+		if(version == 5)
+			Bloc.setSPLength(61);  // Pourquoi pas 62???
+		
+		
 
 
 		if (myParameters.get("nBack") == 1)
@@ -496,20 +502,29 @@ public class Task {
 			case 1: 	d=0;	break;	case 2:	d=2;	break;	case 3:	d=4;	break;	case 4:	d=6;	break;	case 5:	d=8;	break; case 6:	d=10;	break;
 			default : d = 1; break;
 		}
-		blocsSPG = new Bloc[d+2];
-		blocsSPD = new Bloc[d+2];
-		blocsSM = new Bloc[d+2];
-		blocsDM = new Bloc[d+2];
-		otherBlocsDM = new Bloc[d+2];
-		for (int i =0; i<d+2 ; i++)
-		{
-			blocsSPG[i] = new Bloc (myStimulus, "SPG", this.nBack, this.typeNback, "left", this.version);
-			blocsSPD[i] = new Bloc (myOtherStimulus, "SPD", this.nBack, this.typeNback, "right", this.version);
-			blocsSM[i] = new Bloc (myStimulus, myOtherStimulus, "SM", this.nBack, this.typeNback, this.version);
-			blocsDM[i] =new Bloc (myStimulus, "DM", this.nBack, this.typeNback, "left", this.version);
-			otherBlocsDM[i] =new Bloc (myOtherStimulus, "DM", this.nBack, this.typeNback, "right", this.version);
-		}
 		
+		
+			blocsSPG = new Bloc[d+2];
+			blocsSPD = new Bloc[d+2];
+			blocsSM = new Bloc[d+2];
+			blocsDM = new Bloc[d+2];
+			otherBlocsDM = new Bloc[d+2];
+			//if(version != 5){
+				for (int i =0; i<d+2 ; i++)
+				{
+					blocsSPG[i] = new Bloc (myStimulus, "SPG", this.nBack, this.typeNback, "left", this.version);
+					blocsSPD[i] = new Bloc (myOtherStimulus, "SPD", this.nBack, this.typeNback, "right", this.version);
+					blocsSM[i] = new Bloc (myStimulus, myOtherStimulus, "SM", this.nBack, this.typeNback, this.version);
+					blocsDM[i] =new Bloc (myStimulus, "DM", this.nBack, this.typeNback, "left", this.version);
+					otherBlocsDM[i] =new Bloc (myOtherStimulus, "DM", this.nBack, this.typeNback, "right", this.version);
+				}
+			/*}else if(version == 5){
+				for (int i =0; i< 2 ; i++)
+					blocsSPG[i] = new Bloc (myStimulus, "SPG", this.nBack, this.typeNback, "left", this.version);
+			}*/
+			
+
+			
 		//les blocs et les instructions associ�es sont ordonnés ici
 
 		slideStack[slideCpt++] = new Slide("intro", this.imagerie); 
@@ -533,7 +548,9 @@ public class Task {
 		{
 			addInstructions(blocsSM[0], myStimulus, myOtherStimulus);	//
 		}
-		for (int i = 0; i <d; i++)
+		
+		if(version != 5){
+			for (int i = 0; i <d; i++)
 			{
 				if (isThereDM)
 					addInstructions(blocsDM[i], otherBlocsDM[i], myStimulus, myOtherStimulus);
@@ -545,6 +562,8 @@ public class Task {
 					addInstructions(blocsSPD[i], myOtherStimulus, myStimulus);
 				}
 			}
+		}
+		
 		if (isThereSM)
 		{
 			addInstructions(blocsSM[d+1], myStimulus, myOtherStimulus);
@@ -555,7 +574,13 @@ public class Task {
 			{
 				addInstructions(blocsSPG[d+1], myStimulus, myOtherStimulus);
 				addInstructions(blocsSPD[d+1], myOtherStimulus, myStimulus);	
+			}else{
+				
+				addInstructions(blocsSPG[1], myStimulus, myOtherStimulus);
 			}
+			/*addInstructions(blocsSPG[d+1], myStimulus, myOtherStimulus);	
+			if (version != 5)
+				addInstructions(blocsSPD[d+1], myOtherStimulus, myStimulus);	*/
 		}
 		if (this.type == "training"&& ReadLog.hasBeenTrained(this.sujetID, "data/log_", 1) && !typeNback.equals("matching"))
 		{

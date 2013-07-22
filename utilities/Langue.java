@@ -669,6 +669,12 @@ public class Langue extends HashMap {
 					"<br />" +
 					"<p align=\"center\">Here is an example:</p></html>");*/
 			
+			expression.put("nBackExplanationHeader0Back", "<html><p align=\"center\">Your task is to determine if the symbol you see " +
+					"is a 3." +
+					"<br />" +
+					"If you see a 3, press the <b>%key1%</b> key. Otherwise press the <b>%key2%</b> key.</p></html>");
+	
+			
 			expression.put("nBackExplanationHeader1Back", "<html><p align=\"center\">Your task is to determine if the symbol you see  " +
 					"is similar to the preceding one (-1)." +
 					"<br />" +

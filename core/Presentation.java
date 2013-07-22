@@ -144,6 +144,8 @@ public class Presentation extends JPanel{
 		
 		GraphicEngine.setModifying(true);
 		GraphicEngine.clearAll();
+		
+		
 		if(!myTask.getMySlide().isStimulus() && myTask.getMySlide().getSlideName() != "reminderExplanation" && myTask.getMySlide().getSlideName() != "countdown" && myTask.getMySlide().getSlideName() != "pause"){
 
 			WriteLog.writeMeans( myTask, "data/log_");

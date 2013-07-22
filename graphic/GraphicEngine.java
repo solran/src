@@ -43,7 +43,7 @@ public class GraphicEngine {
 		timer.schedule(new GraphicManager(), 0, period);
 	}
 	
-	//empêcher de modifier en même temps... Mettre un flag que run va appeler...
+	//empï¿½cher de modifier en mï¿½me temps... Mettre un flag que run va appeler...
 	//ajouter
 
 	
@@ -51,6 +51,8 @@ public class GraphicEngine {
 		ImageBox myImg;
 		
 		ListIterator<ImageBox> litr = ImageBox.getAllImage().listIterator();
+		
+		
 	    while (litr.hasNext()) {
 	    	myImg = litr.next();
 	    	
