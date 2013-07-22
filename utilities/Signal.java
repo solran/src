@@ -1,14 +1,21 @@
 package utilities;
 import java.io.IOException;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import core.Task;
 
 public class Signal {
 	private static String lastSignal;
-
+	static Timer EegMask;
+	static String type, imagerie;
+	static long time;
 	
-	public static void sendSignal(String type, String imagerie)
+	public static void sendSignal(String t_type, String t_imagerie)
 	{
+		
+		type = t_type;
+		imagerie = t_imagerie;
+		
 		if (imagerie == "IO" || imagerie == "EEG" )
 		{
 			if ((imagerie == "IO" && type != lastSignal)||imagerie == "EEG" )
@@ -16,15 +23,46 @@ public class Signal {
 				try {
 					String cmd = "C:\\Ruby186\\bin\\ruby.exe C:/ruby_executable/send.rb " + converter(type, imagerie);
 					Runtime.getRuntime().exec(cmd);
+					time = System.currentTimeMillis();
 					WriteLog.writingStuff("Signal : " + converter(type, imagerie), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+					
+					if(imagerie == "EEG"){
+						EegMask = new Timer();
+						EegMask.schedule(new TimerTask() {
+							@Override
+							public void run() {
+							  sendMask();
+							}
+						}, 45);
+					}
 					
 				} catch (IOException e) {
 					WriteLog.writingStuff("Signal : " + converter(type, imagerie) + " " +  e.getMessage(), "data/console_" + Task.mainTask.getSujetID() + ".txt");
 				}
 				if (imagerie == "IO"){ lastSignal = type;}
+				
+				
 			}
 		}
 	}
+	
+
+	private static void sendMask() {
+		// TODO Auto-generated method stub
+		try {
+			String cmd = "C:\\Ruby186\\bin\\ruby.exe C:/ruby_executable/send.rb " + 0;
+			Runtime.getRuntime().exec(cmd);
+			//test_temp
+			WriteLog.writingStuff("Masque : " + (time - System.currentTimeMillis()), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+			
+		} catch (IOException e) {
+			WriteLog.writingStuff("Masque : " +  e.getMessage(), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+		}
+	}
+
+	
+	
+	
 	
 	private static int converter (String s)
 	{
