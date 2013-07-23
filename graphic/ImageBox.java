@@ -20,6 +20,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import core.Main;
 import core.Stimulus;
 
 /*
@@ -208,11 +209,31 @@ public class ImageBox{
 	private void setImage(){
 		if (this.imagePath!= "")
 		{
-			try {
-				this.myImage = ImageIO.read(new File(this.imagePath));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(! Main.isApplet){
+				System.out.println("../" + this.imagePath);
+				try {
+					this.myImage = ImageIO.read(new File(this.imagePath));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if(Main.isApplet){
+			///* %!#Applet
+				try {
+					URL url = new URL(Main.getInstance().getDocumentBase(),"../" + this.imagePath);
+					this.myImage = Main.getInstance().getImage(url);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				// Start downloading the image and wait until it finishes loading. 
+		        Main.getTracker().addImage(this.myImage, 0);
+		        try { 
+		        	Main.getTracker().waitForAll(); 
+		        } 
+		        catch(InterruptedException e) {}
+		    //*/
 			}
 		}
 		

@@ -2,9 +2,7 @@ package utilities;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,136 +11,61 @@ import java.util.HashMap;
 
 import overview.SimplifiedTask;
 
+import core.Main;
 import core.Task;
+
 
 public class ReadLog {
 
-	private static int  nbColomn = 0;
+	public static String sTab = "espacement", sParam = "findeligne";   // sParameter = separateur entre les lignes envoyées par param dans l'applet
+	
+	//??? Remove all?
+	private static int  nbColomn = 0;  //??? Column
 	private static String  sChariot = System.getProperty("line.separator");
-	private static String sTab = "\t";
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	private static Date date = new Date();
 	
-	//permet de de v�rifier si une session n,a pas �t� �crite pr�c�demment
+	//permet de de vérifier dans le log si une session n'a pas été écrite précédemment
 	public static int trouveSession (int ID, String location)
 	{
 		int session = 0;
-		try
-		{           
-			FileReader fic = new FileReader(location + ID + ".txt");
-			BufferedReader in = new BufferedReader(fic);
-			String line;	String lineSep[];				
-			// on saute la ligne de titre de colonne
-			in.readLine();
-			while (in.ready()) 
-			{
-				line = in.readLine();
-				lineSep = line.split("\t");
-                session = Integer.parseInt(lineSep[1].trim());
-			}
-		}
-		// Y'a rien dans le catch pcq ca veut dire que c'est la 1ere session
-		catch (IOException E){
-			System.out.print("premi�re session");
-			//log
-			String s = "";
-			String t = "";
-
+		String line, lineSep[];	
+		
+		if(! Main.isApplet){
 			try
 			{           
-				FileWriter fic = new FileWriter("data/log_" + ID + ".txt", true);
-				PrintWriter out = new PrintWriter(fic);
-				s +="sujetId" + sTab; 
-				s +="session" + sTab;
-				s +="date" + sTab;
-				s +="type" + sTab; 
-				s +="completed" + sTab; 
-				s +="version" + sTab;
-				s += "qte" + sTab;
-				s += "langue" + sTab;
-				s += "tempsStim" + sTab;
-				s += "tempsAnswer" + sTab;
-				s += "tempsIsi" + sTab;
-				s += "nBack" + sTab;	
-				s += "typedeNBack" + sTab;
-				s += "pourcentage d'essais mixtes" + sTab;	
-
-
-				
-				t += "spgRt" + sTab;
-				t += "smgRt" + sTab;
-				t += "dmgRt" + sTab;
-				t += "spdRt" + sTab;
-				t += "smdRt" + sTab;
-				t += "dmdRt" + sTab;
-				t += "spgError" + sTab;
-				t += "smgError" + sTab;
-				t += "dmgError" + sTab;
-				t += "spdError" + sTab;
-				t += "smdError" + sTab;
-				t += "dmdError" + sTab;
-				t += "spgLate" + sTab;
-				t += "smgLate" + sTab;
-				t += "dmgLate" + sTab;
-				t += "spdLate" + sTab;
-				t += "smdLate" + sTab;
-				t += "dmdLate" + sTab;
-				t += "spgAll" + sTab;
-				t += "smgAll" + sTab;
-				t += "dmgAll" + sTab;
-				t += "spdAll" + sTab;
-				t += "smdAll" + sTab;
-				t += "dmdAll" + sTab;
-
-			//	writing  + sTab + true + sTab + monTrial.getAttendu() + sTab + myKey + sTab + clock2Fleche +  sTab + ISIRTFleche + sTab + this.erreur, "statsForExcel");
-				out.write(s + t + sChariot);
-				
-			    // Fermeture du fichier
-			    out.close();
+				FileReader fic = new FileReader(location + ID + ".txt");
+				BufferedReader in = new BufferedReader(fic);				
+				in.readLine();		// saut de la ligne de l'entête
+				while (in.ready()) 
+				{
+					line = in.readLine();
+					lineSep = line.split(sTab);
+	                session = Integer.parseInt(lineSep[1].trim()); //??? Pourquoi lire toutes les info à chaque fois? Sortir les trois lignes du while
+				}
 			}
-			catch (IOException F)
-			{
-			   Utilities.msgErreur("Le programme a g�n�r� une erreur lors de l'�criture des donn�es !");
+			// Y'a rien dans le catch pcq ca veut dire que c'est la 1ere session
+			catch (IOException E){
+				System.out.print("première session");
+				//Write title for `log` and `donnee`
+				WriteLog.writeTitle("log", ID);
+				WriteLog.writeTitle("donnee", ID);
 			}
-			//donnees
-			try
-			{           
-				FileWriter fic = new FileWriter("data/donnees_" + ID + ".txt", true);			
-				PrintWriter out = new PrintWriter(fic);
-				s += "bloc" + sTab;
-				s += "trialLoc" + sTab;
-				s += "trialUnique" + sTab;
-				s += "trialAbsLoc" + sTab;
-				s += "trialAbsUnique" + sTab;
-				s += "SpgSpdSmDm" + sTab;
-				s += "isMixed" + sTab;
-				s += "isDouble" + sTab;
-				s += "isLeft" + sTab;
-				s += "stimName" + sTab;
-				s += "isMatch" + sTab;
-				s += "expectedKey" + sTab;
-				s += "pressedKey" + sTab;
-				s += "accuracy" + sTab;
-				s += "rt" + sTab;
-				s += "rtTotal" + sTab;
-				s += "rtSync" + sTab;
-				s += "stimDisplaySync" + sTab;
-				s += "stimRemovedSync" + sTab;
-				s += "barRang" + sTab;
-				s += "percentiles" + sTab;
-				s += "valeurGraph" + sTab;
-
-			//	writing  + sTab + true + sTab + monTrial.getAttendu() + sTab + myKey + sTab + clock2Fleche +  sTab + ISIRTFleche + sTab + this.erreur, "statsForExcel");
-				out.write(s + sChariot);
-				
-			    // Fermeture du fichier
-			    out.close();
-			}
-			catch (IOException F)
-			{
-				Utilities.msgErreur("Le programme a généré une erreur lors de l'écriture des données !");
+		}else if(Main.isApplet){
+			
+			String[] lastLine;
+			String[] allLine;
+			
+			if(! Main.getInstance().getParameter("log").equals("0")){
+				allLine = Main.getInstance().getParameter("log").split(sParam); //sParam
+				lastLine = allLine[allLine.length - 1].split(sTab);		//trouve la dernière lignesTab
+				session = Integer.parseInt(lastLine[1].trim());
+				System.out.println("Session: " + session);
+			}else{
+				System.out.print("première session");
 			}
 		}
+		
 		return session;
 	}
 	
@@ -151,50 +74,81 @@ public class ReadLog {
 		int timesTrained = 0;
 		String type = "";
 		String completed = "";
-		try
-		{           
-			FileReader fic = new FileReader(location + ID + ".txt");
-			BufferedReader in = new BufferedReader(fic);
-			String line;	String lineSep[];				
-			// on saute la ligne de titre de colonne
-			in.readLine();
-			while (in.ready()) 
-			{
-				line = in.readLine();
-				lineSep = line.split("\t");
-                type = lineSep[3].trim();
-                completed = lineSep[4].trim();
-                if (type.equals("training") && (completed.equals("true") || completed.equals("TRUE")))
+		String line, lineSep[];	
+		
+		if(! Main.isApplet){
+			try
+			{           
+				FileReader fic = new FileReader(location + ID + ".txt");
+				BufferedReader in = new BufferedReader(fic);			
+				in.readLine();		// saut de la ligne de l'entête
+				while (in.ready()) 
+				{
+					line = in.readLine();
+					lineSep = line.split("\t");
+	                type = lineSep[3].trim();
+	                completed = lineSep[4].trim();
+	                if (type.equals("training") && completed.equalsIgnoreCase("true"))
+	                	timesTrained++;
+				}
+			}
+			catch (IOException E){}
+		}else if(Main.isApplet){
+			String[] thisLine, allLine;
+			
+			allLine = Main.getInstance().getParameter("log").split(sParam);
+			for(int i=1; i < allLine.length; i++){     // Débute à 1 pour sauter l'entete
+				thisLine = allLine[i].split(sTab);
+				type = thisLine[3].trim();
+                completed = thisLine[4].trim();
+                if (type.equals("training") && completed.equalsIgnoreCase("true"))
                 	timesTrained++;
 			}
 		}
-		catch (IOException E){}
+		
 		if (howManyTime <= timesTrained)
 			return true;
 		else
 			return false;
 	}
 	
-	public static ArrayList readFullFile (Task task, String location)
+	public static ArrayList<String> readFullFile (Task task, String location)
 	{
-		ArrayList fullFile = new ArrayList();
-		try
-		{           
-			FileReader fic = new FileReader(location + task.getSujetID() + ".txt");
-			BufferedReader in = new BufferedReader(fic);
-			String line;	String lineSep[];				
-			// on saute la ligne de titre de colonne
-			while (in.ready()) 
-			{
-				fullFile.add(in.readLine());
-			}
-		}
-		catch (IOException E){
-			System.out.print("Document inexistant");
-		}
-		return fullFile;
+		ArrayList<String> fullFile = new ArrayList<String>();
+		String lineSep[];	
 		
+		if(! Main.isApplet){
+			try
+			{           
+				FileReader fic = new FileReader(location + task.getSujetID() + ".txt");
+				BufferedReader in = new BufferedReader(fic);
+				while (in.ready()) 
+				{
+					fullFile.add(in.readLine());
+				}
+			}
+			catch (IOException E){
+				System.out.print("Document inexistant");
+			}
+		}else if(Main.isApplet){
+			String[] allLine;
+			
+			//if(! Main.getInstance().getParameter("log").equals("0")){  //test ""
+				allLine = Main.getInstance().getParameter("log").split(sParam);
+				for(int i=0; i < allLine.length; i++){
+					fullFile.add(allLine[i]);
+				}
+			/*}else{
+				System.out.print("Document inexistant");
+			}*/
+		}
+		
+		return fullFile;
 	}
+
+	
+	
+
 	
 	public static ArrayList<ArrayList<SimplifiedTask>> forSpeedOverview (int ID, String location, String version)
 	{
@@ -255,9 +209,6 @@ public class ReadLog {
 				}
 			}
 			
-
-			
-			
 		}catch (IOException E){
 			E.printStackTrace();
 		}
@@ -287,7 +238,7 @@ public class ReadLog {
 			String[] header, splittedLine;
 
 			
-			// ent�te
+			// entête
 			header = in.readLine().split("\t");
 			
 			

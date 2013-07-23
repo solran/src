@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -52,7 +51,6 @@ import utilities.FiltreSimple;
 import utilities.Langue;
 import utilities.SoundClip;
 import utilities.Utilities;
-import utilities.WriteLog;
 
 
 
@@ -551,7 +549,7 @@ public class Menu {
 	        		
 	                manager.removeKeyEventDispatcher(enterListener);
 
-		        	Main.start(myParameters);
+		        	Main.startDesktop(myParameters);
 	        	}
         	}
         }

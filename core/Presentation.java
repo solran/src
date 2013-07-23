@@ -46,7 +46,7 @@ import java.util.concurrent.Callable;
  */
 public class Presentation extends JPanel{
 
-	private Fenetre myWindow;
+	private boolean finished = false;
 	private Task myTask;
 	private Stimulus[] ActualStimulus, ActualOtherStimulus;
 	
@@ -92,12 +92,15 @@ public class Presentation extends JPanel{
 	private ArrayList<ArrayList<SimplifiedTask>> tasks ;
 	
 	
-	public Presentation(Fenetre myWindow, Task myTask){
-
-		myWindow.hideCursor();
+	public Presentation(Task myTask){
+		//hide cursor only if desktop version
+		if(! Main.isApplet)
+			Main.getInstance().hideCursor();
+		
+		this.myTask = myTask;
 		
 		//Initialize buffImage and graphic
-		buffImage = new BufferedImage( myWindow.getBigPanel().getWidth(), myWindow.getBigPanel().getHeight(), BufferedImage.TYPE_INT_ARGB);
+		buffImage = new BufferedImage( Main.getInstance().getBigPanel().getWidth(), Main.getInstance().getBigPanel().getHeight(), BufferedImage.TYPE_INT_ARGB);
 		
 		tempGraphic = buffImage.getGraphics();
 		graphic = (Graphics2D)tempGraphic;
@@ -106,23 +109,16 @@ public class Presentation extends JPanel{
 		graphic.setFont(new Font("Verdana", Font.BOLD, 46));
 		graphic.setColor(Color.BLACK);
 
-	
 		//Load single image
 		feedback1 = new ImageBox(0, 0,  764, 314, Task.ENVIRONNEMENT + "feedback1.png", "feedback1");		//test
 		feedback2 = new ImageBox(0, 0,  488, 108, Task.ENVIRONNEMENT + "feedback2.png", "feedback2");		//test	
-		
-		
-		
-		this.myWindow = myWindow;
-		this.myTask = myTask;
-		//myWindow.addKeyListener(keyMenuListener);
 		
 		//Add this JPanel to the "center" jpanel
         this.setOpaque(false);
         
         //center   to   mainPanel
-        myWindow.getBigPanel().setLayout(new BorderLayout());
-        myWindow.getBigPanel().add(this, BorderLayout.CENTER);      
+        Main.getInstance().getBigPanel().setLayout(new BorderLayout());
+        Main.getInstance().getBigPanel().add(this, BorderLayout.CENTER);      
 	}
 	
 
@@ -132,11 +128,11 @@ public class Presentation extends JPanel{
 		ImageBox tempImageBox, tempImageBox2;
 
         //am�liorer plus tard
-		xOrigin = myWindow.getBigPanel().getWidth()/2 - myTask.getBackground().getWidth()/2;
+		xOrigin = Main.getInstance().getBigPanel().getWidth()/2 - myTask.getBackground().getWidth()/2;
 		if (Fenetre.ySize < 800)
-			yOrigin = myWindow.getBigPanel().getHeight()/2 - myTask.getBackground().getHeight()/2 - myTask.getProgressBar().getHeight();
+			yOrigin = Main.getInstance().getBigPanel().getHeight()/2 - myTask.getBackground().getHeight()/2 - myTask.getProgressBar().getHeight();
 		else 
-			yOrigin = myWindow.getBigPanel().getHeight()/2 - myTask.getBackground().getHeight()/2 - 30;
+			yOrigin = Main.getInstance().getBigPanel().getHeight()/2 - myTask.getBackground().getHeight()/2 - 30;
 
 		
 		ActualStimulus = new Stimulus[myTask.getStimulus()[0].getStimulusLength()];
@@ -148,13 +144,14 @@ public class Presentation extends JPanel{
 		
 		if(!myTask.getMySlide().isStimulus() && myTask.getMySlide().getSlideName() != "reminderExplanation" && myTask.getMySlide().getSlideName() != "countdown" && myTask.getMySlide().getSlideName() != "pause"){
 
-			WriteLog.writeMeans( myTask, "data/log_");
+			if(finished == false)
+				WriteLog.writeMeans( myTask, "data/log_");
 			
 			if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}
 			
 			myTask.getBackground().setProperties(xOrigin, yOrigin, true);
 			
-			myWindow.addKeyListener(new keyMenuListener (myTask.getMySlide().getSync()));
+			Main.getInstance().addKeyListener(new keyMenuListener (myTask.getMySlide().getSync()));
 			// Erase the bars
 			GraphicEngine.setVisibleBar1(false);	
 			GraphicEngine.setVisibleBar2(false);	
@@ -167,8 +164,8 @@ public class Presentation extends JPanel{
 			}
 			
 			// Progress Bar
-			x = myWindow.getBigPanel().getWidth()/2 - myTask.getFrontProgressBar().getWidth()/2;
-			y = myWindow.getBigPanel().getHeight() - myTask.getFrontProgressBar().getHeight();
+			x = Main.getInstance().getBigPanel().getWidth()/2 - myTask.getFrontProgressBar().getWidth()/2;
+			y = Main.getInstance().getBigPanel().getHeight() - myTask.getFrontProgressBar().getHeight();
 			
 			
 			progressRatio = (myTask.getBackProgressBar().getWidth() - 15) * ((float)Bloc.getBlocActuel() / (float)Bloc.getnbBloc());
@@ -192,13 +189,13 @@ public class Presentation extends JPanel{
 		
 		if(lastState.equals("graphic")){
 			
-			myWindow.remove(graph);
+			Main.getInstance().remove(graph);
 			
-			myWindow.windowPanel.setBackground(Color.BLACK);
-			myWindow.windowPanel.setLayout(new GridBagLayout());
-			myWindow.add(myWindow.getBigPanel());
+			Main.getInstance().windowPanel.setBackground(Color.BLACK);
+			Main.getInstance().windowPanel.setLayout(new GridBagLayout());
+			Main.getInstance().add(Main.getInstance().getBigPanel());
 			
-			myWindow.windowPanel.setSize(new Dimension(myWindow.getX() - 100, myWindow.getY() - 100));
+			Main.getInstance().windowPanel.setSize(new Dimension(Main.getInstance().getX() - 100, Main.getInstance().getY() - 100));
 	      	
 			lastState = "";
 		}
@@ -206,8 +203,8 @@ public class Presentation extends JPanel{
 		
 		if (myTask.getMySlide().getSlideName() == "intro"){
 
-				x = (int)(myWindow.getBigPanel().getWidth()/2 - myTask.getHelloString().getWidth()/2);
-				y = (int)(myWindow.getBigPanel().getHeight()/2 - myTask.getHelloString().getHeight()/2);
+				x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getHelloString().getWidth()/2);
+				y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getHelloString().getHeight()/2);
 				myTask.getHelloString().setProperties(x, y, true);				
 		}
 		else if (myTask.getMySlide().getSlideName() == "keyGeneralExplanation"){
@@ -219,7 +216,7 @@ public class Presentation extends JPanel{
 				for(int i=0; i < nbStimulus; i++){
 					
 					tempImageBox = myTask.getMySmallImages().get(ActualStimulus[i].getName())[0];
-					x =(int)((myWindow.getMainPanel().getWidth())/(nbStimulus + 1)) * (i + 1) - tempImageBox.getWidth()/2 + xOrigin;
+					x =(int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus + 1)) * (i + 1) - tempImageBox.getWidth()/2 + xOrigin;
 					
 					myTask.getBlackSquareSmall()[i].setProperties(x, y, true);
 					tempImageBox.setProperties(x, y, true);
@@ -238,13 +235,13 @@ public class Presentation extends JPanel{
 				index = myTask.getMySlide().getMyCardinal();
 				
 				tempImageBox = myTask.getMySmallImages().get(ActualStimulus[index].getName())[0];
-				x =(int)(myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
+				x =(int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 				y = yOrigin + 120;
 				myTask.getBlackSquareSmall()[index].setProperties(x, y, true);
 				tempImageBox.setProperties(x, y, true);
 				
 				tempImageBox =  myTask.getMyImgKeyboard().get(ActualStimulus[index].getKey());
-				x =(int)(myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
+				x =(int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 				y = yOrigin + 220;
 				tempImageBox.setProperties(x, y, true);
 				
@@ -258,7 +255,7 @@ public class Presentation extends JPanel{
 					y = yOrigin + 370;
 					if (myTask.getFormat() == "noNumpad")
 					{
-						x =(int)(myWindow.getBigPanel().getWidth()/2 - (tempImageBox.getWidth()/2+30));
+						x =(int)(Main.getInstance().getBigPanel().getWidth()/2 - (tempImageBox.getWidth()/2+30));
 						y = yOrigin + 405;
 					}
 				}
@@ -284,24 +281,24 @@ public class Presentation extends JPanel{
 					
 					
 					if(nbStimulus == 4){
-						x = xOrigin + (int)((myWindow.getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + 1) - tempImageBox2.getWidth()/2;
+						x = xOrigin + (int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + 1) - tempImageBox2.getWidth()/2;
 						myTask.getBlackSquareSmall()[i].setProperties(x, y, true);
 						tempImageBox2.setProperties(x, y, true);				
 					}else{
-						x = xOrigin +(int)((myWindow.getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + 1) - tempImageBox.getWidth()/2;
+						x = xOrigin +(int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + 1) - tempImageBox.getWidth()/2;
 						myTask.getBlackSquareSmall()[i].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
 					}
 					
 					
 					tempImageBox = myTask.getMyImgKeys().get(ActualStimulus[i].getKey());
-					x = xOrigin + (int)((myWindow.getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + 1) - tempImageBox.getWidth()/2;
+					x = xOrigin + (int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + 1) - tempImageBox.getWidth()/2;
 					y = yOrigin + 350;
 					tempImageBox.setProperties(x, y, true);
 					
 				}
 
-				x = xOrigin + (int)((myWindow.getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (nbStimulus + 1) - 40;
+				x = xOrigin + (int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (nbStimulus + 1) - 40;
 				y = yOrigin + 220;
 				
 				if(myTask.getMySlide().getSlideName().equalsIgnoreCase("keySimpleMixte")){
@@ -317,17 +314,17 @@ public class Presentation extends JPanel{
 					tempImageBox2 = myTask.getMySmallImages().get(ActualOtherStimulus[i].getName())[0];
 					
 					if(nbStimulus == 4){
-						x = xOrigin + (int)((myWindow.getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + nbStimulus + 2) - tempImageBox2.getWidth()/2;
+						x = xOrigin + (int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + nbStimulus + 2) - tempImageBox2.getWidth()/2;
 						myTask.getBlackSquareSmall()[i + nbStimulus].setProperties(x, y, true);
 						tempImageBox2.setProperties(x, y, true);				
 					}else{
-						x = xOrigin +  (int)((myWindow.getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + nbStimulus + 2) - tempImageBox2.getWidth()/2;
+						x = xOrigin +  (int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + nbStimulus + 2) - tempImageBox2.getWidth()/2;
 						myTask.getBlackSquareSmall()[i + nbStimulus].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
 					}
 					
 					tempImageBox = myTask.getMyImgKeys().get(ActualOtherStimulus[i].getKey());
-					x = xOrigin + (int)((myWindow.getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + nbStimulus + 2) - tempImageBox.getWidth()/2;
+					x = xOrigin + (int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus * 2 + 2)) * (i + nbStimulus + 2) - tempImageBox.getWidth()/2;
 					y = yOrigin + 350;
 					tempImageBox.setProperties(x, y, true);
 				}
@@ -346,17 +343,30 @@ public class Presentation extends JPanel{
 		
 			else if (myTask.getMySlide().getSlideName() == "nBackAsterisk"){
 				tempImageBox = myTask.getCross();
-				x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2 -100;
+				x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+				y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2 -100;
 				tempImageBox.setProperties(x, y, true);
 				
 			}
 		
-			else if (myTask.getMySlide().getSlideName() == "pauseInstruction" || myTask.getMySlide().getSlideName() == "goodbye"){
-				tempImageBox = myTask.getBrain();
-				x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
-				tempImageBox.setProperties(x, y, true);
+			else if (myTask.getMySlide().getSlideName() == "pauseInstruction"){
+					tempImageBox = myTask.getBrain();
+					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+					tempImageBox.setProperties(x, y, true);
+			}
+		
+			else if (myTask.getMySlide().getSlideName() == "goodbye"){
+				
+					tempImageBox = myTask.getBrain();
+					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+					tempImageBox.setProperties(x, y, true);
+					
+				if(! finished){
+					sessionFinished();
+					finished = true;
+				}
 			}
 		
 			else if (myTask.getMySlide().getSlideName() == "allStimuli"){
@@ -366,7 +376,7 @@ public class Presentation extends JPanel{
 
 						tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[i].getName())[i2];
 
-						x = (int)((myWindow.getMainPanel().getWidth())/(nbStimulus + 1)) * (i + 1) - tempImageBox.getWidth()/2 + xOrigin;
+						x = (int)((Main.getInstance().getMainPanel().getWidth())/(nbStimulus + 1)) * (i + 1) - tempImageBox.getWidth()/2 + xOrigin;
 						y = yOrigin + 150 + i2 * 100;
 						myTask.getBlackSquareSmall()[i2 + i * 3].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
@@ -384,7 +394,7 @@ public class Presentation extends JPanel{
 					
 				}else{
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[0];
-						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
+						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[0].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
 				}
@@ -394,17 +404,17 @@ public class Presentation extends JPanel{
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[2].getName())[1];
 				else
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[1];
-						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
+						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[1].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
 						
 				
 						
 						tempImageBox = myTask.getEqual()[0];
-						x = (x + ((int)((myWindow.getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin))/2 ;
+						x = (x + ((int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin))/2 ;
 						tempImageBox.setProperties(x+ 25, y+20, true);
 						
-						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin;
+						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin;
 						if (ActualStimulus[1].getIsLeft())
 						{
 								tempImageBox = myTask.getMyImgKeys().get(Task.mainTask.getLeftKeys()[0]);
@@ -420,7 +430,7 @@ public class Presentation extends JPanel{
 					
 				}else{	
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[2];
-					x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
+					x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
 					myTask.getBlackSquareSmall()[2].setProperties(x, y, true);
 					tempImageBox.setProperties(x, y, true);
 				}	
@@ -429,15 +439,15 @@ public class Presentation extends JPanel{
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[6].getName())[2];
 				else
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[1].getName())[2];
-						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
+						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[3].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
 						
 						tempImageBox = myTask.getEqual()[1];
-						x = (x + ((int)((myWindow.getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin))/2 ;
+						x = (x + ((int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin))/2 ;
 						tempImageBox.setProperties(x+ 25, y+20, true);
 						
-						x = (int)((myWindow.getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin;
+						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (3 ) - tempImageBox.getWidth()/2 + xOrigin;
 						if (ActualStimulus[1].getIsLeft())
 						{
 								tempImageBox = myTask.getMyImgKeys().get(Task.mainTask.getLeftKeys()[1]);
@@ -451,7 +461,7 @@ public class Presentation extends JPanel{
 			else if (myTask.getMySlide().getSlideName() == "feedback"){
 				// Feedback & Priorite
 				tempImageBox =  myTask.getFeedback();
-				x =(int)(myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
+				x =(int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 				y = yOrigin + 180;
 				tempImageBox.setProperties(x, y, true);
 				
@@ -469,7 +479,7 @@ public class Presentation extends JPanel{
 					SoundClip.play(myTask.getBadSound());
 					Langue.setPriority("left");
 					tempImageBox = myTask.getSpeed();
-					x = (int)(myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
+					x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 					y = yOrigin + 150;
 					
 					/*x = xOrigin + 400;
@@ -477,7 +487,7 @@ public class Presentation extends JPanel{
 					tempImageBox.setProperties(x, y, true);
 					
 					
-					new Animate(new String[]{"translation", (xOrigin + 400) + "," + (yOrigin + 150)}, 2000, tempImageBox, myWindow.getMainPanel());
+					new Animate(new String[]{"translation", (xOrigin + 400) + "," + (yOrigin + 150)}, 2000, tempImageBox, Main.getInstance().getMainPanel());
 
 				}
 				else if (i < 0.80)	//Philippe
@@ -485,11 +495,11 @@ public class Presentation extends JPanel{
 					SoundClip.play(myTask.getBadSound());
 					Langue.setPriority("right");
 					tempImageBox = myTask.getSpeed();
-					x = (int)(myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
+					x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 					y = yOrigin + 150;
 					tempImageBox.setProperties(x, y, true);
 					
-					new Animate(new String[]{"translation", (xOrigin + 200) + "," + (yOrigin + 150)}, 2000, tempImageBox, myWindow.getMainPanel());
+					new Animate(new String[]{"translation", (xOrigin + 200) + "," + (yOrigin + 150)}, 2000, tempImageBox, Main.getInstance().getMainPanel());
 
 				}
 				else
@@ -497,19 +507,19 @@ public class Presentation extends JPanel{
 					SoundClip.play(myTask.getGoodSound());
 					Langue.setPriority("equal");
 					tempImageBox =  myTask.getGood();
-					x = (int)(myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
+					x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 					y = yOrigin + 150;
 					tempImageBox.setProperties(x, y, true);
 					
 					//philippe
-					//new Animate(new String[]{"translation", (xOrigin + 200) + "," + (yOrigin + 150)}, 2000, tempImageBox, myWindow.getMainPanel());
+					//new Animate(new String[]{"translation", (xOrigin + 200) + "," + (yOrigin + 150)}, 2000, tempImageBox, Main.getInstance().getMainPanel());
 
 				}
 				
 				myTask.getMySlide().setTxtHeader(Langue.translate("prioriteHeader"));		
 				myTask.getMySlide().setTxtFooter(Langue.translate("prioriteFooter"));					
-				myWindow.labelHeader.setText(myTask.getMySlide().getTxtHeader());
-				myWindow.labelFooter.setText(myTask.getMySlide().getTxtFooter());				
+				Main.getInstance().labelHeader.setText(myTask.getMySlide().getTxtHeader());
+				Main.getInstance().labelFooter.setText(myTask.getMySlide().getTxtFooter());				
 				
 				tempImageBox =  myTask.getMyImgHands().get("gauche");
 				x = xOrigin + 150;
@@ -535,7 +545,7 @@ public class Presentation extends JPanel{
 						{Signal.sendSignal("bloc3back", myTask.getImagerie());}
 				}
 				
-				new Animate(new String[]{"fadein",""}, 1500, 100, myWindow.getBigPanel().getWidth()/2 - 85, myWindow.getBigPanel().getHeight()/2 - 25, 100, 100, "III", new Callable<Integer>(){ 
+				new Animate(new String[]{"fadein",""}, 1500, 100, Main.getInstance().getBigPanel().getWidth()/2 - 85, Main.getInstance().getBigPanel().getHeight()/2 - 25, 100, 100, "III", new Callable<Integer>(){ 
 					public Integer call() { 
 						return callback(); 
 					} 
@@ -583,63 +593,63 @@ public class Presentation extends JPanel{
 					}
 
 					tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
-					x =  myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+					x =  Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloStimulus());
 					
-					myWindow.addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(0), myTask.getMyExpectedKeys(), myTask.getMYNEARKEYS(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(), System.currentTimeMillis()));
+					Main.getInstance().addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(0), myTask.getMyExpectedKeys(), myTask.getMYNEARKEYS(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(), System.currentTimeMillis()));
 					
 				}
 				else if (myTask.getMySlide().getSoloOtherStimulus().getSPG_SPD_SM_DM() == "SPD")
 				{
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SPD", myTask.getImagerie());}
 					tempImageBox =  myTask.getMyImages().get(otherStim.get(count).getName())[rgen.nextInt(3)];
-					x =  myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+					x =  Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloOtherStimulus());
 					
-					myWindow.addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(1), myTask.getMyOtherExpectedKeys(), myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), System.currentTimeMillis()));
+					Main.getInstance().addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(1), myTask.getMyOtherExpectedKeys(), myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), System.currentTimeMillis()));
 				}
 				else if  (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SM" )
 				{
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SM", myTask.getImagerie());}
 					tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
-					x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloStimulus());
 					
-					myWindow.addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(0), myTask.getMyExpectedKeys()+ myTask.getMyOtherExpectedKeys(), myTask.getMYNEARKEYS()+ myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(), myTask.getRightReminderString(), myTask.getMYOTHERNEARKEYS(), System.currentTimeMillis()));
+					Main.getInstance().addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(0), myTask.getMyExpectedKeys()+ myTask.getMyOtherExpectedKeys(), myTask.getMYNEARKEYS()+ myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(), myTask.getRightReminderString(), myTask.getMYOTHERNEARKEYS(), System.currentTimeMillis()));
 				}				
 				else if  (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "DM" )
 				{
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("DM", myTask.getImagerie());}
 					tempImageBox = myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
-					x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloStimulus());
 					
 					tempImageBox = myTask.getMyImages().get(otherStim.get(count).getName())[rgen.nextInt(3)];
-					x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-					y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloOtherStimulus());		
 					
-					myWindow.addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(0), myTask.getMyExpectedKeys(), myTask.getMYNEARKEYS(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(),  myTask.getMyOtherExpectedKeys(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), System.currentTimeMillis()));
-					myWindow.addKeyListener(taskListener2 = new TaskListener (myTask.getMySlide().getExpectedKey(1), myTask.getMyOtherExpectedKeys(), myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), myTask.getMyExpectedKeys(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(), System.currentTimeMillis()));
+					Main.getInstance().addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(0), myTask.getMyExpectedKeys(), myTask.getMYNEARKEYS(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(),  myTask.getMyOtherExpectedKeys(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), System.currentTimeMillis()));
+					Main.getInstance().addKeyListener(taskListener2 = new TaskListener (myTask.getMySlide().getExpectedKey(1), myTask.getMyOtherExpectedKeys(), myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), myTask.getMyExpectedKeys(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(), System.currentTimeMillis()));
 				}
 				
 				if (myTask.getMySlide().getSoloStimulus() != null && myTask.getMySlide().getSoloStimulus().getKey() == "!")
 				{   
 					writeStimInfo(true, 9999.0, 9999.0, '!', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
-					x = (int)(myWindow.getBigPanel().getWidth()/2 - myTask.getDoNotAnswer().getWidth()/2);
-					y = (int)(myWindow.getBigPanel().getHeight()/2 - myTask.getDoNotAnswer().getHeight()/2) - 100;
-					new Animate(new String[]{"fade",""}, 1500, x ,y, myTask.getDoNotAnswer(), myWindow.getMainPanel());
+					x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getDoNotAnswer().getWidth()/2);
+					y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getDoNotAnswer().getHeight()/2) - 100;
+					new Animate(new String[]{"fade",""}, 1500, x ,y, myTask.getDoNotAnswer(), Main.getInstance().getMainPanel());
 				}
 				if (myTask.getMySlide().getSoloOtherStimulus() != null && myTask.getMySlide().getSoloOtherStimulus().getKey() == "!")	
 				{
 					writeStimInfo(true, 9999.0, 9999.0, '!', System.currentTimeMillis(), myTask.getMySlide().getSoloOtherStimulus());
-					x = (int)(myWindow.getBigPanel().getWidth()/2 - myTask.getDoNotAnswer().getWidth()/2);
-					y = (int)(myWindow.getBigPanel().getHeight()/2 - myTask.getDoNotAnswer().getHeight()/2) - 100;
-					new Animate(new String[]{"fade",""}, 1500, x ,y, myTask.getDoNotAnswer(), myWindow.getMainPanel());
+					x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getDoNotAnswer().getWidth()/2);
+					y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getDoNotAnswer().getHeight()/2) - 100;
+					new Animate(new String[]{"fade",""}, 1500, x ,y, myTask.getDoNotAnswer(), Main.getInstance().getMainPanel());
 				}
 				if (myTask.getStimT() != 0)
 				{
@@ -657,22 +667,22 @@ public class Presentation extends JPanel{
 		
 			else if (myTask.getMySlide().getSlideName() == "reminderExplanation"){
 				if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}
-				myWindow.addKeyListener(new keyMenuListener (myTask.getMySlide().getSync()));
+				Main.getInstance().addKeyListener(new keyMenuListener (myTask.getMySlide().getSync()));
 
 
 				tempImageBox = myTask.getCross();
-				x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+				x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+				y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);
 				
 
-				x = (int)(myWindow.getBigPanel().getWidth()/2 - myTask.getReminderExplanation1().getWidth()/2);
-				y = (int)(myWindow.getBigPanel().getHeight()/2 - myTask.getReminderExplanation1().getHeight()/2) - 100;
+				x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getReminderExplanation1().getWidth()/2);
+				y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getReminderExplanation1().getHeight()/2) - 100;
 				
-				//new Animate(new String[]{"fadein",""}, 1500, 0, myWindow.getBigPanel().getHeight(),  myTask.getReminderExplanation1(), myWindow.getMainPanel());
-				new Animate(new String[]{"fadein",""}, 500, 50, (int)(myWindow.getBigPanel().getHeight()-150),  myTask.getReminderExplanation1(), myWindow.getMainPanel());
-				new Animate(new String[]{"fadein",""}, 500, myWindow.getBigPanel().getWidth()/2 - myTask.getReminderExplanation2().getWidth()/2+10, myWindow.getBigPanel().getHeight()/2 - 120,  myTask.getReminderExplanation2(), myWindow.getMainPanel());
-				new Animate(new String[]{"fadein",""}, 500, myWindow.getBigPanel().getWidth() - (myTask.getReminderExplanation3().getWidth()), myWindow.getBigPanel().getHeight()- 140,  myTask.getReminderExplanation3(), myWindow.getMainPanel());
+				//new Animate(new String[]{"fadein",""}, 1500, 0, Main.getInstance().getBigPanel().getHeight(),  myTask.getReminderExplanation1(), Main.getInstance().getMainPanel());
+				new Animate(new String[]{"fadein",""}, 500, 50, (int)(Main.getInstance().getBigPanel().getHeight()-150),  myTask.getReminderExplanation1(), Main.getInstance().getMainPanel());
+				new Animate(new String[]{"fadein",""}, 500, Main.getInstance().getBigPanel().getWidth()/2 - myTask.getReminderExplanation2().getWidth()/2+10, Main.getInstance().getBigPanel().getHeight()/2 - 120,  myTask.getReminderExplanation2(), Main.getInstance().getMainPanel());
+				new Animate(new String[]{"fadein",""}, 500, Main.getInstance().getBigPanel().getWidth() - (myTask.getReminderExplanation3().getWidth()), Main.getInstance().getBigPanel().getHeight()- 140,  myTask.getReminderExplanation3(), Main.getInstance().getMainPanel());
 
 				prepareForNextStim(myTask);
 
@@ -681,17 +691,17 @@ public class Presentation extends JPanel{
 			else if (myTask.getMySlide().getSlideName() == "preSpeedOverviewInstruction" || myTask.getMySlide().getSlideName() == "accOverviewInstruction" || myTask.getMySlide().getSlideName() == "postSpeedOverviewInstruction"){
 				
 				tempImageBox = myTask.getOverview();
-				x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+				x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+				y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);			
 			}
 			//Philippe	
 			
 			else if (myTask.getMySlide().getSlideName() == "speedOverview" ){
 
-				myWindow.windowPanel.setSize(new Dimension(myWindow.getX() - 100, myWindow.getY() - 100));
-				myWindow.windowPanel.setBackground(Color.BLACK);
-				myWindow.windowPanel.setLayout(new BorderLayout());
+				Main.getInstance().windowPanel.setSize(new Dimension(Main.getInstance().getX() - 100, Main.getInstance().getY() - 100));
+				Main.getInstance().windowPanel.setBackground(Color.BLACK);
+				Main.getInstance().windowPanel.setLayout(new BorderLayout());
 			  	    try
 					{
 				      	//*/	Affichage du graphique Overview
@@ -709,10 +719,10 @@ public class Presentation extends JPanel{
 				      	//graph.setCheckbox(true);
 				      	
 				      	graph.drawOverview();
-				      	myWindow.windowPanel.add(graph, BorderLayout.CENTER);
-						myWindow.remove(myWindow.getBigPanel());
+				      	Main.getInstance().windowPanel.add(graph, BorderLayout.CENTER);
+						Main.getInstance().remove(Main.getInstance().getBigPanel());
 
-				      	myWindow.showCursor(graph);
+				      	Main.getInstance().showCursor(graph);
 				      	lastState = "graphic";
 
 					} catch (Throwable t) {
@@ -723,15 +733,15 @@ public class Presentation extends JPanel{
 			                System.out.println(  element );
 			              }
 			        }
-			      	myWindow.revalidate();
+			      	Main.getInstance().revalidate();
 			      	
 				
 			}
 			else if (myTask.getMySlide().getSlideName() == "accOverview" ){
 				
-				myWindow.windowPanel.setSize(new Dimension(myWindow.getX() - 100, myWindow.getY() - 100));
-				myWindow.windowPanel.setBackground(Color.BLACK);
-				myWindow.windowPanel.setLayout(new BorderLayout());
+				Main.getInstance().windowPanel.setSize(new Dimension(Main.getInstance().getX() - 100, Main.getInstance().getY() - 100));
+				Main.getInstance().windowPanel.setBackground(Color.BLACK);
+				Main.getInstance().windowPanel.setLayout(new BorderLayout());
 	  	    
 		  	    try
 				{
@@ -747,10 +757,10 @@ public class Presentation extends JPanel{
 				    
 			      	graph = new Overview(tasks, (xSize-50), (ySize-50), "Acc");
 			      	graph.drawOverview();
-			      	myWindow.windowPanel.add(graph, BorderLayout.CENTER);
+			      	Main.getInstance().windowPanel.add(graph, BorderLayout.CENTER);
 					
-			      	myWindow.remove(myWindow.getBigPanel());
-			      	myWindow.showCursor(graph);
+			      	Main.getInstance().remove(Main.getInstance().getBigPanel());
+			      	Main.getInstance().showCursor(graph);
 			      	lastState = "graphic";		
 
 				} catch (Throwable t) {
@@ -763,7 +773,7 @@ public class Presentation extends JPanel{
 		              }
 		            
 		        }
-		      	myWindow.revalidate();
+		      	Main.getInstance().revalidate();
 		      	
 		}
 		else
@@ -778,14 +788,14 @@ public class Presentation extends JPanel{
 		
 		
 GraphicEngine.setModifying(false);	
-		myWindow.labelHeader.setText(myTask.getMySlide().getTxtHeader());
-		myWindow.labelFooter.setText(myTask.getMySlide().getTxtFooter());
+		Main.getInstance().labelHeader.setText(myTask.getMySlide().getTxtHeader());
+		Main.getInstance().labelFooter.setText(myTask.getMySlide().getTxtFooter());
 	}
 	
 	
 	//	Callbacks of Coutdown
 	public Integer callback(){
-		new Animate(new String[]{"fadein",""}, 1500, 100, myWindow.getBigPanel().getWidth()/2 - 85, myWindow.getBigPanel().getHeight()/2-25, 100, 100, " II", new Callable<Integer>(){ 
+		new Animate(new String[]{"fadein",""}, 1500, 100, Main.getInstance().getBigPanel().getWidth()/2 - 85, Main.getInstance().getBigPanel().getHeight()/2-25, 100, 100, " II", new Callable<Integer>(){ 
 			public Integer call() { 
 				return callback2(); 
 			} 
@@ -793,7 +803,7 @@ GraphicEngine.setModifying(false);
 		return 0;
 	}
 	public Integer callback2(){
-		new Animate(new String[]{"fadein",""}, 1500, 100, myWindow.getBigPanel().getWidth()/2 - 85, myWindow.getBigPanel().getHeight()/2-25, 100, 100, "  I", new Callable<Integer>(){ 
+		new Animate(new String[]{"fadein",""}, 1500, 100, Main.getInstance().getBigPanel().getWidth()/2 - 85, Main.getInstance().getBigPanel().getHeight()/2-25, 100, 100, "  I", new Callable<Integer>(){ 
 			public Integer call() {
 				return callback3(); 
 			} 
@@ -914,10 +924,10 @@ GraphicEngine.setModifying(false);
 				
 				if(timerCall > 0)
 				{
-					x = timerCall * 70 + myWindow.getBigPanel().getWidth()/6 + 20;		
-					y = timerCall * 70 + myWindow.getBigPanel().getHeight()/6 + 20;
-					x2 = 180 + timerCall * 70 + myWindow.getBigPanel().getWidth()/6 + 30;
-					y2 = 35 + timerCall * 70 + myWindow.getBigPanel().getHeight()/6 + 30;
+					x = timerCall * 70 + Main.getInstance().getBigPanel().getWidth()/6 + 20;		
+					y = timerCall * 70 + Main.getInstance().getBigPanel().getHeight()/6 + 20;
+					x2 = 180 + timerCall * 70 + Main.getInstance().getBigPanel().getWidth()/6 + 30;
+					y2 = 35 + timerCall * 70 + Main.getInstance().getBigPanel().getHeight()/6 + 30;
 					myTask.getBlackSquare()[timerCall-1].setProperties(x, y, true);
 				}
 				if(nbStimulus == 2){
@@ -970,7 +980,7 @@ GraphicEngine.setModifying(false);
 			char key = Character.toLowerCase(e.getKeyChar()) ;
 			//les bonnes r�ponses
 			if(key == myTask.getMySlide().getExpectedKey(0)){
-				myWindow.removeKeyListener(this);
+				Main.getInstance().removeKeyListener(this);
 				//instructions
 				try{			//Changer cela de place??? ou mettre condition
 					nbackTimer.cancel();
@@ -982,7 +992,7 @@ GraphicEngine.setModifying(false);
 			}
 			// les retours dans l'instructions
 			else if(key == '\b'){
-				myWindow.removeKeyListener(this);
+				Main.getInstance().removeKeyListener(this);
 
 				myTask.getPreviousSlide(key);
 				
@@ -1019,7 +1029,7 @@ GraphicEngine.setModifying(false);
 				{
 					Task.syncTime = System.currentTimeMillis();
 				}
-				myWindow.removeKeyListener(this);
+				Main.getInstance().removeKeyListener(this);
 				//instructions
 				try{			//Changer cela de place??? ou mettre condition
 					nbackTimer.cancel();
@@ -1033,7 +1043,7 @@ GraphicEngine.setModifying(false);
 			
 			// les retours dans l'instructions
 			else if(key == '\b'){
-				myWindow.removeKeyListener(this);
+				Main.getInstance().removeKeyListener(this);
 
 				myTask.getPreviousSlide(key);
 				
@@ -1114,7 +1124,7 @@ GraphicEngine.setModifying(false);
 
 			if (nearKeys.contains(""+key) || key == expectedKey)
             {
-				myWindow.removeKeyListener(this);
+				Main.getInstance().removeKeyListener(this);
 				// bonne r�ponse
 				if(key == expectedKey)
 				{
@@ -1203,9 +1213,9 @@ GraphicEngine.setModifying(false);
 					
 					//tout d�calage (erreur compris)
 						isOffset = true;
-						x = (int)(myWindow.getBigPanel().getWidth()/2 - myTask.getOffsetString().getWidth()/2);
-						y = (int)(myWindow.getBigPanel().getHeight()/2 - myTask.getOffsetString().getHeight()/2) - 100;
-						new Animate(new String[]{"fade",""}, 1500, x ,y, myTask.getOffsetString(), myWindow.getMainPanel());
+						x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getOffsetString().getWidth()/2);
+						y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getOffsetString().getHeight()/2) - 100;
+						new Animate(new String[]{"fade",""}, 1500, x ,y, myTask.getOffsetString(), Main.getInstance().getMainPanel());
 					}
 				}
 				writeGraphInfo(stimulus);
@@ -1373,11 +1383,11 @@ GraphicEngine.setModifying(false);
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
 				}
 
-				myWindow.removeKeyListener(taskListener);
-				myWindow.removeKeyListener(taskListener2);
+				Main.getInstance().removeKeyListener(taskListener);
+				Main.getInstance().removeKeyListener(taskListener2);
 				ImageBox tempImageBox = myTask.getCross();
-				x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+				x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+				y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);
 			}
 			if (this.tic == myTask.getISI())
@@ -1413,8 +1423,8 @@ GraphicEngine.setModifying(false);
 			if (this.tic == 0){
 				GraphicEngine.clearAll();
 				ImageBox tempImageBox = myTask.getPause();
-				x = myWindow.getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
-				y = myWindow.getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
+				x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
+				y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);
 				if (myTask.getImagerie() == "IO"){Signal.sendSignal("pause", myTask.getImagerie());}
 				if (myTask.getImagerie() == "EEG"){Signal.sendSignal("pause", myTask.getImagerie());}
@@ -1475,7 +1485,17 @@ GraphicEngine.setModifying(false);
 		}
 	}
 	
-
+	private void sessionFinished(){
+		String myFirstColumns;
+		
+		//Session terminée
+		myTask.setIsCompleted(true);
+		myFirstColumns = WriteLog.writeLogFirstColumn(myTask, "data/log_");
+		WriteLog.writeMeans(myTask, "data/log_", myFirstColumns);
+		myTask.setIsCompleted(false);
+		
+		System.out.println("SessionFinished");
+	}
 
    
 //--- Getter and Setter ---    

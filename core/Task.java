@@ -163,7 +163,10 @@ public class Task {
 	public Task(HashMap<String, Integer> myParameters){
 		
 		mainTask = this;
-		myGUI = new Presentation(Main.myWindow, this);
+		myGUI = new Presentation( this);
+			
+		
+		
 		this.sujetID = (myParameters.get("sujetID"));
 		this.version = myParameters.get("version");
 		this.qte = myParameters.get("qte") + 1 ;
@@ -376,8 +379,8 @@ public class Task {
 		
 		doNotAnswer = new ImageBox(Color.WHITE, 24, Langue.translate("doNotAnswer"), 0, 0, 100, "doNotAnswer");
 		
-		//x = (int)(myWindow.getBigPanel().getWidth()/2 - myTask.getReminderExplanation1().getWidth()/2);
-		//y = (int)(myWindow.getBigPanel().getHeight()/2 - myTask.getReminderExplanation1().getHeight()/2) - 100;
+		//x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getReminderExplanation1().getWidth()/2);
+		//y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getReminderExplanation1().getHeight()/2) - 100;
 		reminderExplanation1 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 500, 500, Langue.translate("reminderExplanation1"), "reminderExplanation1");
 		reminderExplanation2 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 500, 500, Langue.translate("reminderExplanation2"), "reminderExplanation2");
 		reminderExplanation3 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 450, 500, Langue.translate("reminderExplanation3"), "reminderExplanation3");
@@ -490,8 +493,8 @@ public class Task {
 		leftReminderString = new ImageBox(Color.WHITE, 24, leftReminder, 0, 0, 90, "leftReminder");
 		rightReminderString = new ImageBox(Color.WHITE, 24, rightReminder, 0, 0, 90, "rightReminder");
 		
-		leftReminderString.setProperties(150, Main.myWindow.getBigPanel().getHeight() - 70, true);
-		rightReminderString.setProperties(Main.myWindow.getBigPanel().getWidth() - (rightReminderString.getWidth()+150), Main.myWindow.getBigPanel().getHeight() - 70, true);
+		leftReminderString.setProperties(150, Main.getInstance().getBigPanel().getHeight() - 70, true);
+		rightReminderString.setProperties(Main.getInstance().getBigPanel().getWidth() - (rightReminderString.getWidth()+150), Main.getInstance().getBigPanel().getHeight() - 70, true);
 
 			
 			
@@ -594,9 +597,23 @@ public class Task {
 		
 		//note du d�part
 		if (imagerie == "IO"){Signal.sendSignal("start", this.imagerie);}
+		
+		//note du départ
+		//test temp
+		Signal.sendSignal("start", this.imagerie);
+		this.session = ReadLog.trouveSession(this.sujetID, "data/log_" ) + 1;
+		String firstColumns = "";
+		firstColumns = WriteLog.writeLogFirstColumn (this, "data/log_");
+		System.out.println("First Columns: " + firstColumns);
+		
+		WriteLog.writeMeans( this, "data/log_", firstColumns);
+
+		/*  //test temp
 		this.session = ReadLog.trouveSession(this.sujetID, "data/log_" )+1;
 		WriteLog.writing (this, "data/log_");
 		WriteLog.writeMeans( this, "data/log_");
+		//*/
+		
 		
 		//first slide
 		this.nbSlide = slideCpt - 1;		
@@ -606,7 +623,7 @@ public class Task {
 		//Paint the "bonjour" slide
 		myGUI.paintSlide();
 		myGUI.repaint();
-		Main.myWindow.addKeyListener(new urgency(this.imagerie, this.getUrgency()));
+		Main.getInstance().addKeyListener(new urgency(this.imagerie, this.getUrgency()));
 	}
 	
 	public Task getNextSlide(char key){
@@ -871,7 +888,7 @@ public class Task {
 				System.out.println("before: " +onOff);
 				if (onOff==1)
 				{
-					new Animate(new String[]{"fadein",""}, 300, Main.myWindow.getBigPanel().getWidth()/2 -urgency.getWidth()/2, Main.myWindow.getBigPanel().getHeight()/2-urgency.getHeight()/2, urgency, Main.myWindow.getMainPanel());
+					new Animate(new String[]{"fadein",""}, 300, Main.getInstance().getBigPanel().getWidth()/2 -urgency.getWidth()/2, Main.getInstance().getBigPanel().getHeight()/2-urgency.getHeight()/2, urgency, Main.getInstance().getMainPanel());
 
 					if (imagerie == "IO"){Signal.sendSignal("urgency", this.imagerie);}
 					if (imagerie == "EEG"){Signal.sendSignal("urgency", this.imagerie);}

@@ -1,6 +1,7 @@
 package utilities;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -16,7 +17,23 @@ public class SoundClip {
 
 	public SoundClip (String path)
 	{
-		this.u = Main.myWindow.getClass().getClassLoader().getResource( "sounds/" + path);
+
+		if(! Main.isApplet){
+			this.u = Main.myWindow.getClass().getClassLoader().getResource( "sounds/" + path);
+			
+			//this.u = Main.getInstance().getClass().getClassLoader().getResource( "sounds/" + path);
+			//System.out.println("Intro Sound Path: " + u.getPath());
+		}else if(Main.isApplet){
+			System.out.println("SoundClip applet");
+			///* %!#Applet
+			try {
+				this.u = new URL(Main.getInstance().getDocumentBase(),"../sounds/" + path);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//*/
+		}
 	}
 	//"./sounds/"
 	public static void play (SoundClip sc)
