@@ -42,7 +42,7 @@ import java.util.concurrent.Callable;
 
 /*
  * --- Presentation ---
- * Classe qui g�re l'affichage tant des slides que des stimuli (par l'interm�diaire d'une bufferedImage)
+ * Classe qui gère l'affichage tant des slides que des stimuli (par l'intermédiaire d'une bufferedImage)
  */
 public class Presentation extends JPanel{
 
@@ -67,7 +67,6 @@ public class Presentation extends JPanel{
 	private int x, y;
 	private int xOrigin, yOrigin;
 	
-	private int dimensionBlackBox;
 	private int nbStimulus = 0;
 	
 	private KeyListener taskListener, taskListener2;
@@ -75,7 +74,7 @@ public class Presentation extends JPanel{
 	private ImageBox feedback1, feedback2;
 
 	
-	private ArrayList<Stimulus> stim = new ArrayList<Stimulus>();	//test
+	private ArrayList<Stimulus> stim = new ArrayList<Stimulus>();
 	private ArrayList<Stimulus> otherStim = new ArrayList<Stimulus>();
 
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss:SSS");
@@ -110,8 +109,8 @@ public class Presentation extends JPanel{
 		graphic.setColor(Color.BLACK);
 
 		//Load single image
-		feedback1 = new ImageBox(0, 0,  764, 314, Task.ENVIRONNEMENT + "feedback1.png", "feedback1");		//test
-		feedback2 = new ImageBox(0, 0,  488, 108, Task.ENVIRONNEMENT + "feedback2.png", "feedback2");		//test	
+		feedback1 = new ImageBox(0, 0,  764, 314, Task.ENVIRONNEMENT + "feedback1.png", "feedback1");
+		feedback2 = new ImageBox(0, 0,  488, 108, Task.ENVIRONNEMENT + "feedback2.png", "feedback2");
 		
 		//Add this JPanel to the "center" jpanel
         this.setOpaque(false);
@@ -121,13 +120,15 @@ public class Presentation extends JPanel{
         Main.getInstance().getBigPanel().add(this, BorderLayout.CENTER);      
 	}
 	
+	
+	private Animate reminderExplanation1, reminderExplanation2, reminderExplanation3;
 
 
 	public void paintSlide(){
 		float progressRatio;
 		ImageBox tempImageBox, tempImageBox2;
 
-        //am�liorer plus tard
+        //dimension de l'écran
 		xOrigin = Main.getInstance().getBigPanel().getWidth()/2 - myTask.getBackground().getWidth()/2;
 		if (Fenetre.ySize < 800)
 			yOrigin = Main.getInstance().getBigPanel().getHeight()/2 - myTask.getBackground().getHeight()/2 - myTask.getProgressBar().getHeight();
@@ -266,11 +267,6 @@ public class Presentation extends JPanel{
 				//	--	--	--	-	--	--	--
 				//	--	--	--		--	--	--
 								
-				dimensionBlackBox = 90;
-				
-				
-				if(nbStimulus == 4)
-					dimensionBlackBox = 70;
 				
 				
 				
@@ -533,6 +529,8 @@ public class Presentation extends JPanel{
 				
 			}
 			else if (myTask.getMySlide().getSlideName() == "countdown"){
+				
+				
 				if (myTask.getImagerie() == "EEG")
 				{
 					if (myTask.getnBack()== 0)
@@ -545,13 +543,27 @@ public class Presentation extends JPanel{
 						{Signal.sendSignal("bloc3back", myTask.getImagerie());}
 				}
 				
+
+				// Removes the reminderExplanation. If the animation isn't finished, it stops it!
+					if(reminderExplanation1.isActive())
+						reminderExplanation1.stop();
+					myTask.getReminderExplanation1().setVisible(false);
+					
+					if(reminderExplanation2.isActive())
+						reminderExplanation2.stop();
+					myTask.getReminderExplanation2().setVisible(false);
+					
+					if(reminderExplanation3.isActive())
+						reminderExplanation3.stop();
+					myTask.getReminderExplanation3().setVisible(false);
+				
+	
+				
 				new Animate(new String[]{"fadein",""}, 1500, 100, Main.getInstance().getBigPanel().getWidth()/2 - 85, Main.getInstance().getBigPanel().getHeight()/2 - 25, 100, 100, "III", new Callable<Integer>(){ 
-					public Integer call() { 
+					public Integer call() {
 						return callback(); 
 					} 
 				});
-				
-				//prepareForNextSlide(myTask);
 			}
 			else if (myTask.getMySlide().getSlideName() == "stimulus"){
 				stim.add(myTask.getMySlide().getSoloStimulus());
@@ -669,23 +681,16 @@ public class Presentation extends JPanel{
 				if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}
 				Main.getInstance().addKeyListener(new keyMenuListener (myTask.getMySlide().getSync()));
 
-
 				tempImageBox = myTask.getCross();
 				x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 				y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);
 				
-
-				x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getReminderExplanation1().getWidth()/2);
-				y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getReminderExplanation1().getHeight()/2) - 100;
-				
-				//new Animate(new String[]{"fadein",""}, 1500, 0, Main.getInstance().getBigPanel().getHeight(),  myTask.getReminderExplanation1(), Main.getInstance().getMainPanel());
-				new Animate(new String[]{"fadein",""}, 500, 50, (int)(Main.getInstance().getBigPanel().getHeight()-150),  myTask.getReminderExplanation1(), Main.getInstance().getMainPanel());
-				new Animate(new String[]{"fadein",""}, 500, Main.getInstance().getBigPanel().getWidth()/2 - myTask.getReminderExplanation2().getWidth()/2+10, Main.getInstance().getBigPanel().getHeight()/2 - 120,  myTask.getReminderExplanation2(), Main.getInstance().getMainPanel());
-				new Animate(new String[]{"fadein",""}, 500, Main.getInstance().getBigPanel().getWidth() - (myTask.getReminderExplanation3().getWidth()), Main.getInstance().getBigPanel().getHeight()- 140,  myTask.getReminderExplanation3(), Main.getInstance().getMainPanel());
+				reminderExplanation1 = new Animate(new String[]{"fadein",""}, 500, 50, (int)(Main.getInstance().getBigPanel().getHeight()-150),  myTask.getReminderExplanation1(), Main.getInstance().getMainPanel());
+				reminderExplanation2 = new Animate(new String[]{"fadein",""}, 500, Main.getInstance().getBigPanel().getWidth()/2 - myTask.getReminderExplanation2().getWidth()/2+10, Main.getInstance().getBigPanel().getHeight()/2 - 120,  myTask.getReminderExplanation2(), Main.getInstance().getMainPanel());
+				reminderExplanation3 = new Animate(new String[]{"fadein",""}, 500, Main.getInstance().getBigPanel().getWidth() - (myTask.getReminderExplanation3().getWidth()), Main.getInstance().getBigPanel().getHeight()- 140,  myTask.getReminderExplanation3(), Main.getInstance().getMainPanel());
 
 				prepareForNextStim(myTask);
-
 			}
 		
 			else if (myTask.getMySlide().getSlideName() == "preSpeedOverviewInstruction" || myTask.getMySlide().getSlideName() == "accOverviewInstruction" || myTask.getMySlide().getSlideName() == "postSpeedOverviewInstruction"){
@@ -695,7 +700,7 @@ public class Presentation extends JPanel{
 				y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 				tempImageBox.setProperties(x, y, true);			
 			}
-			//Philippe	
+
 			
 			else if (myTask.getMySlide().getSlideName() == "speedOverview" ){
 
@@ -778,8 +783,7 @@ public class Presentation extends JPanel{
 		}
 		else
 		{
-			System.out.println ("Slide inexistante : " + myTask.getMySlide().getSlideName());	
-
+			System.out.println ("Slide inexistante : " + myTask.getMySlide().getSlideName());
 		}
 		
 		
@@ -793,10 +797,12 @@ GraphicEngine.setModifying(false);
 	}
 	
 	
-	//	Callbacks of Coutdown
+	//	Callbacks of Countdown
 	public Integer callback(){
 		new Animate(new String[]{"fadein",""}, 1500, 100, Main.getInstance().getBigPanel().getWidth()/2 - 85, Main.getInstance().getBigPanel().getHeight()/2-25, 100, 100, " II", new Callable<Integer>(){ 
-			public Integer call() { 
+			public Integer call() {
+				
+				
 				return callback2(); 
 			} 
 		});

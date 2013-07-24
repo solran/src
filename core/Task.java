@@ -186,7 +186,7 @@ public class Task {
 			this.langue = "francais";
 		}
 		else if (myParameters.get("langue") == 2)
-		{			
+		{
 			Langue.setTaskLangue("francais");  //temporairement pcq tout les mots n'existe pas encore en anglais
 			Langue.setTaskLangue("english");
 			this.langue = "english";

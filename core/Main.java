@@ -33,14 +33,14 @@ import javax.swing.SwingConstants;
 // pour passer à la version Desktop (sans l'espace avant la dernière lettre)
 // Rechercher:     ///* %!#Apple t
 // Remplacer par:  /* %!#Apple t
-// Rechercher:     ///* %!#Deskto p
-// Remplacer par:  /* %!#Deskto p
+// Rechercher:     /* %!#Deskto p
+// Remplacer par:  ///* %!#Deskto p
 
 // pour passer à la version Applet
 // Rechercher:     /* %!#Apple t
 // Remplacer par:  ///* %!#Apple t
-//Rechercher:     /* %!#Deskto p
-//Remplacer par:  ///* %!#Deskto p
+//Rechercher:     ///* %!#Deskto p
+//Remplacer par:  /* %!#Deskto p
 
 
 //Alternate
@@ -144,9 +144,15 @@ public class Main extends JApplet {
 		
 		this.setBackground(Color.BLACK);
 	       
-        Toolkit tk = Toolkit.getDefaultToolkit();  
-		xSize = 1000; //((int) tk.getScreenSize().getWidth() - 10);  
-		ySize = 800; //((int) tk.getScreenSize().getHeight() - 100);  
+        Toolkit tk = Toolkit.getDefaultToolkit(); 
+        //1000  test 900
+        //800   test 740
+        
+		xSize = 950; //((int) tk.getScreenSize().getWidth() - 10);  
+		ySize = 780; //((int) tk.getScreenSize().getHeight() - 100);  
+		
+		
+		
 		this.setSize(xSize,ySize);
 
 		// Load Background image
@@ -197,7 +203,7 @@ public class Main extends JApplet {
         else
         	mainPanel.setPreferredSize(new Dimension(900, 700 - 35));*/
         
-        mainPanel.setPreferredSize(new Dimension(900, 700-35));	//test
+        mainPanel.setPreferredSize(new Dimension(850, 700-35));	//test 850
 
         mainPanel.setBackground(Color.RED);
 

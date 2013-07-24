@@ -228,8 +228,16 @@ public class Animate {
 		private float[][][] hsbLastColor;
 		private float[] hsbNowColor = new float[3];
 		
-		private void stop(){
+		public boolean isActive() {
+			return isActive;
+		}
 
+
+		public boolean isActive = true;
+		
+		public void stop(){
+			isActive = false;
+			
 			AnimationStack2.remove(AnimationStack2.indexOf(this));
 			
 			if(myFunc != null){
@@ -244,7 +252,7 @@ public class Animate {
 
 		public void refresh(Graphics2D dstBuffer){
 			if(myComponent != null){	//Component
-				if(count * easing > duration){		//end
+				if(count * easing > duration && isActive == true){		//end
 					stop();
 				}else{
 					if(count == 0){
@@ -307,7 +315,7 @@ public class Animate {
 					}
 				}
 			}else if(myImage != null){	//BufferedImage
-				if(count * easing > duration){		//end
+				if(count * easing > duration && isActive == true){		//end
 					stop();
 				}else{
 					if(count == 0){
@@ -434,10 +442,11 @@ public class Animate {
 								else
 								{
 									opacity = 1.f;
-									myImage.setVisible(true);
-									myImage.setX(this.x);
-									myImage.setY(this.y);
-
+									if(isActive == true){
+										myImage.setVisible(true);
+										myImage.setX(this.x);
+										myImage.setY(this.y);
+									}
 								}
 								
 
@@ -484,7 +493,7 @@ public class Animate {
 					}
 				}
 			}else if(text != null){	//Text
-				if(count * easing > duration){		//end
+				if(count * easing > duration && isActive == true){		//end
 					stop();
 				}else{
 					if(count == 0){

@@ -16,8 +16,12 @@ import core.Task;
 
 
 public class ReadLog {
-
+	///* %!#Applet
 	public static String sTab = "espacement", sParam = "findeligne";   // sParameter = separateur entre les lignes envoyées par param dans l'applet
+	//*/
+	/* %!#Desktop
+	public static String sTab = "\t";
+	//*/
 	
 	//??? Remove all?
 	private static int  nbColomn = 0;  //??? Column
@@ -41,6 +45,7 @@ public class ReadLog {
 				{
 					line = in.readLine();
 					lineSep = line.split(sTab);
+					System.out.println("lineSep: " + lineSep[0]);
 	                session = Integer.parseInt(lineSep[1].trim()); //??? Pourquoi lire toutes les info à chaque fois? Sortir les trois lignes du while
 				}
 			}
@@ -52,7 +57,7 @@ public class ReadLog {
 				WriteLog.writeTitle("donnee", ID);
 			}
 		}else if(Main.isApplet){
-			
+			///* %!#Applet
 			String[] lastLine;
 			String[] allLine;
 			
@@ -64,6 +69,7 @@ public class ReadLog {
 			}else{
 				System.out.print("première session");
 			}
+			//*/
 		}
 		
 		return session;
@@ -94,6 +100,7 @@ public class ReadLog {
 			}
 			catch (IOException E){}
 		}else if(Main.isApplet){
+			///* %!#Applet
 			String[] thisLine, allLine;
 			
 			allLine = Main.getInstance().getParameter("log").split(sParam);
@@ -104,6 +111,7 @@ public class ReadLog {
                 if (type.equals("training") && completed.equalsIgnoreCase("true"))
                 	timesTrained++;
 			}
+			//*/
 		}
 		
 		if (howManyTime <= timesTrained)
@@ -133,14 +141,12 @@ public class ReadLog {
 		}else if(Main.isApplet){
 			String[] allLine;
 			
-			//if(! Main.getInstance().getParameter("log").equals("0")){  //test ""
+			///* %!#Applet
 				allLine = Main.getInstance().getParameter("log").split(sParam);
 				for(int i=0; i < allLine.length; i++){
 					fullFile.add(allLine[i]);
 				}
-			/*}else{
-				System.out.print("Document inexistant");
-			}*/
+			//*/
 		}
 		
 		return fullFile;
