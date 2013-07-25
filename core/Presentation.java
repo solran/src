@@ -183,8 +183,6 @@ public class Presentation extends JPanel{
 			
 			myTask.getLeftReminderString().setVisible(false);
 			myTask.getRightReminderString().setVisible(false);
-			
-			//System.out.println(Bloc.getBlocActuel() + " " + Bloc.getnbBloc() + " " + progressRatio);	
 		}
 		
 		

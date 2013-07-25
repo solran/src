@@ -16,10 +16,10 @@ import core.Task;
 
 
 public class ReadLog {
-	///* %!#Applet
+	/* %!#Applet
 	public static String sTab = "espacement", sParam = "findeligne";   // sParameter = separateur entre les lignes envoyées par param dans l'applet
 	//*/
-	/* %!#Desktop
+	///* %!#Desktop
 	public static String sTab = "\t";
 	//*/
 	
@@ -45,7 +45,6 @@ public class ReadLog {
 				{
 					line = in.readLine();
 					lineSep = line.split(sTab);
-					System.out.println("lineSep: " + lineSep[0]);
 	                session = Integer.parseInt(lineSep[1].trim()); //??? Pourquoi lire toutes les info à chaque fois? Sortir les trois lignes du while
 				}
 			}
@@ -57,7 +56,7 @@ public class ReadLog {
 				WriteLog.writeTitle("donnee", ID);
 			}
 		}else if(Main.isApplet){
-			///* %!#Applet
+			/* %!#Applet
 			String[] lastLine;
 			String[] allLine;
 			
@@ -100,7 +99,7 @@ public class ReadLog {
 			}
 			catch (IOException E){}
 		}else if(Main.isApplet){
-			///* %!#Applet
+			/* %!#Applet
 			String[] thisLine, allLine;
 			
 			allLine = Main.getInstance().getParameter("log").split(sParam);
@@ -141,7 +140,7 @@ public class ReadLog {
 		}else if(Main.isApplet){
 			String[] allLine;
 			
-			///* %!#Applet
+			/* %!#Applet
 				allLine = Main.getInstance().getParameter("log").split(sParam);
 				for(int i=0; i < allLine.length; i++){
 					fullFile.add(allLine[i]);

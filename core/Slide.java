@@ -111,12 +111,6 @@ public class Slide {
 				break;
 				
 				case "keySimpleMixte":	
-					
-					System.out.println("Version of task:" + Task.mainTask.getVersion());
-					
-					System.out.println(Langue.translate("keyS&DMixteHeader", Utilities.iniHashMap (new String[]{"taskName", "link", "otherTaskName"},  new String[] {Langue.translate(new String[] {"tasksNames", "0"}), Langue.translate(new String[] {"links", "|"}), Langue.translate(new String[] {"otherTasksNames", "0"})}))  );
-					
-					//test 0
 					txtHeader = Langue.translate("keyS&DMixteHeader", Utilities.iniHashMap (new String[]{"taskName", "link", "otherTaskName"},  new String[] {Langue.translate(new String[] {"tasksNames", ""+(Task.mainTask.getVersion()-1)}), Langue.translate(new String[] {"links", "|"}), Langue.translate(new String[] {"otherTasksNames", "" + (Task.mainTask.getVersion()-1)})}))  ;
 
 					txtFooter = Langue.translate("keyS&DMixteFooter");

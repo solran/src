@@ -44,19 +44,19 @@ import javax.swing.SwingConstants;
 
 
 //Alternate
-/* %!#Desktop
+///* %!#Desktop
 public class Main {
 //*/
-///* %!#Applet	
+/* %!#Applet	
 public class Main extends JApplet {
 //*/
 	
-	/* %!#Desktop
+	///* %!#Desktop
 	public static Fenetre getInstance() {
 		return Main.myWindow;
 	}
 	//*/
-	///* %!#Applet
+	/* %!#Applet
 	public static Main getInstance() {
 	    return instance;
     }
@@ -124,6 +124,8 @@ public class Main extends JApplet {
 		myWindow.revalidate();
 		myWindow.repaint();
 		myWindow.requestFocus();
+		
+		System.out.println(myParameters);
 		myTask2 = new Task(myParameters);
 	}
 	
@@ -131,14 +133,8 @@ public class Main extends JApplet {
 	public void init(){
 		instance = this;
 		tracker = new MediaTracker(this);
-		
-		if(this.getClass().getSuperclass() == JApplet.class){
-			isApplet = true;
-			System.out.println("isApplet");
-		}else{
-			isApplet = false;
-			System.out.println("Not Applet");
-		}
+		isApplet = true;
+
 
 		
 		
@@ -370,7 +366,5 @@ public class Main extends JApplet {
 		panel.setCursor(Cursor.getDefaultCursor());
 	}
 	
-	public void destroy(){
-		System.out.println("Destroy");
-	}
+	public void destroy(){}
 }

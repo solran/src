@@ -210,7 +210,6 @@ public class ImageBox{
 		if (this.imagePath!= "")
 		{
 			if(! Main.isApplet){
-				System.out.println("../" + this.imagePath);
 				try {
 					this.myImage = ImageIO.read(new File(this.imagePath));
 				} catch (IOException e) {
@@ -218,7 +217,7 @@ public class ImageBox{
 					e.printStackTrace();
 				}
 			}else if(Main.isApplet){
-			///* %!#Applet
+			/* %!#Applet
 				try {
 					URL url = new URL(Main.getInstance().getDocumentBase(),"../" + this.imagePath);
 					this.myImage = Main.getInstance().getImage(url);

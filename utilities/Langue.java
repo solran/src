@@ -225,7 +225,7 @@ public class Langue extends HashMap {
 					"<br />" +
 					"<p align=\"center\">Donc, pour les deux premières images, ne répondez pas et retenez les images pour y répondre deux essais plus tard.</p></html>");
 			
-			expression.put("allStimuliHeader", "<html><br /><p align=\"center\">Prenez note que chaque symboles peuvent légèrement varier comme suit :</p></html>");
+			expression.put("allStimuliHeader", "<html><br /><p align=\"center\">Prenez note que chaque symbole peut légèrement varier comme suit :</p></html>");
 			expression.put("allStimuliFooter", "<html><p align=\"center\">Appuyez sur la barre d’espacement pour avancer dans le menu.</p></html>");
 		
 			expression.put("feedbackHeader", "<html><p align=\"center\">Des informations concernant vos performances vont vous être données.</p></html>");

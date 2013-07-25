@@ -36,13 +36,11 @@ public class Bloc {
 		     {
 		    	 for (int j = 0 ; j <myStimulus.length & (i+j)<stimulusComplet.length; j ++)
 		    	 {
-		    		 //System.out.println("ScL: " +stimulusComplet.length + " ij: " + (i+j));
 		    		 stimulusComplet[i+j] = CopieSansPointeur(myStimulus[j]);
 		    	 }
 		    	 i+=myStimulus.length;
 		    	 for (int j = 0 ; j <myOtherStimulus.length & (i+j)<stimulusComplet.length; j ++)
 		    	 {
-		    		// System.out.println("ScL: " +stimulusComplet.length + " ij: " + (i+j));
 		    		 stimulusComplet[i+j] = CopieSansPointeur(myOtherStimulus[j]);
 		    	 }
 		     }
@@ -206,8 +204,7 @@ public class Bloc {
 		{
 		     for (int i = 0; i<stimulusComplet.length ; i+=myStimulus.length )
 		     {
-		    	// System.out.println("type : " + sPG_SPD_SM_DM + " StimC : " +stimulusComplet.length+ " i : " + i + " stimL: " + myStimulus.length);
-			     if (stimulusComplet.length-i > myStimulus.length)
+		    	if (stimulusComplet.length-i > myStimulus.length)
 			    	 System.arraycopy(myStimulus, 0, stimulusComplet, i, myStimulus.length); 
 			     else
 			    	 System.arraycopy(myStimulus, 0, stimulusComplet, i, stimulusComplet.length-i); 
@@ -317,13 +314,6 @@ public class Bloc {
 			
 			 //on choisit un place un stim aléatoire
 		     int randomPosition = rgen.nextInt(bufStimulusComplet.length);
-		     //System.out.println ("  i : " + i + "  rand: " + randomPosition + " pos: " + (bufStimulusComplet.length-1));
-		     
-	    	// System.out.println ("");
-		    /* for (int j = 0 ; j< bufStimulusComplet.length; j++)
-		     {	
-			     System.out.println ("####" + bufStimulusComplet[j].getIDBidon());
-		     }*/
 
 		     output[i] = CopieSansPointeur(bufStimulusComplet[randomPosition]);
 		     //input[i] = bufStimulusComplet[randomPosition];
@@ -335,17 +325,13 @@ public class Bloc {
 		     
 		     for (int j=0; j<randomPosition;j++)
 			    {
-				     //System.out.println ("  i : " + i + "  rand: " + randomPosition + " pos: " + (bufStimulusComplet.length-1));
-			    	 bufTempo[j] = bufStimulusComplet[j];
-			    	 //System.out.print ("pre" + j);
+				     bufTempo[j] = bufStimulusComplet[j];
 			    }
 		     //apres le stim
 
 		     for (int j=randomPosition+1; j<bufStimulusComplet.length;j++)
 		     {
 		    	 bufTempo[j-1] = bufStimulusComplet[j];
-		    	 //System.out.print ("post" +j);
-
 		     }
 
 		     bufStimulusComplet=bufTempo;
