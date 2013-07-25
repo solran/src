@@ -383,7 +383,7 @@ public class Task {
 		//y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getReminderExplanation1().getHeight()/2) - 100;
 		reminderExplanation1 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 500, 500, Langue.translate("reminderExplanation1"), "reminderExplanation1");
 		reminderExplanation2 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 500, 500, Langue.translate("reminderExplanation2"), "reminderExplanation2");
-		reminderExplanation3 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 450, 500, Langue.translate("reminderExplanation3"), "reminderExplanation3");
+		reminderExplanation3 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 300, 500, Langue.translate("reminderExplanation3"), "reminderExplanation3");
 
 		
 		urgency = new ImageBox(Color.RED, new Font("Arial", Font.BOLD, 30), 0, 0, 650, 500, Langue.translate("urgency"), "urgency");
@@ -493,8 +493,8 @@ public class Task {
 		leftReminderString = new ImageBox(Color.WHITE, 24, leftReminder, 0, 0, 90, "leftReminder");
 		rightReminderString = new ImageBox(Color.WHITE, 24, rightReminder, 0, 0, 90, "rightReminder");
 		
-		leftReminderString.setProperties(150, Main.getInstance().getBigPanel().getHeight() - 70, true);
-		rightReminderString.setProperties(Main.getInstance().getBigPanel().getWidth() - (rightReminderString.getWidth()+150), Main.getInstance().getBigPanel().getHeight() - 70, true);
+		leftReminderString.setProperties(25, Main.getInstance().getBigPanel().getHeight() - 70, true);
+		rightReminderString.setProperties(Main.getInstance().getBigPanel().getWidth() - (rightReminderString.getWidth() + 25), Main.getInstance().getBigPanel().getHeight() - 70, true);
 
 			
 			

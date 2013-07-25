@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import core.Main;
 import core.Stimulus;
 
 
@@ -33,8 +34,10 @@ public class Langue extends HashMap {
 		{			
 			expression.put("title", "Programme d'entraînement cognitif");
 			
-			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS"});				
-			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f"});		
+			if(! Main.isApplet){
+				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS"});				
+				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f"});		
+			}
 			
 			Utilities.iniHashMap(expression, "input", new String[]{"0", "1"}, new String[]{"Ma configuration (optionnelle): ", "Parcourir/Sélectionner..."});
 
@@ -160,6 +163,12 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "links", new String[]{"&", "|"}, new String[]{"ET", "OU"});				
 
+			if(Main.isApplet){
+				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS"});				
+				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f"});		
+			}
+			
+			
 			Utilities.iniHashMap(expression, "intro", new String[]{"introCenter", "noIRMFooter", "IRMFooter"}, new String[]{
 					"Bonjour!", "Prêt ? Veuillez appuyer sur la barre d'espacement pour commencer le premier bloc.", "<html><p align=\"center\">Veuillez patientez pendant que la tâche se synchronise avec l'appareil d'imagerie.</p></html>"});		
 			
@@ -249,9 +258,9 @@ public class Langue extends HashMap {
 			expression.put("and", "ET");
 			expression.put("or", "OU");
 			
-			expression.put("reminderExplanation1", "Vous pouvez consulter les rappels au bas de l'écran/n en tout temps, mais votre regard doit être maintenu au centre /nde l'écran lorsque la croix apparait.");
+			expression.put("reminderExplanation1", "Vous pouvez consulter les rappels au bas de l'écran/n en tout temps, mais votre regard doit être maintenu/n au centre de l'écran lorsque la croix apparait.");
 			expression.put("reminderExplanation2", "Les images apparaitront à l'endroit où se trouve la croix ci-bas.");
-			expression.put("reminderExplanation3", "Appuyez sur la barre d'espacement pour commencer!");
+			expression.put("reminderExplanation3", "Pour commencer, appuyez/n sur la barre d'espacement");
 
 			
 			
@@ -302,7 +311,7 @@ public class Langue extends HashMap {
 			expression.put("taskFullName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskFullName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"une étoile", "un soleil", "une lune", "une planète"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"un E", "un U", "un A", "un O"});
-			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"un ß (bétâ)", "un p (pi)", "un Ω (omega)", "un ∑ (sygma)"});
+			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"un ß (bétâ)", "un p (pi)", "un Ω (omega)", "un ∑ (sigma)"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"un dé-3", "un dé-1", "un dé-6", "un dé-2"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"});
 			
@@ -331,7 +340,7 @@ public class Langue extends HashMap {
 			stims.put("taskFullName1", new String[][]{
 					{"une étoile", "un soleil", "une lune", "une planète"}, 
 					{"un E", "un U", "un A", "un O"},
-					{"un ß (bétâ)", "un p (pi)", "un Ω (omega)", "un ∑ (sygma)"},
+					{"un ß (bétâ)", "un p (pi)", "un Ω (omega)", "un ∑ (sigma)"},
 					{"un dé-3", "un dé-1", "un dé-6", "un dé-2"},
 					{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"}});
 
@@ -347,6 +356,9 @@ public class Langue extends HashMap {
 		{		
 			Utilities.iniHashMap(expression, "links", new String[]{"&", "|"}, new String[]{"AND", "OR"});				
 
+			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"HEAVENLY BODY", "LETTERS", "GREEK LETTERS", "QUANTITY", "PHILLIPS"});				
+			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ARROWS", "COLORS", "SHAPES", "STYLES", "f"});		
+			
 			
 			Utilities.iniHashMap(expression, "intro", new String[]{"introCenter", "noIRMFooter", "IRMFooter"}, new String[]{
 					"HELLO!", "Ready ? Please press the space bar to begin the first block.", "<html><p align=\"center\">Please wait while the task synchronizes itself with the imaging device.</p></html>"});		
@@ -437,9 +449,9 @@ public class Langue extends HashMap {
 			expression.put("and", "AND");
 			expression.put("or", "OR");
 			
-			expression.put("reminderExplanation1", "You may consult the reminders at the bottom of the screen at any /n time, but your sight must be kept at the centre  of the screen /nwhen the cross appears.");
+			expression.put("reminderExplanation1", "You may consult the reminders at the bottom of the screen/n at any  time, but your sight must be kept at the centre /nwhen the cross appears.");
 			expression.put("reminderExplanation2", "The images will appear at the location where the cross below is situated.");
-			expression.put("reminderExplanation3", "Please press the space bar to begin!");
+			expression.put("reminderExplanation3", "Press the space bar to begin!");
 
 			
 			
@@ -490,7 +502,7 @@ public class Langue extends HashMap {
 			expression.put("taskFullName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskFullName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"a star", "a sun", "a moon", "a planet"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"a E", "a U", "a A", "a O"});
-			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"a ß (bétâ)", "a p (pi)", "a Ω (omega)", "a ∑ (sygma)"});
+			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"a ß (bétâ)", "a p (pi)", "a Ω (omega)", "a ∑ (sigma)"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"a 3 dots dice", "a 1 dot dice", "a 6 dots dice", "a 2 dots dice"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"});
 			
@@ -518,7 +530,7 @@ public class Langue extends HashMap {
 			stims.put("taskFullName1", new String[][]{
 					{"a star", "a sun", "a moon", "a planet"}, 
 					{"a E", "a U", "a A", "a O"},
-					{"a ß (bétâ)", "a p (pi)", "a Ω (omega)", "a ∑ (sygma)"},
+					{"a ß (bétâ)", "a p (pi)", "a Ω (omega)", "a ∑ (sigma)"},
 					{"a 3 dots dice", "a 1 dot dice", "a 6 dots dice", "a 2 dots dice"},
 					{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"}});
 
@@ -536,6 +548,9 @@ public class Langue extends HashMap {
 	{
 		String returnObject = "Display Error";
 		HashMap<String, Object> temp = expression;
+		
+
+		
 		for (int i = 0; i<key.length;i++)
 		{
 			Object object = temp.get(key[i]);
