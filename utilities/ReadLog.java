@@ -97,7 +97,9 @@ public class ReadLog {
 	                	timesTrained++;
 				}
 			}
-			catch (IOException E){}
+			catch (IOException E){
+				System.out.println("Erreur! Fichier en lecture inexistant");
+			}
 		}else if(Main.isApplet){
 			/* %!#Applet
 			String[] thisLine, allLine;
@@ -127,7 +129,7 @@ public class ReadLog {
 		if(! Main.isApplet){
 			try
 			{           
-				FileReader fic = new FileReader(location + task.getSujetID() + ".txt");
+				FileReader fic = new FileReader(location + ".txt");
 				BufferedReader in = new BufferedReader(fic);
 				while (in.ready()) 
 				{
@@ -172,7 +174,7 @@ public class ReadLog {
 			BufferedReader in = new BufferedReader(fic);
 			String[] header, splittedLine;
 
-			// ent�te
+			// entête
 			header = in.readLine().split("\t");
 						
 			while (in.ready()) 
@@ -236,6 +238,9 @@ public class ReadLog {
 		ArrayList<ArrayList<SimplifiedTask>> taskList = new ArrayList<ArrayList<SimplifiedTask>>();
 		ArrayList<SimplifiedTask> tempTaskList = new ArrayList<SimplifiedTask>(), tempTaskList2 = new ArrayList<SimplifiedTask>();
 		
+		float tempScore = 0.f;
+		float tempScore2 = 0.f;
+		
 		try
 		{           
 			FileReader fic = new FileReader(location + ID + ".txt");
@@ -264,10 +269,14 @@ public class ReadLog {
 				for(int i = 0; i < nbRow; i++){
 	
 					if(correctData(allLines, i)){
+						tempScore = (Float.parseFloat(allLines.get(i).get("dmgAll")) - Float.parseFloat(allLines.get(i).get("dmgError"))) / Float.parseFloat(allLines.get(i).get("dmgAll")) * 100;
+						System.out.println("tempScore: " + tempScore);
+						tempScore2 = (Float.parseFloat(allLines.get(i).get("dmdAll")) - Float.parseFloat(allLines.get(i).get("dmdError"))) / Float.parseFloat(allLines.get(i).get("dmdAll")) * 100;
+						
+						
+						tempTaskList.add(new SimplifiedTask(allLines.get(i).get("date"), Integer.parseInt(allLines.get(i).get("version").split(":")[0]), tempScore)); 
 						//Philippe
-						tempTaskList.add(new SimplifiedTask(allLines.get(i).get("date"), Integer.parseInt(allLines.get(i).get("version").split(":")[0]), (Float.parseFloat(allLines.get(i).get("dmgTrial")) - Float.parseFloat(allLines.get(i).get("dmgAcc"))) / Float.parseFloat(allLines.get(i).get("dmgTrial")) * 100)); 
-						//Philippe
-						tempTaskList2.add(new SimplifiedTask(allLines.get(i).get("date"), Integer.parseInt(allLines.get(i).get("version").split(":")[0]), (Float.parseFloat(allLines.get(i).get("dmgTrial")) - Float.parseFloat(allLines.get(i).get("dmdAcc"))) / Float.parseFloat(allLines.get(i).get("dmdTrial")) * 100));
+						tempTaskList2.add(new SimplifiedTask(allLines.get(i).get("date"), Integer.parseInt(allLines.get(i).get("version").split(":")[0]), tempScore2)); 					
 					}
 				}
 	

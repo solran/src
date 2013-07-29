@@ -145,7 +145,7 @@ public class Presentation extends JPanel{
 		
 		if(!myTask.getMySlide().isStimulus() && myTask.getMySlide().getSlideName() != "reminderExplanation" && myTask.getMySlide().getSlideName() != "countdown" && myTask.getMySlide().getSlideName() != "pause"){
 
-			if(finished == false)
+			if(! finished)
 				WriteLog.writeMeans( myTask, "data/log_");
 			
 			if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}

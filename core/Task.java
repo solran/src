@@ -571,12 +571,14 @@ public class Task {
 			
 
 			
-		//les blocs et les instructions associ�es sont ordonnés ici
+		//les blocs et les instructions associées sont ordonnés ici
 
 		slideStack[slideCpt++] = new Slide("intro", this.imagerie); 
 		
 		if (this.type == "training" && ReadLog.hasBeenTrained(this.sujetID, "data/log_", 2) && !typeNback.equals("matching"))
 		{
+			//Overview
+			System.out.println("Overview !");
 			slideStack[slideCpt++] = new Slide("preSpeedOverviewInstruction");
 			slideStack[slideCpt++] = new Slide("speedOverview");
 			

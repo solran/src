@@ -153,8 +153,14 @@ public class WriteLog {
 		
 		//fullFile.set(fullFile.size()-1, s);	//append s to file
 
-		
-		writeString(s, location + task.getSujetID());
+		if(! Main.isApplet){
+			if(first){
+				writeString(s, location + task.getSujetID());
+				first = false;
+			}else
+				writeString(s, location + task.getSujetID(), false, task);
+		}else
+			writeString(s, location + task.getSujetID());
 	}
 	
 	// écriture du Log
@@ -169,8 +175,6 @@ public class WriteLog {
 		s += task.getType() + sTab;   		nbColomn ++;
 		s += task.getIsCompleted() + sTab; 	nbColomn ++;
 		s += Langue.translate(new String[] {"radioVersion",""+ task.getVersion()}) + sTab;  		nbColomn ++;
-		//test
-		System.out.println("Version: " + Langue.translate(new String[] {"radioVersion", "1"}));
 		
 		s += task.getQte() + sTab;   		nbColomn ++;
 		s += task.getLangue() + sTab;  		nbColomn ++;
@@ -179,8 +183,9 @@ public class WriteLog {
 		s += task.getISI()*100 + sTab;  		nbColomn ++;
 		s += task.getnBack() + sTab;  		nbColomn ++;
 		s += task.getTypeNback() + sTab;	nbColomn ++;
+		s += task.getMixedPourc() + sTab;	nbColomn ++;
 		
-		//s += sChariot; //test
+		
 		System.out.println("NbColomn: " + nbColomn);
 		
 		
@@ -207,7 +212,8 @@ public class WriteLog {
 					s += "tempsIsi" + sTab;
 					s += "nBack" + sTab;	
 					s += "typedeNBack" + sTab;	
-		
+					//s += "%mixed" + sTab;
+					
 					t += "spgRt" + sTab;
 					t += "smgRt" + sTab;
 					t += "dmgRt" + sTab;
@@ -262,66 +268,63 @@ public class WriteLog {
 					s += "valeurGraph" + sTab;
 	
 				//	writing  + sTab + true + sTab + monTrial.getAttendu() + sTab + myKey + sTab + clock2Fleche +  sTab + ISIRTFleche + sTab + this.erreur, "statsForExcel");
-				    writeString(s + t + sChariot, "data/donnees_" + ID);
+				    writeString(s + t, "data/donnees_" + ID);
+				    //+ sChariot
 			}
 		}
 	}
 	
-	/*
-	public static void writeCompletedSession(String location){
-
-		String output = "app_finished.php";
-		System.out.println(s);
-		
-
-	    try {
-            // Send the request
-	    	URL url = new URL("http://lesca.ca/test/php/" + output);
-            URLConnection conn = url.openConnection();
-            conn.setDoOutput(true);
-            OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
-            
-            //write parameters
-            writer.write(s);
-            writer.flush();
-            
-            // Get the response
-            StringBuffer answer = new StringBuffer();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                answer.append(line);
-            }
-            writer.close();
-            reader.close();
-            
-            //Output the response
-            System.out.println("web response: " + answer.toString());
-            
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+	
+	public static void writeString (String s, String location)
+	{
+		writeString (s, location, true, null);
 	}
-	*/
 	
+	private static boolean first = true;
 	
-	public static void writeString (String s, String location)  //writingStuff
+	public static void writeString (String s, String location, boolean Append, Task task)  //writingStuff
 	{
 		if(! Main.isApplet){
-			try
-			{           
-				FileWriter fic = new FileWriter(location + ".txt", true);
-				PrintWriter out = new PrintWriter(fic);
-				out.write(s);
+			if(Append){
+				try
+				{           
+					FileWriter fic = new FileWriter(location + ".txt", true);
+					PrintWriter out = new PrintWriter(fic);
+					out.write(s);
+					
+				    // Fermeture du fichier
+				    out.close();
+				}
+				catch (IOException E)
+				{
+					Utilities.msgErreur(writeError);
+				}
+			}else{
 				
-			    // Fermeture du fichier
-			    out.close();
-			}
-			catch (IOException E)
-			{
-				Utilities.msgErreur(writeError);
+				ArrayList fullFile = ReadLog.readFullFile (task, location);
+				String lastline =  (String) fullFile.get(fullFile.size()-1);
+				String[] aLastline = lastline.split("\t");
+				
+				
+				
+				fullFile.set(fullFile.size()-1, s);
+				
+				try
+				{   
+					FileWriter fic = new FileWriter(location + ".txt", false);
+					PrintWriter out = new PrintWriter(fic);
+					for (int i = 0 ; i< fullFile.size(); i++)
+					{
+						out.write((String) fullFile.get(i) + sChariot);
+					}
+					
+				    // Fermeture du fichier
+				    out.close();
+				}
+				catch (IOException E){
+					Utilities.msgErreur(writeError);
+				}
+				
 			}
 		}else if(Main.isApplet){
 			
