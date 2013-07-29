@@ -54,6 +54,7 @@ public class WriteLog {
 		s += task.getISI()*100 + sTab;
 		s += task.getnBack() + sTab;
 		s += task.getTypeNback() + sTab;
+		s += task.getMixedPourc() + sTab;
 		s += stim.getBloc().getBlocID() + sTab;
 		s += stim.getStimulusLocCpt() + sTab;
 		s += stim.getStimulusLocUniqueCpt() + sTab;
@@ -236,6 +237,7 @@ public class WriteLog {
 					writeString(s + t + sChariot, "data/log_" + ID);
 	
 			}else if(type.equals("donnee")){
+					s += "%mixte" + sTab;
 					s += "bloc" + sTab;
 					s += "trialLoc" + sTab;
 					s += "trialUnique" + sTab;
@@ -312,7 +314,7 @@ public class WriteLog {
 			{           
 				FileWriter fic = new FileWriter(location + ".txt", true);
 				PrintWriter out = new PrintWriter(fic);
-				out.write(s + sChariot);  		
+				out.write(s);
 				
 			    // Fermeture du fichier
 			    out.close();
