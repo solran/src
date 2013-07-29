@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 import core.Main;
 import core.Stimulus;
+import core.Task;
 
 
 
@@ -35,8 +36,8 @@ public class Langue extends HashMap {
 			expression.put("title", "Programme d'entraînement cognitif");
 			
 			if(! Main.isApplet){
-				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS"});				
-				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f"});		
+				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE"});				
+				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f", "GO/STOP"});
 			}
 			
 			Utilities.iniHashMap(expression, "input", new String[]{"0", "1"}, new String[]{"Ma configuration (optionnelle): ", "Parcourir/Sélectionner..."});
@@ -52,11 +53,14 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "radioLangue", new String[]{"0", "1", "2"}, new String[]{"<html><font size = 4>Langue du participant</font></html>", 
 					"Français", "Anglais" });
 			
-			Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5"}, new String[]{"<html><font size = 4>Version de la tâche</font></html>", "1: " + Langue.translate(new String[] {"tasksNames", "0"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "0"}),  
+			Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4>Version de la tâche</font></html>", "1: " + Langue.translate(new String[] {"tasksNames", "0"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "0"}),  
 					"2: " + Langue.translate(new String[] {"tasksNames", "1"}) + "  / " + Langue.translate(new String[] {"otherTasksNames", "1"}), 
 					"3: " + Langue.translate(new String[] {"tasksNames", "2"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "2"}), 
 					"4: " + Langue.translate(new String[] {"tasksNames", "3"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "3"}), 
-					"5: " + Langue.translate(new String[] {"tasksNames", "4"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "4"})}); 
+					"5: " + Langue.translate(new String[] {"tasksNames", "4"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "4"}),
+					"6: " + Langue.translate(new String[] {"tasksNames", "5"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "5"}),
+					"7: " + Langue.translate(new String[] {"tasksNames", "6"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "6"})
+			}); 
 			
 			Utilities.iniHashMap(expression, "radioQte", new String[]{"0", "1", "2", "3" }, new String[]{"<html><font size = 4>Nombre de possiblités par main</font></html>", 
 					"Débutant : 2 par mains", "Intermédiaire : 3 par mains", "Expert : 4 par mains"});
@@ -156,6 +160,7 @@ public class Langue extends HashMap {
 		}
 	}
 	
+	
 	public static void setTaskLangue (String langue)
 	{
 		if (langue == "francais")
@@ -164,8 +169,8 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "links", new String[]{"&", "|"}, new String[]{"ET", "OU"});				
 
 			if(Main.isApplet){
-				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS"});				
-				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f"});		
+				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE"});				
+				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES","f", "GO/STOP"});		
 			}
 			
 			
@@ -174,26 +179,49 @@ public class Langue extends HashMap {
 			
 			expression.put("introFooter", "<html><p align=\"center\">Appuyez sur la barre d’espacement pour avancer dans le menu.</p></html>");
 
-			expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">Pour ce bloc, %stim1% vont apparaître au<br /> centre de l’écran.</p><br /><p align=\"center\">Vous devez identifier le symbole (%stim2%)<br />en appuyant sur la touche du clavier correspondante.</p></html>");
-					
+			
+			// GeneralExplanation
+			if(! Task.mainTask.isStimsAreSounds())
+				expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">Pour ce bloc, %stim1% vont apparaître au<br /> centre de l’écran.</p><br /><p align=\"center\">Vous devez identifier le symbole (%stim2%)<br />en appuyant sur la touche du clavier correspondante.</p></html>");	
+			else{
+				expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier d'où provient le son (gauche ou droite)<br />en appuyant sur la touche du clavier correspondante.</p></html>");
+			}
+			
 			expression.put("keyGeneralExplanationFooter", "<html><p align=\"center\">Vous devez répondre <b>le plus vite possible et faire le moins<br />d’erreurs possible.</b></p></html>");
 			
-			expression.put("keyDetailedExplanationHeader", "<html><p align=\"center\">Si %fullname% apparait au centre de l'écran,<br />appuyez sur la touche <b>%key%</b> avec votre %finger%.</p></html>");
+			expression.put("keyGeneralExplanationHeader2", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier le mot (GO ou STOP)<br />en appuyant sur la touche du clavier correspondante.</p></html>");
 			
+			
+			
+			// DetailedExplanation
+			if(! Task.mainTask.isStimsAreSounds())
+				expression.put("keyDetailedExplanationHeader", "<html><p align=\"center\">Si %fullname% apparait au centre de l'écran,<br />appuyez sur la touche <b>%key%</b> avec votre %finger%.</p></html>");
+			else
+				expression.put("keyDetailedExplanationHeader", "<html><p align=\"center\">Si %fullname% se fait entendre,<br />appuyez sur la touche <b>%key%</b> avec votre %finger%.</p></html>");
 			expression.put("keyDetailedExplanationFooter", "<html><p align=\"center\">Pour continuer, appuyez sur la touche %key%</b></p></html>");
+			
+			
 			
 			Utilities.iniHashMap(expression, "overviewError", new String[]{"header", "footer"}, new String[]{ "<html><p align='center'>Une erreur s'est produite à l'affichage du graphique.<br /> Si cette erreur se reproduit lors de votre prochain entrainement, nous vous invitons à contacter un assistant de recherche!</p></html>",  "<html><p align='center'>Désolé pour les inconvénients! :)</p></html>"});
 
 
-			expression.put("keyS&DMixteHeader", "<html><p align=\"center\">Dans cet exercice, des %taskName% <b>%link%</b> des %otherTaskName% vont apparaître au<br />" +
-					"centre de l'écran.</p>" +
-					"<br />" +
-					"<p align=\"center\">Vous devez identifier le symbole en appuyant sur la touche<br />" +
-					"correspondante.</p></html>");
-			
+			// S&DMixteHeader
+			if(! Task.mainTask.isStimsAreSounds()){
+				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">Dans cet exercice, des %taskName% <b>%link%</b> des %otherTaskName% vont apparaître au<br />" +
+						"centre de l'écran.</p>" +
+						"<br />" +
+						"<p align=\"center\">Vous devez identifier le son en appuyant sur la touche<br />" +
+						"correspondante.</p></html>");
+			}else{
+				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">Dans cet exercice, des %taskName% <b>%link%</b> des %otherTaskName% vont se faire entendre</p>" +
+						"<br />" +
+						"<p align=\"center\">Vous devez identifier le symbole en appuyant sur la touche<br />" +
+						"correspondante.</p></html>");
+			}
 			expression.put("keyS&DMixteFooter", "<html><p align=\"center\">Vous devez répondre <b>le plus vite possible et faire le moins<br />" +
 					"d’erreurs possible.</b></p>" +
 					"<p align=\"center\">Appuyez sur la barre d’espacement pour avancer dans le menu.</p></html>");
+		
 			
 			expression.put("nBackExplanationHeader1Back", "<html><p align=\"center\"><b>Mais attention! Vous ne devez pas répondre à l'image " +
 					"que vous voyez, mais à l'image qui la précédait.</b></p>" +
@@ -293,13 +321,14 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "finger", new String[]{"0", "1", "2", "3"}, new String[]{"auriculaire", "annulaire", "majeur", "index"});
 
-			//Philippe - pourquoi mettre deux fois la même information ?
+
 			expression.put("taskName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"étoile", "soleil", "lune", "planète"});
 			Utilities.iniHashMap(expression.get("taskName1"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"\"E\"", "\"U\"", "\"A\"", "\"O\""});
 			Utilities.iniHashMap(expression.get("taskName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"\"ß\"", "\"p\"", "\"Ω\"", "\"∑\""});
 			Utilities.iniHashMap(expression.get("taskName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"dé-3", "dé-1", "dé-6", "dé-2"});
 			Utilities.iniHashMap(expression.get("taskName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
+			Utilities.iniHashMap(expression.get("taskName1"), "5", new String[]{"0", "1"}, new String[]{"son à gauche", "son à droite"});
 
 			expression.put("taskName2", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskName2"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"bas", "droite", "gauche",  "haut"});
@@ -307,6 +336,7 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression.get("taskName2"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"cercle", "carré", "losange", "octogone"});
 			Utilities.iniHashMap(expression.get("taskName2"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"unie", "ondulée", "quadrillée", "rayée"});
 			Utilities.iniHashMap(expression.get("taskName2"), "4", new String[]{"0", "1", "2", "3"}, new String[]{" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"});
+			Utilities.iniHashMap(expression.get("taskName2"), "5", new String[]{"0", "1"}, new String[]{"go", "stop"});
 
 			expression.put("taskFullName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskFullName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"une étoile", "un soleil", "une lune", "une planète"});
@@ -314,50 +344,59 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"un ß (bétâ)", "un p (pi)", "un Ω (omega)", "un ∑ (sigma)"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"un dé-3", "un dé-1", "un dé-6", "un dé-2"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"});
-			
+			Utilities.iniHashMap(expression.get("taskFullName1"), "5", new String[]{"0", "1"}, new String[]{"un son provenant de la gauche", "un son provenant de la droite"});
+
 			expression.put("taskFullName2", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskFullName2"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"une flèche dont le rouge pointe vers le bas", "une flèche dont le rouge pointe vers la droite", "une flèche dont le rouge pointe vers la gauche", "une flèche dont le rouge pointe vers le haut"});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"le rouge", "le bleu", "le jaune", "le vert"});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"un cercle", "un carré", "un losange", "un octogone"});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"une forme unie", "une forme ondulée", "une forme quadrillée", "une forme rayée"});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"});
+			Utilities.iniHashMap(expression.get("taskFullName2"), "5", new String[]{"0", "1"}, new String[]{"le mot GO","le mot STOP"});
 
 			stims.put("taskName1", new String[][]{
 					{"étoile", "soleil", "lune", "planète"},
 					{"\"E\"", "\"U\"", "\"A\"", "\"O\""}, 
 					{"\"ß\"", "\"p\"", "\"Ω\"", "\"∑\""}, 
 					{"dé-3", "dé-1", "dé-6", "dé-2"}, 
-					{"1", "2", "3", "4", "5", "6", "7", "8", "9"}});
+					{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
+					{"son à gauche", "son à droite"}
+			});
 
-			
 			stims.put("taskName2", new String[][]{
 					{"bas", "haut", "gauche",  "droite", },  
 					{"rouge", "bleu", "jaune", "vert"}, 
 					{"cercle", "carré", "losange", "octogone"}, 
 					{"unie", "ondulée", "quadrillée", "rayée"}, 
-					{" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"}});
+					{" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"},
+					{"go", "stop"}
+			});
 
 			stims.put("taskFullName1", new String[][]{
 					{"une étoile", "un soleil", "une lune", "une planète"}, 
 					{"un E", "un U", "un A", "un O"},
 					{"un ß (bétâ)", "un p (pi)", "un Ω (omega)", "un ∑ (sigma)"},
 					{"un dé-3", "un dé-1", "un dé-6", "un dé-2"},
-					{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"}});
+					{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"},
+					{"un son provenant de la gauche", "un son provenant de la droite"}
+			});
 
 			stims.put("taskFullName2", new String[][]{
 					{"une flèche dont le rouge pointe vers le bas", "une flèche dont le rouge pointe vers le haut", "une flèche dont le rouge pointe vers la gauche", "une flèche dont le rouge pointe vers la droite"}, 
 					{"le rouge", "le bleu", "le jaune", "le vert"},
 					{"un cercle", "un carré", "un losange", "un octogone"}, 
 					{"une forme unie", "une forme ondulée", "une forme quadrillée", "une forme rayée"},
-					{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"}});
+					{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"},
+					{"le mot GO","le mot STOP"}
+			});
 				
 		}
 		if (langue == "english")
 		{		
 			Utilities.iniHashMap(expression, "links", new String[]{"&", "|"}, new String[]{"AND", "OR"});				
 
-			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"HEAVENLY BODY", "LETTERS", "GREEK LETTERS", "QUANTITY", "PHILLIPS"});				
-			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4"}, new String[]{"ARROWS", "COLORS", "SHAPES", "STYLES", "f"});		
+			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"HEAVENLY BODY", "LETTERS", "GREEK LETTERS", "QUANTITY", "PHILLIPS", "LEFT/RIGHT SOUND"});				
+			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"ARROWS", "COLORS", "SHAPES", "STYLES", "f", "GO/STOP"});		
 			
 			
 			Utilities.iniHashMap(expression, "intro", new String[]{"introCenter", "noIRMFooter", "IRMFooter"}, new String[]{
@@ -365,22 +404,48 @@ public class Langue extends HashMap {
 			
 			expression.put("introFooter", "<html><p align=\"center\">Press the space bar to go forward in the menu.</p></html>");
 
-			expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">For this bloc, %stim1% will appear at<br /> the centre of the screen.</p><br /><p align=\"center\">You must identify the symbol (%stim2%)<br />by pressing on the corresponding key.</p></html>");
-					
+			
+			
+			
+			// GeneralExplanation
+			if(! Task.mainTask.isStimsAreSounds())
+				expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">For this bloc, %stim1% will appear at<br /> the centre of the screen.</p><br /><p align=\"center\">You must identify the symbol (%stim2%)<br />by pressing on the corresponding key.</p></html>");
+			else{
+				expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">For this bloc, %stim1% will be heard.</p><br /><p align=\"center\">You must identify from where the sound is coming<br />by pressing on the corresponding key.</p></html>");
+			}
 			expression.put("keyGeneralExplanationFooter", "<html><p align=\"center\">You must answer <b>as quickly as possible while making as few<br />errors possible.</b></p></html>");
+			expression.put("keyGeneralExplanationHeader2", "<html><p align=\"center\">For this bloc, %stim1% will be heard.</p><br /><p align=\"center\">You must identify the word (Go or STOP)<br />by pressing on the corresponding key.</p></html>");
 			
-			expression.put("keyDetailedExplanationHeader", "<html><p align=\"center\">If %fullname% appears at the centre of the screen,<br />press the <b>%key%</b> key with your %finger%.</p></html>");
-			
+			// DetailedExplanation
+			if(! Task.mainTask.isStimsAreSounds())
+				expression.put("keyDetailedExplanationHeader", "<html><p align=\"center\">If %fullname% appears at the centre of the screen,<br />press the <b>%key%</b> key with your %finger%.</p></html>");
+			else
+				expression.put("keyDetailedExplanationHeader", "<html><p align=\"center\">If %fullname% is heard,<br />press the <b>%key%</b> key with your %finger%.</p></html>");
 			expression.put("keyDetailedExplanationFooter", "<html><p align=\"center\">To continue, press the %key% key.</b></p></html>");
+			
+
+			// S&DMixteHeader
+			if(! Task.mainTask.isStimsAreSounds()){
+				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">In this task, %taskName% <b>%link%</b> %otherTaskName% will appear at the<br />" +
+						"centre of the screen.</p>" +
+						"<br />" +
+						"<p align=\"center\">You must identify the symbol by pressing on the corresponding<br />" +
+						"key.</p></html>");
+			}else{
+				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">Dans cet exercice, des %taskName% <b>%link%</b> des %otherTaskName% vont se faire entendre</p>" +
+						"<br />" +
+						"<p align=\"center\">Vous devez identifier le symbole en appuyant sur la touche<br />" +
+						"correspondante.</p></html>");
+				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">In this task, %taskName% <b>%link%</b> %otherTaskName% will be heard<br />" +
+						"<p align=\"center\">You must identify the sound by pressing on the corresponding<br />" +
+						"key.</p></html>");
+			}
+
 			
 			Utilities.iniHashMap(expression, "overviewError", new String[]{"header", "footer"}, new String[]{ "<html><p align='center'>An error has occurred in the graphic display.<br /> If this error reoccurs during your next training, we suggest that you contact a research assistant!</p></html>",  "<html><p align='center'>Sorry for the inconvenience! :)</p></html>"});
 
 
-			expression.put("keyS&DMixteHeader", "<html><p align=\"center\">In this task, %taskName% <b>%link%</b> %otherTaskName% will appear at the<br />" +
-					"centre of the screen.</p>" +
-					"<br />" +
-					"<p align=\"center\">You must identify the symbol by pressing on the corresponding<br />" +
-					"key.</p></html>");
+			
 			
 			expression.put("keyS&DMixteFooter", "<html><p align=\"center\">You must answer <b>as quickly as possible while making as few<br />" +
 					"errors as possible.</b></p>" +
@@ -484,20 +549,21 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "finger", new String[]{"0", "1", "2", "3"}, new String[]{"little finger", "ring finger", "middle finger", "index"});
 
-			//Philippe - pourquoi mettre deux fois la même information ?
 			expression.put("taskName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"star", "sun", "moon", "planet"});
 			Utilities.iniHashMap(expression.get("taskName1"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"\"E\"", "\"U\"", "\"A\"", "\"O\""});
 			Utilities.iniHashMap(expression.get("taskName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"\"ß\"", "\"p\"", "\"Ω\"", "\"∑\""});
 			Utilities.iniHashMap(expression.get("taskName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"3 dots dice", "1 dots dice", "6 dots dice", "2 dots dice"});
 			Utilities.iniHashMap(expression.get("taskName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
+			Utilities.iniHashMap(expression.get("taskName1"), "5", new String[]{"0", "1"}, new String[]{"left sound", "right sound"});
 
 			expression.put("taskName2", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskName2"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"down", "right", "left",  "up"});
 			Utilities.iniHashMap(expression.get("taskName2"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"red", "blue", "yellow", "green"});
 			Utilities.iniHashMap(expression.get("taskName2"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"circle", "square", "diamond", "octogon"});
 			Utilities.iniHashMap(expression.get("taskName2"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"plain", "rippled", "squared", "striped"});
-			Utilities.iniHashMap(expression.get("taskName2"), "4", new String[]{"0", "1", "2", "3"}, new String[]{" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"});
+			Utilities.iniHashMap(expression.get("taskName2"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
+			Utilities.iniHashMap(expression.get("taskName2"), "5", new String[]{"0", "1"}, new String[]{"go", "stop"});
 
 			expression.put("taskFullName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskFullName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"a star", "a sun", "a moon", "a planet"});
@@ -505,41 +571,51 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"a ß (bétâ)", "a p (pi)", "a Ω (omega)", "a ∑ (sigma)"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"a 3 dots dice", "a 1 dot dice", "a 6 dots dice", "a 2 dots dice"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"});
-			
+			Utilities.iniHashMap(expression.get("taskFullName1"), "5", new String[]{"0", "1"}, new String[]{"a sound coming from left", "a sound coming from right"});
+
 			expression.put("taskFullName2", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskFullName2"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"an arrow pointing down", "an arrow pointing right", "an arrow pointing left", "an arrow pointing top"});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"a red shape", "a blue shape", "a yellow shape", "a green shape"});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"a circle", "a square", "a diamond", "an octogon"});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"a plain shape", "a rippled shape", "a squared shape", "a striped shape "});
 			Utilities.iniHashMap(expression.get("taskFullName2"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"});	
-			
+			Utilities.iniHashMap(expression.get("taskFullName2"), "5", new String[]{"0", "1"}, new String[]{"the word GO", "the word STOP"});	
+
 			stims.put("taskName1", new String[][]{
 					{"star", "sun", "moon", "planet"},
 					{"\"E\"", "\"U\"", "\"A\"", "\"O\""}, 
 					{"\"ß\"", "\"p\"", "\"Ω\"", "\"∑\""}, 
 					{"3 dots dice", "1 dots dice", "6 dots dice", "2 dots dice"}, 
-					{"1", "2", "3", "4", "5", "6", "7", "8", "9"}});
+					{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
+					{"left sound", "right sound"}
+			});
 			
 			stims.put("taskName2", new String[][]{
 					{"down", "right", "left",  "up"},  
 					{"red", "blue", "yellow", "green"}, 
 					{"circle", "square", "diamond", "octogon"}, 
 					{"plain", "rippled", "squared", "striped"}, 
-					{" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"}});
+					{" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9"},
+					{"go", "stop"}
+			});
 	
 			stims.put("taskFullName1", new String[][]{
 					{"a star", "a sun", "a moon", "a planet"}, 
 					{"a E", "a U", "a A", "a O"},
 					{"a ß (bétâ)", "a p (pi)", "a Ω (omega)", "a ∑ (sigma)"},
 					{"a 3 dots dice", "a 1 dot dice", "a 6 dots dice", "a 2 dots dice"},
-					{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"}});
+					{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"},
+					{"a sound coming from left","a sound coming from right"}
+			});
 
 			stims.put("taskFullName2", new String[][]{
 					{"an arrow pointing down", "an arrow pointing right", "an arrow pointing left", "an arrow pointing top"}, 
 					{"a red shape", "a blue shape", "a yellow shape", "a green shape"},
 					{"a circle", "a square", "a diamond", "an octogon"}, 
 					{"a plain form", "a rippled form", "a squared form", "a striped form "},
-					{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"}});
+					{"a 1", "a 2", "a 3", "a 4", "a 5", "a 6", "a 7", "a 8", "a 9"},
+					{"the word GO", "the word STOP"}
+			});
 		}
 		
 	}

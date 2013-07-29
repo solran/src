@@ -28,8 +28,6 @@ import core.Stimulus;
  * Classe dont les instantiations sont des JPanel dans lesquels sont dessin�s des images (stimuli, clavier, main, etc)  
  */
 
-
-//Enlever extends JPanel et Cloneable
 public class ImageBox{
 	 
 	private int width, height;

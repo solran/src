@@ -13,18 +13,18 @@ public class SoundClip {
 	
 	private URL u;
 	private Clip clip;
+	private String name = "";
 
-
-	public SoundClip (String path)
+	public SoundClip(String path, String name)
 	{
-
+		this.name = name;
+		
 		if(! Main.isApplet){
 			this.u = Main.myWindow.getClass().getClassLoader().getResource( "sounds/" + path);
 			
 			//this.u = Main.getInstance().getClass().getClassLoader().getResource( "sounds/" + path);
 			//System.out.println("Intro Sound Path: " + u.getPath());
 		}else if(Main.isApplet){
-			System.out.println("SoundClip applet");
 			/* %!#Applet
 			try {
 				this.u = new URL(Main.getInstance().getDocumentBase(),"../sounds/" + path);
@@ -35,9 +35,16 @@ public class SoundClip {
 			//*/
 		}
 	}
+	
+	public void playMe(){
+		play(this);
+	}
+	
+	
 	//"./sounds/"
 	public static void play (SoundClip sc)
 	{
+		
 		
 		try {
 		    // Open an audio input stream.
@@ -69,7 +76,6 @@ public class SoundClip {
 	public Clip getClip() {
 		return clip;
 	}
-
 	public void setClip(Clip clip) {
 		this.clip = clip;
 	}

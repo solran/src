@@ -101,6 +101,15 @@ public class Slide {
 					
 				break;
 				
+				//special case for GO/STOP
+				case "keyGeneralExplanation2":	
+					
+					txtHeader = Langue.translate("keyGeneralExplanationHeader2", Utilities.iniHashMap (new String[]{"stim1", "stim2"},  new String[]{writeArray(myStimulus, Langue.translate("or") , true), writeArray(myStimulus, Langue.translate("or"), false)}))  ;
+					txtFooter = Langue.translate("keyGeneralExplanationFooter"); 					
+					expectedKey[0] = ' ';
+					
+				break;
+				
 				case "keyDetailedExplanation":
 					if (myStimulus[cardinal].getIsLeft())
 						txtHeader = Langue.translate("keyDetailedExplanationHeader", Utilities.iniHashMap (new String[]{"fullname", "key", "finger"},  new String[]{myStimulus[cardinal].getFullName(), myStimulus[cardinal].getKey().toUpperCase(), Langue.translate(new String[]{"finger",  ""+ (cardinal + (4 - myStimulus[cardinal].getStimulusLength()))})}))  ;

@@ -103,7 +103,7 @@ public class Menu {
 			private ButtonGroup bgType = new ButtonGroup();
 						
 			private JPanel radioPanelVersion = new JPanel();
-			private JRadioButton radio1Version= new JRadioButton (), radio2Version= new JRadioButton (), radio3Version= new JRadioButton (), radio4Version= new JRadioButton (),radio5Version= new JRadioButton ();
+			private JRadioButton radio1Version= new JRadioButton (), radio2Version= new JRadioButton (), radio3Version= new JRadioButton (), radio4Version= new JRadioButton (),radio5Version= new JRadioButton (),radio6Version= new JRadioButton ();
 			private ButtonGroup bgVersion = new ButtonGroup();			
 			private JLabel radioLabelVersion= new JLabel();	
 			
@@ -189,7 +189,7 @@ public class Menu {
 	
 	date = new Date();
 	private JLabel dateLabel = new JLabel();
-    private SoundClip introSong = new SoundClip("intro.wav");
+    private SoundClip introSong = new SoundClip("intro.wav", "intro");
 
 	public Menu(){
 		
@@ -313,12 +313,21 @@ public class Menu {
 	        radioLabelType.setHorizontalAlignment(SwingConstants.CENTER);
 
 	        // Radio Button Version
-	        bgVersion.add(radio1Version);		bgVersion.add(radio2Version);		bgVersion.add(radio3Version);		bgVersion.add(radio4Version);		bgVersion.add(radio5Version);
-	        radio1Version.addActionListener(new RadioListener());	radio2Version.addActionListener(new RadioListener());	radio3Version.addActionListener(new RadioListener());	radio4Version.addActionListener(new RadioListener()); radio5Version.addActionListener(new RadioListener());	
+	    	/*
+			this.radio1Version.setBorder(null);
+			this.radio2Version.setBorder(null);
+			this.radio3Version.setBorder(null);
+			this.radio4Version.setBorder(null);
+			this.radio5Version.setBorder(null);
+			this.radio6Version.setBorder(null);
+	    	 */
+	        
+	        bgVersion.add(radio1Version);		bgVersion.add(radio2Version);		bgVersion.add(radio3Version);		bgVersion.add(radio4Version);		bgVersion.add(radio5Version);	bgVersion.add(radio6Version);
+	        radio1Version.addActionListener(new RadioListener());	radio2Version.addActionListener(new RadioListener());	radio3Version.addActionListener(new RadioListener());	radio4Version.addActionListener(new RadioListener()); 	radio5Version.addActionListener(new RadioListener());	radio6Version.addActionListener(new RadioListener());	
 	        radio1Version.setSelected(true);	        
-	        radioPanelVersion.setLayout(new GridLayout(6,1));
+	        radioPanelVersion.setLayout(new GridLayout(7,1));
 	        radioPanelVersion.setPreferredSize(new Dimension(220, 220));
-	        radioPanelVersion.add(radioLabelVersion);	radioPanelVersion.add(radio1Version);		radioPanelVersion.add(radio2Version);	radioPanelVersion.add(radio3Version);		radioPanelVersion.add(radio4Version);	radioPanelVersion.add(radio5Version);
+	        radioPanelVersion.add(radioLabelVersion);	radioPanelVersion.add(radio1Version);		radioPanelVersion.add(radio2Version);	radioPanelVersion.add(radio3Version);		radioPanelVersion.add(radio4Version);	radioPanelVersion.add(radio5Version);	radioPanelVersion.add(radio6Version);
 	        radioLabelVersion.setVerticalAlignment(SwingConstants.TOP);
 	        radioLabelVersion.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -864,6 +873,9 @@ public class Menu {
 		this.radio3Version.setText(Langue.translate(new String[] {"radioVersion", "3"}));
 		this.radio4Version.setText(Langue.translate(new String[] {"radioVersion", "4"}));
 		this.radio5Version.setText(Langue.translate(new String[] {"radioVersion", "5"}));
+		this.radio6Version.setText(Langue.translate(new String[] {"radioVersion", "6"}));
+	
+		
 		
 		this.radioLabelQte.setText(Langue.translate(new String[] {"radioQte", "0"}));
 		this.radio1Qte.setText(Langue.translate(new String[] {"radioQte", "1"}));

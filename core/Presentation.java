@@ -206,7 +206,7 @@ public class Presentation extends JPanel{
 				y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getHelloString().getHeight()/2);
 				myTask.getHelloString().setProperties(x, y, true);				
 		}
-		else if (myTask.getMySlide().getSlideName() == "keyGeneralExplanation"){
+		else if (myTask.getMySlide().getSlideName() == "keyGeneralExplanation" || myTask.getMySlide().getSlideName() == "keyGeneralExplanation2"){
 				//  --	--	--	--
 				//	--	--	--	--
 				
@@ -225,6 +225,9 @@ public class Presentation extends JPanel{
 					tempImageBox.setProperties(x, y + 125, true);
 				}
 		}
+		
+		
+		
 		else if (myTask.getMySlide().getSlideName() == "keyDetailedExplanation"){
 				//		--
 				//	----------
@@ -574,8 +577,8 @@ public class Presentation extends JPanel{
 				
 				if (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SPG")
 				{
+					// Imagerie
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SPG", myTask.getImagerie());}
-			
 					if (myTask.getImagerie() == "EEG")
 					{
 						if (myTask.getMySlide().getSoloStimulus().getMatch()== "isMatching")
@@ -602,7 +605,15 @@ public class Presentation extends JPanel{
 						}
 					}
 
-					tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
+					// Déclenchement du stim
+					tempImageBox = null;
+					if(! myTask.isStimsAreSounds()){
+						tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
+					}else if(myTask.isStimsAreSounds()){
+						System.out.println(stim.get(count).getName());
+						myTask.getMySounds().get(stim.get(count).getName()).playMe();
+						tempImageBox = myTask.getBlackSquare()[0];
+					}
 					x =  Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloStimulus());
@@ -613,17 +624,32 @@ public class Presentation extends JPanel{
 				else if (myTask.getMySlide().getSoloOtherStimulus().getSPG_SPD_SM_DM() == "SPD")
 				{
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SPD", myTask.getImagerie());}
-					tempImageBox =  myTask.getMyImages().get(otherStim.get(count).getName())[rgen.nextInt(3)];
+					
+					tempImageBox = null;
+					if(! myTask.isStimsAreSounds()){
+						tempImageBox =  myTask.getMyImages().get(otherStim.get(count).getName())[rgen.nextInt(3)];
+					}else if(myTask.isStimsAreSounds()){
+						myTask.getMySounds().get(otherStim.get(count).getName()).playMe();
+						tempImageBox = myTask.getBlackSquare()[0];
+					}
 					x =  Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloOtherStimulus());
+					
 					
 					Main.getInstance().addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(1), myTask.getMyOtherExpectedKeys(), myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), System.currentTimeMillis()));
 				}
 				else if  (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SM" )
 				{
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("SM", myTask.getImagerie());}
-					tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
+					
+					tempImageBox = null;
+					if(! myTask.isStimsAreSounds()){
+						tempImageBox =  myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
+					}else if(myTask.isStimsAreSounds()){
+						myTask.getMySounds().get(stim.get(count).getName()).playMe();
+						tempImageBox = myTask.getBlackSquare()[0];
+					}
 					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloStimulus());
@@ -633,15 +659,30 @@ public class Presentation extends JPanel{
 				else if  (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "DM" )
 				{
 					if (myTask.getImagerie() == "IO"){Signal.sendSignal("DM", myTask.getImagerie());}
-					tempImageBox = myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
+					tempImageBox = null;
+					
+					if(! myTask.isStimsAreSounds()){
+						tempImageBox = myTask.getMyImages().get(stim.get(count).getName())[rgen.nextInt(3)];
+					}else if(myTask.isStimsAreSounds()){
+						myTask.getMySounds().get(stim.get(count).getName()).playMe();
+						tempImageBox = myTask.getBlackSquare()[0];
+					}
 					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
 					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloStimulus());
 					
-					tempImageBox = myTask.getMyImages().get(otherStim.get(count).getName())[rgen.nextInt(3)];
+					
+					if(! myTask.isStimsAreSounds()){
+						tempImageBox = myTask.getMyImages().get(otherStim.get(count).getName())[rgen.nextInt(3)];
+					}else if(myTask.isStimsAreSounds()){
+						myTask.getMySounds().get(otherStim.get(count).getName()).playMe();
+						tempImageBox = myTask.getBlackSquare()[0];
+					}
 					x = Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2;
 					y = Main.getInstance().getBigPanel().getHeight()/2 - tempImageBox.getHeight()/2;
-					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloOtherStimulus());		
+					tempImageBox.setProperties(x, y, true, myTask.getMySlide().getSoloOtherStimulus());	
+					
+					
 					
 					Main.getInstance().addKeyListener(taskListener = new TaskListener (myTask.getMySlide().getExpectedKey(0), myTask.getMyExpectedKeys(), myTask.getMYNEARKEYS(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(),  myTask.getMyOtherExpectedKeys(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), System.currentTimeMillis()));
 					Main.getInstance().addKeyListener(taskListener2 = new TaskListener (myTask.getMySlide().getExpectedKey(1), myTask.getMyOtherExpectedKeys(), myTask.getMYOTHERNEARKEYS(), myTask.getMySlide().getSoloOtherStimulus(), myTask.getRightReminderString(), myTask.getMyExpectedKeys(), myTask.getMySlide().getSoloStimulus(), myTask.getLeftReminderString(), System.currentTimeMillis()));
@@ -1181,19 +1222,11 @@ GraphicEngine.setModifying(false);
 				//erreur
 				else if (!ignore.contains(""+key))
 				{
-					SoundClip.play(myTask.getErrorSound());
+					if(! myTask.isStimsAreSounds())
+						SoundClip.play(myTask.getErrorSound());
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsNotMatch", myTask.getImagerie());}
 
-					/*try
-					{
-						myTask.getErrorSound().run();
-
-					}
-					catch ( IllegalThreadStateException error)
-					{
-						myTask.getErrorSound().run();
-					}*/
 					
 					writeStimInfo(false, System.currentTimeMillis() -time, System.currentTimeMillis() -Task.syncTime, key, System.currentTimeMillis(), stimulus);
 					if (otherNearKeys.contains("" + key)){
@@ -1370,19 +1403,22 @@ GraphicEngine.setModifying(false);
 				{
 					//label.setVisible(false);
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
-					SoundClip.play(myTask.getErrorSound());
+					if(! myTask.isStimsAreSounds())
+						SoundClip.play(myTask.getErrorSound());
 					new Animate(new String[]{"color", "255,0,0, 255"}, 100, label, myTask.getMyGUI());					
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
 				}
 				if ((myTask.getMySlide().getSoloOtherStimulus().getSPG_SPD_SM_DM() == "SPD" || myTask.getMySlide().getSoloOtherStimulus().getSPG_SPD_SM_DM() == "DM")  && !myTask.getMySlide().getSoloOtherStimulus().getIsAnswered()) 
 				{
-					SoundClip.play(myTask.getErrorSound());
+					if(! myTask.isStimsAreSounds())
+						SoundClip.play(myTask.getErrorSound());
 					new Animate(new String[]{"color", "255,0,0, 255"}, 100, otherLabel, myTask.getMyGUI());
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloOtherStimulus());
 				}
 				if (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SM" && !myTask.getMySlide().getSoloStimulus().getIsLeft() && !myTask.getMySlide().getSoloStimulus().getIsAnswered())
 				{
-					SoundClip.play(myTask.getErrorSound());
+					if(! myTask.isStimsAreSounds())
+						SoundClip.play(myTask.getErrorSound());
 					new Animate(new String[]{"color", "255,0,0, 255"}, 100, otherLabel, myTask.getMyGUI());
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
 				}

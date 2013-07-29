@@ -88,6 +88,7 @@ public class Task {
 	private  HashMap<String, ImageBox[]> myImages = new HashMap<String, ImageBox[]> ();
 	private  HashMap<String, ImageBox[]> mySmallImages = new HashMap<String, ImageBox[]> ();
     private  HashMap<String, ImageBox[]> mySmallerImages = new HashMap<String, ImageBox[]> ();
+    private  HashMap<String, SoundClip> mySounds = new HashMap<String, SoundClip> ();
     
     private ImageBox speed = new ImageBox(0, 0, 300, 243, ENVIRONNEMENT + "speedmeter.png", "speedometer");
     private ImageBox feedback = new ImageBox(0, 0, 800, 299, ENVIRONNEMENT + "feedback1.png", "feedback");
@@ -102,10 +103,10 @@ public class Task {
     private ImageBox[] blackSquareSmaller = new ImageBox[9];
     private ImageBox[] blackSquare = new ImageBox[9];
 	
-    private SoundClip errorSound = new SoundClip( "error.wav");
-    private SoundClip badSound = new SoundClip( "bad.wav");
-	private SoundClip goodSound = new SoundClip("good.wav");
-	private SoundClip overviewSound = new SoundClip("overview.wav");
+    private SoundClip errorSound = new SoundClip( "error.wav", "error");
+    private SoundClip badSound = new SoundClip( "bad.wav", "bad");
+	private SoundClip goodSound = new SoundClip("good.wav", "goodSound");
+	private SoundClip overviewSound = new SoundClip("overview.wav", "overviewSound");
 
 
 
@@ -157,7 +158,7 @@ public class Task {
 	private Presentation myGUI;
 	
 	private GraphicEngine ge;
-	
+	private boolean stimsAreSounds = false;
 
 
 	public Task(HashMap<String, Integer> myParameters){
@@ -169,6 +170,13 @@ public class Task {
 		
 		this.sujetID = (myParameters.get("sujetID"));
 		this.version = myParameters.get("version");
+		
+
+		if(this.version == 6)
+			stimsAreSounds = true;
+
+		
+		
 		this.qte = myParameters.get("qte") + 1 ;
 		if (version == 5)
 			this.qte = 9 ;
@@ -244,7 +252,7 @@ public class Task {
 		else if (myParameters.get("format") == 2)
 			this.format = "noNumpad";
 		
-		//Phil - exception pour la tâche 5
+		//exception pour la tâche de Phillips en 0-back
 		if (nBack<0 || version == 5)
 		{
 			if (myParameters.get("boxNback") == 1)
@@ -338,7 +346,7 @@ public class Task {
 		else if (myParameters.get("isIO") == 4)
 			this.imagerie = "EEG";
 		
-		// �gal le nombre de tic (1 tic = 30sec)
+		// égal le nombre de tic (1 tic = 30sec)
 		this.pauseT = (myParameters.get("pauseT"))-1;
 		
 		// Instanciation of arrays
@@ -372,31 +380,23 @@ public class Task {
 
 		setBackground(new ImageBox(0, 0, 900, 700, ENVIRONNEMENT + "background.png", "background"));
 
-		
 		helloString = new ImageBox(Color.BLACK, 48, Langue.translate(new String[] {"intro", "introCenter"}), 0, 0, 100, "hello");
 		
 		offsetString = new ImageBox(Color.WHITE, 24, Langue.translate("decalage"), 0, 0, 100, "offset");
 		
 		doNotAnswer = new ImageBox(Color.WHITE, 24, Langue.translate("doNotAnswer"), 0, 0, 100, "doNotAnswer");
 		
-		//x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - myTask.getReminderExplanation1().getWidth()/2);
-		//y = (int)(Main.getInstance().getBigPanel().getHeight()/2 - myTask.getReminderExplanation1().getHeight()/2) - 100;
 		reminderExplanation1 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 500, 500, Langue.translate("reminderExplanation1"), "reminderExplanation1");
 		reminderExplanation2 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 500, 500, Langue.translate("reminderExplanation2"), "reminderExplanation2");
 		reminderExplanation3 = new ImageBox(new Color(255, 255, 7, 255), new Font("Arial", Font.BOLD, 16), 0, 0, 300, 500, Langue.translate("reminderExplanation3"), "reminderExplanation3");
 
-		
 		urgency = new ImageBox(Color.RED, new Font("Arial", Font.BOLD, 30), 0, 0, 650, 500, Langue.translate("urgency"), "urgency");
 		
-		
-		andString = new ImageBox(Color.BLACK, 48, Langue.translate("and"), 0, 0, 90, "and");
-		orString = new ImageBox(Color.BLACK, 48, Langue.translate("or"), 0, 0, 90, "or");
-		
 		andString = new ImageBox(Color.BLACK, 48, Langue.translate("and"), 0, 0, 90, "and");
 		orString = new ImageBox(Color.BLACK, 48, Langue.translate("or"), 0, 0, 90, "or");
 		
 		
-		//cr�ation unique de toute les clefs et claviers
+		//création unique de toute les clefs et claviers
 		for (int i = 0; i < leftKeys.length; i++)
 		{
 			myImgKeys.put(leftKeys[i], new ImageBox(Color.BLACK, keyFont, 0, 0, 80, 66, ENVIRONNEMENT + "touche.png", "   " +leftKeys[i].toUpperCase(), "imgKeyLeft" + leftKeys[i]));
@@ -433,35 +433,78 @@ public class Task {
 		//pairage devrait faire effet ici!!!!
 
 		for(int i=0; i < qte; i++){
-			if (this.typeNback == "matching")
-			{
-				myStimulus[i] = new Stimulus(name[i] , fullName[i], "n/a", version, true, i, qte, nBack , typeNback);
-				myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], "n/a", version, false, i, qte, nBack, typeNback);
-				this.myExpectedKeys += leftKeys[0];		this.myExpectedKeys += leftKeys[1];
-				this.myOtherExpectedKeys+= rightKeys[0];		this.myOtherExpectedKeys+= rightKeys[1];
-			}
-			else
-			{
-				myStimulus[i] = new Stimulus(name[i] , fullName[i], leftKeys[i], version, true, i, qte, nBack, typeNback);
-				myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], rightKeys[i], version, false, i, qte, nBack, typeNback);
-				this.myExpectedKeys += leftKeys[i];
-				this.myOtherExpectedKeys+= rightKeys[i];
+			if(! stimsAreSounds){
+				if (this.typeNback == "matching")
+				{
+					myStimulus[i] = new Stimulus(name[i] , fullName[i], "n/a", version, true, i, qte, nBack , typeNback);
+					myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], "n/a", version, false, i, qte, nBack, typeNback);
+					this.myExpectedKeys += leftKeys[0];		this.myExpectedKeys += leftKeys[1];
+					this.myOtherExpectedKeys+= rightKeys[0];		this.myOtherExpectedKeys+= rightKeys[1];
+				}
+				else
+				{
+					myStimulus[i] = new Stimulus(name[i] , fullName[i], leftKeys[i], version, true, i, qte, nBack, typeNback);
+					myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], rightKeys[i], version, false, i, qte, nBack, typeNback);
+					this.myExpectedKeys += leftKeys[i];
+					this.myOtherExpectedKeys+= rightKeys[i];
+				}
+			}else if(stimsAreSounds){
+				
+				System.out.println("Name: " + name[i] + " fullName: " + fullName[i]);
+				
+				
+				if (this.typeNback == "matching")
+				{
+					myStimulus[i] = new Stimulus(name[i] , fullName[i], "n/a", version, true, i, qte, nBack , typeNback);
+					myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], "n/a", version, false, i, qte, nBack, typeNback);
+					
+					this.myExpectedKeys += leftKeys[0];		this.myExpectedKeys += leftKeys[1];
+					this.myOtherExpectedKeys+= rightKeys[0];		this.myOtherExpectedKeys+= rightKeys[1];
+				}
+				else
+				{
+					myStimulus[i] = new Stimulus(name[i] , fullName[i], leftKeys[i], version, true, i, qte, nBack, typeNback);
+					myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], rightKeys[i], version, false, i, qte, nBack, typeNback);
+					
+					this.myExpectedKeys += leftKeys[i];
+					this.myOtherExpectedKeys+= rightKeys[i];
+				}
+				
+				if(i == 0){
+					mySounds.put(name[i], new SoundClip("6/A/left.wav", "left"));
+					mySounds.put(name2[i], new SoundClip("6/B/go.wav", "go"));
+				}else if(i == 1){
+					mySounds.put(name[i], new SoundClip("6/A/right.wav", "right"));
+					mySounds.put(name2[i], new SoundClip("6/B/stop.wav", "stop"));
+				}
 			}
 			
-			//cr�ation unique de toute les images
-			myImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 160,160,  "images/" + version + "/A/" + (i + departGauche + 1) + "a.png", "images1" + name[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/A/" + (i + departGauche + 1) + "b.png", "images2" + name[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/A/" + (i + departGauche + 1) + "c.png", "images3" + name[i])});
-			mySmallImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "a.png", "smallImages1" + name[i]), new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "b.png", "smallImages2" + name[i]), new ImageBox(0, 0, 90, 90,160, 160, "images/" + version + "/A/" + (i + departGauche +1) + "c.png", "smallImages3" + name[i])});
-			mySmallerImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 70, 70, 160, 160,   "images/" + version + "/A/" + (i + departGauche +1) + "a.png", "smallerImages1" + name[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "b.png", "smallerImages2" + name[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "c.png", "smallerImages3" + name[i])});
-			
-			myImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 160,160,  "images/" + version + "/B/" + (i + 1) + "a.png", "images1" + name2[i]), new ImageBox(0, 0, 160,160,  "images/" + version + "/B/" + (i + 1) + "b.png", "images2" + name2[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/B/" + (i + 1) + "c.png", "images3" + name2[i])});
-			mySmallImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/B/" + (i + 1) + "a.png", "smallImages1" + name2[i]), new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/B/" + (i + 1) + "b.png", "smallImages2" + name2[i]), new ImageBox(0, 0, 90, 90,160, 160, "images/" + version + "/B/" + (i + 1) + "c.png", "smallImages3" + name2[i])});
-			mySmallerImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 70, 70, 160, 160,   "images/" + version + "/B/" + (i + 1) + "a.png", "smallerImages1" + name2[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/B/" + (i + 1) + "b.png", "smallerImages2" + name[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/B/" + (i + 1) + "c.png", "smallerImages3" + name[i])});
+			//création unique de toute les images
+			if(!stimsAreSounds){
+				myImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 160,160,  "images/" + version + "/A/" + (i + departGauche + 1) + "a.png", "images1" + name[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/A/" + (i + departGauche + 1) + "b.png", "images2" + name[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/A/" + (i + departGauche + 1) + "c.png", "images3" + name[i])});
+				mySmallImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "a.png", "smallImages1" + name[i]), new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "b.png", "smallImages2" + name[i]), new ImageBox(0, 0, 90, 90,160, 160, "images/" + version + "/A/" + (i + departGauche +1) + "c.png", "smallImages3" + name[i])});
+				mySmallerImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 70, 70, 160, 160,   "images/" + version + "/A/" + (i + departGauche +1) + "a.png", "smallerImages1" + name[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "b.png", "smallerImages2" + name[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "c.png", "smallerImages3" + name[i])});
+				
+				myImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 160,160,  "images/" + version + "/B/" + (i + 1) + "a.png", "images1" + name2[i]), new ImageBox(0, 0, 160,160,  "images/" + version + "/B/" + (i + 1) + "b.png", "images2" + name2[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/B/" + (i + 1) + "c.png", "images3" + name2[i])});
+				mySmallImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/B/" + (i + 1) + "a.png", "smallImages1" + name2[i]), new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/B/" + (i + 1) + "b.png", "smallImages2" + name2[i]), new ImageBox(0, 0, 90, 90,160, 160, "images/" + version + "/B/" + (i + 1) + "c.png", "smallImages3" + name2[i])});
+				mySmallerImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 70, 70, 160, 160,   "images/" + version + "/B/" + (i + 1) + "a.png", "smallerImages1" + name2[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/B/" + (i + 1) + "b.png", "smallerImages2" + name[i]), new ImageBox(0, 0, 70, 70, 160, 160,  "images/" + version + "/B/" + (i + 1) + "c.png", "smallerImages3" + name[i])});
+				
+			}else{
+				myImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 160,160,  "images/" + version + "/A/" + (i + departGauche + 1) + "a.png", "images1" + name[i])});
+				mySmallImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "a.png", "smallImages1" + name[i])});
+				mySmallerImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 70, 70, 160, 160,   "images/" + version + "/A/" + (i + departGauche +1) + "a.png", "smallerImages1" + name[i])});
+				
+				myImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 160,160,  "images/" + version + "/B/" + (i + 1) + "a.png", "images1" + name2[i])});
+				mySmallImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/B/" + (i + 1) + "a.png", "smallImages1" + name2[i])});
+				mySmallerImages.put(name2[i], new ImageBox[] {new ImageBox(0, 0, 70, 70, 160, 160,   "images/" + version + "/B/" + (i + 1) + "a.png", "smallerImages1" + name2[i])});
+			}
 			
 			blackSquareSmall[i * 3] = new ImageBox(Color.BLACK, 0, 0, 90, 90, "blackSquareSmall" + (i * 3));
 			blackSquareSmall[i * 3 + 1] = new ImageBox(Color.BLACK, 0, 0, 90, 90, "blackSquareSmall" + (i * 3 + 1));
 			blackSquareSmall[i * 3 + 2] = new ImageBox(Color.BLACK, 0, 0, 90, 90, "blackSquareSmall" + (i * 3 + 2));
 
 			blackSquareSmaller[i] = new ImageBox(Color.BLACK, 0, 0, 60, 60, "blackSquareSmaller" + i);
+		
 		}
 		
 		ge = new GraphicEngine(myGUI.getGraphic(), myGUI, 100);	//80
@@ -666,6 +709,7 @@ public class Task {
 		}
 	}
 
+	private static boolean first = true;
 	
 	public void addInstructions (Bloc myBloc, Bloc myOtherBloc, Stimulus[] mainStim, Stimulus[] secondStim)
 	{	
@@ -681,14 +725,23 @@ public class Task {
 		if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "SPG" || myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "SPD")
 		{	
 			if (this.typeNback == "matching"){
-				this.slideStack[this.slideCpt++] = new Slide("allStimuli", mainStim, secondStim);
+				if(! stimsAreSounds)
+					this.slideStack[this.slideCpt++] = new Slide("allStimuli", mainStim, secondStim);
 			}
 			else
 			{
-				this.slideStack[this.slideCpt++] = new Slide("keyGeneralExplanation", mainStim, secondStim);
+				if(first || ! stimsAreSounds){
+					this.slideStack[this.slideCpt++] = new Slide("keyGeneralExplanation", mainStim, secondStim);
+					first = false;
+				}else if (! first && stimsAreSounds){
+					this.slideStack[this.slideCpt++] = new Slide("keyGeneralExplanation2", mainStim, secondStim);
+				}
+				
+				
 				for(int i = this.slideCpt; this.slideCpt < (i + name.length); this.slideCpt++){
 					this.slideStack[this.slideCpt] = new Slide("keyDetailedExplanation", mainStim, secondStim, this.slideCpt - i);
 				}
+				if(! stimsAreSounds)
 				this.slideStack[this.slideCpt++] = new Slide("allStimuli", mainStim, secondStim);
 			}
 			
@@ -724,8 +777,9 @@ public class Task {
 		}
 		
 			//this.slideStack[this.slideCpt++] = new Slide("nBackExplanation", mainStim, secondStim);
-		if (this.typeNback == "matching")
+		if (this.typeNback == "matching" && ! stimsAreSounds)
 		{
+			
 			this.slideStack[this.slideCpt++] = new Slide("allStimuliNback", mainStim, secondStim);
 			if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM")
 			{
@@ -741,17 +795,6 @@ public class Task {
 
 		this.slideStack[this.slideCpt++] = new Slide("countdown");				
 
-		
-		//temp ArrayList tempListForShuffling = new ArrayList();
-		
-		
-		int nbI = 0;
-		
-
-		if (myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM" && isMixed)
-		{
-			nbI = this.slideCpt;
-		}
 		
 		
 		for (int i = 0; i < myBloc.getStimulusComplet().length; i++, this.slideCpt++){
@@ -775,10 +818,9 @@ public class Task {
 				{
 
 					myBloc.incrementNbSmDmStimuli();
-					
-					System.out.println(myBloc.getNbSmDmStimuli());
 					this.slideCpt--;
 					/*
+					 //test
 					//faire de snotes ici pcq ca fait 50%
 					random = rgen.nextInt(100);
 					 if ( random <= Math.ceil(mixedPourc/2) )
@@ -812,8 +854,6 @@ public class Task {
 		
 		// EverydayImShuffling
 		if(myBloc.getStimulusComplet()[0].getSPG_SPD_SM_DM() == "DM" && isMixed){
-		
-			System.out.println("isMixed");
 			
 			// Calculate the number of each type of trial
 			int nombre_total_essai = myBloc.getNbSmDmStimuli();
@@ -829,7 +869,6 @@ public class Task {
 					allStimArray[i] = "SMD";
 				else
 					allStimArray[i] = "DM";
-				//System.out.println(allStimArray[i]);	//verif
 			}
 			//Shuffle the list
 			Collections.shuffle(Arrays.asList(allStimArray));
@@ -851,8 +890,6 @@ public class Task {
 					Stimulus.setStimulusCpts(myBloc.getStimulusComplet()[i], myOtherBloc.getStimulusComplet()[i]);
 				}
 			}
-
-			//System.out.println("NbSmDmStimuli: " + myBloc.getNbSmDmStimuli());  //?
 		}
 	}
 	
@@ -999,8 +1036,11 @@ public class Task {
 	}
 
     public HashMap<String, ImageBox[]> getMyImages() {
-    	  
-		return myImages;
+    	return myImages;
+	}
+    
+    public HashMap<String, SoundClip> getMySounds() {
+    	return mySounds;
 	}
 
 	public HashMap<String, ImageBox[]> getMySmallImages() {
@@ -1244,12 +1284,10 @@ public class Task {
 	
     public SoundClip getErrorSound() {
 		return errorSound;
-	}
-    
+	}  
     public SoundClip getBadSound() {
 		return badSound;
 	}
-
 	public SoundClip getGoodSound() {
 		return goodSound;
 	}
@@ -1280,8 +1318,7 @@ public class Task {
 
 	public ImageBox getDoNotAnswer() {
 		return doNotAnswer;
-	}
-	
+	}	
 	public ImageBox getUrgency() {
 		return urgency;
 	}
@@ -1289,10 +1326,15 @@ public class Task {
 	public String[] getLeftKeys() {
 		return leftKeys;
 	}
-
 	public String[] getRightKeys() {
 		return rightKeys;
 	}
-	
+
+	public boolean isStimsAreSounds() {
+		return stimsAreSounds;
+	}
+	public void setStimsAreSounds(boolean stimsAreSounds) {
+		this.stimsAreSounds = stimsAreSounds;
+	}
   }
 
