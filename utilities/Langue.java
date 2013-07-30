@@ -38,6 +38,16 @@ public class Langue extends HashMap {
 			if(! Main.isApplet){
 				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE"});				
 				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f", "GO/STOP"});
+			
+				Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4>Version de la tâche</font></html>", "1: " + Langue.translate(new String[] {"tasksNames", "0"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "0"}),  
+						"2: " + Langue.translate(new String[] {"tasksNames", "1"}) + "  / " + Langue.translate(new String[] {"otherTasksNames", "1"}), 
+						"3: " + Langue.translate(new String[] {"tasksNames", "2"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "2"}), 
+						"4: " + Langue.translate(new String[] {"tasksNames", "3"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "3"}), 
+						"5: " + Langue.translate(new String[] {"tasksNames", "4"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "4"}),
+						"6: " + Langue.translate(new String[] {"tasksNames", "5"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "5"}),
+						"7: " + Langue.translate(new String[] {"tasksNames", "6"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "6"})
+				}); 
+			
 			}
 			
 			Utilities.iniHashMap(expression, "input", new String[]{"0", "1"}, new String[]{"Ma configuration (optionnelle): ", "Parcourir/Sélectionner..."});
@@ -53,14 +63,7 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "radioLangue", new String[]{"0", "1", "2"}, new String[]{"<html><font size = 4>Langue du participant</font></html>", 
 					"Français", "Anglais" });
 			
-			Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4>Version de la tâche</font></html>", "1: " + Langue.translate(new String[] {"tasksNames", "0"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "0"}),  
-					"2: " + Langue.translate(new String[] {"tasksNames", "1"}) + "  / " + Langue.translate(new String[] {"otherTasksNames", "1"}), 
-					"3: " + Langue.translate(new String[] {"tasksNames", "2"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "2"}), 
-					"4: " + Langue.translate(new String[] {"tasksNames", "3"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "3"}), 
-					"5: " + Langue.translate(new String[] {"tasksNames", "4"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "4"}),
-					"6: " + Langue.translate(new String[] {"tasksNames", "5"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "5"}),
-					"7: " + Langue.translate(new String[] {"tasksNames", "6"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "6"})
-			}); 
+			
 			
 			Utilities.iniHashMap(expression, "radioQte", new String[]{"0", "1", "2", "3" }, new String[]{"<html><font size = 4>Nombre de possiblités par main</font></html>", 
 					"Débutant : 2 par mains", "Intermédiaire : 3 par mains", "Expert : 4 par mains"});
@@ -171,6 +174,15 @@ public class Langue extends HashMap {
 			if(Main.isApplet){
 				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE"});				
 				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES","f", "GO/STOP"});		
+			
+				Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4>Version de la tâche</font></html>", "1: " + Langue.translate(new String[] {"tasksNames", "0"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "0"}),  
+						"2: " + Langue.translate(new String[] {"tasksNames", "1"}) + "  / " + Langue.translate(new String[] {"otherTasksNames", "1"}), 
+						"3: " + Langue.translate(new String[] {"tasksNames", "2"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "2"}), 
+						"4: " + Langue.translate(new String[] {"tasksNames", "3"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "3"}), 
+						"5: " + Langue.translate(new String[] {"tasksNames", "4"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "4"}),
+						"6: " + Langue.translate(new String[] {"tasksNames", "5"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "5"}),
+						"7: " + Langue.translate(new String[] {"tasksNames", "6"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "6"})
+				}); 
 			}
 			
 			
@@ -325,7 +337,10 @@ public class Langue extends HashMap {
 			expression.put("taskName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"étoile", "soleil", "lune", "planète"});
 			Utilities.iniHashMap(expression.get("taskName1"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"\"E\"", "\"U\"", "\"A\"", "\"O\""});
-			Utilities.iniHashMap(expression.get("taskName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"\"ß\"", "\"p\"", "\"Ω\"", "\"∑\""});
+			
+			Utilities.iniHashMap(expression.get("taskName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"\"bêta (ß)\"", "\"pi\"", "\"omega (Ω)\"", "\"sigma (∑)\""});
+			
+			//Utilities.iniHashMap(expression.get("taskName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"\"ß\"", "\"p\"", "\"Ω\"", "\"∑\""});
 			Utilities.iniHashMap(expression.get("taskName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"dé-3", "dé-1", "dé-6", "dé-2"});
 			Utilities.iniHashMap(expression.get("taskName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
 			Utilities.iniHashMap(expression.get("taskName1"), "5", new String[]{"0", "1"}, new String[]{"son à gauche", "son à droite"});
@@ -341,7 +356,7 @@ public class Langue extends HashMap {
 			expression.put("taskFullName1", new  HashMap <String, Object>() );
 			Utilities.iniHashMap(expression.get("taskFullName1"), "0", new String[]{"0", "1", "2", "3"}, new String[]{"une étoile", "un soleil", "une lune", "une planète"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "1", new String[]{"0", "1", "2", "3"}, new String[]{"un E", "un U", "un A", "un O"});
-			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"un ß (bétâ)", "un p (pi)", "un Ω (omega)", "un ∑ (sigma)"});
+			Utilities.iniHashMap(expression.get("taskFullName1"), "2", new String[]{"0", "1", "2", "3"}, new String[]{"un ß (bêta)", "un p (pi)", "un Ω (omega)", "un ∑ (sigma)"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"un dé-3", "un dé-1", "un dé-6", "un dé-2"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"un 1", "un 2", "un 3", "un 4", "un 5", "un 6", "un 7", "un 8", "un 9"});
 			Utilities.iniHashMap(expression.get("taskFullName1"), "5", new String[]{"0", "1"}, new String[]{"un son provenant de la gauche", "un son provenant de la droite"});
