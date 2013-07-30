@@ -120,7 +120,7 @@ public class WriteLog {
 			s += aLastline[i] + sTab;
 		}	
 		//rt
-		s += AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good") + sTab; ;
+		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good") + sTab; ;
 		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good") + sTab; 
 		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good")+ sTab; 
 		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good")+ sTab; 
@@ -212,7 +212,7 @@ public class WriteLog {
 					s += "tempsIsi" + sTab;
 					s += "nBack" + sTab;	
 					s += "typedeNBack" + sTab;	
-					//s += "%mixed" + sTab;
+					s += "%mixed" + sTab;
 					
 					t += "spgRt" + sTab;
 					t += "smgRt" + sTab;
@@ -243,7 +243,6 @@ public class WriteLog {
 					writeString(s + t + sChariot, "data/log_" + ID);
 	
 			}else if(type.equals("donnee")){
-					s += "%mixte" + sTab;
 					s += "bloc" + sTab;
 					s += "trialLoc" + sTab;
 					s += "trialUnique" + sTab;

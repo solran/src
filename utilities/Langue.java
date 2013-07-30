@@ -300,7 +300,7 @@ public class Langue extends HashMap {
 			
 			expression.put("reminderExplanation1", "Vous pouvez consulter les rappels au bas de l'écran/n en tout temps, mais votre regard doit être maintenu/n au centre de l'écran lorsque la croix apparait.");
 			expression.put("reminderExplanation2", "Les images apparaitront à l'endroit où se trouve la croix ci-bas.");
-			expression.put("reminderExplanation3", "Pour commencer, appuyez/n sur la barre d'espacement");
+			expression.put("reminderExplanation3", "Pour commencer, appuyez/n sur la barre d'espacement.");
 
 			
 			

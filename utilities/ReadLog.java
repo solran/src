@@ -16,10 +16,10 @@ import core.Task;
 
 
 public class ReadLog {
-	///* %!#Applet
+	/* %!#Applet
 	public static String sTab = "espacement", sParam = "findeligne";   // sParameter = separateur entre les lignes envoyées par param dans l'applet
 	//*/
-	/* %!#Desktop
+	///* %!#Desktop
 	public static String sTab = "\t";
 	//*/
 	
@@ -56,13 +56,13 @@ public class ReadLog {
 				WriteLog.writeTitle("donnee", ID);
 			}
 		}else if(Main.isApplet){
-			///* %!#Applet
+			/* %!#Applet
 			String[] lastLine;
 			String[] allLine;
 			
 			if(! Main.getInstance().getParameter("log").equals("0")){
 				allLine = Main.getInstance().getParameter("log").split(sParam); //sParam
-				lastLine = allLine[allLine.length - 1].split(sTab);		//trouve la dernière lignesTab
+				lastLine = allLine[allLine.length - 1].split(sTab);		
 				session = Integer.parseInt(lastLine[1].trim());
 				System.out.println("Session: " + session);
 			}else{
@@ -101,7 +101,7 @@ public class ReadLog {
 				System.out.println("Erreur! Fichier en lecture inexistant");
 			}
 		}else if(Main.isApplet){
-			///* %!#Applet
+			/* %!#Applet
 			String[] thisLine, allLine;
 			
 			allLine = Main.getInstance().getParameter("log").split(sParam);
@@ -142,7 +142,7 @@ public class ReadLog {
 		}else if(Main.isApplet){
 			String[] allLine;
 			
-			///* %!#Applet
+			/* %!#Applet
 				allLine = Main.getInstance().getParameter("log").split(sParam);
 				for(int i=0; i < allLine.length; i++){
 					fullFile.add(allLine[i]);

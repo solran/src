@@ -215,7 +215,7 @@ public class ImageBox{
 					e.printStackTrace();
 				}
 			}else if(Main.isApplet){
-			///* %!#Applet
+			/* %!#Applet
 				try {
 					URL url = new URL(Main.getInstance().getDocumentBase(),"../" + this.imagePath);
 					this.myImage = Main.getInstance().getImage(url);
