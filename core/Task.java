@@ -114,7 +114,7 @@ public class Task {
     
     private ImageBox progressBar = new ImageBox(Color.YELLOW, 0, 0, 1, 25, "progress_bar");
     
-    private ImageBox frontProgressBar = new ImageBox(0, 0, 1100, 33, ENVIRONNEMENT + "progress_bar_front.png", "progress_bar_front");
+    private ImageBox frontProgressBar = new ImageBox(0, 0, 955, 70, ENVIRONNEMENT + "progress_bar_front.png", "progress_bar_front");
     private ImageBox circleProgressBar = new ImageBox(0, 0, 13, 12, ENVIRONNEMENT + "progress_bar_circle.png", "progress_bar_circle");
     
     private ImageBox overview = new ImageBox(0, 0, 400, 309, ENVIRONNEMENT + "overview.png", "overview");

@@ -145,6 +145,8 @@ public class Presentation extends JPanel{
 		
 		if(!myTask.getMySlide().isStimulus() && myTask.getMySlide().getSlideName() != "reminderExplanation" && myTask.getMySlide().getSlideName() != "countdown" && myTask.getMySlide().getSlideName() != "pause"){
 
+			System.out.println("New Block");
+			
 			if(! finished)
 				WriteLog.writeMeans( myTask, "data/log_");
 			
@@ -166,19 +168,21 @@ public class Presentation extends JPanel{
 			
 			// Progress Bar
 			x = Main.getInstance().getBigPanel().getWidth()/2 - myTask.getFrontProgressBar().getWidth()/2;
-			y = Main.getInstance().getBigPanel().getHeight() - myTask.getFrontProgressBar().getHeight();
+			y = Main.getInstance().getBigPanel().getHeight() - myTask.getFrontProgressBar().getHeight() + 15;
 			
 			
 			progressRatio = (myTask.getBackProgressBar().getWidth() - 15) * ((float)Bloc.getBlocActuel() / (float)Bloc.getnbBloc());
 
-			myTask.getBackProgressBar().setProperties(x + 170, y, true);	// 170 = width of backspace
+			int widthBackspace = 96;
+			int yAdjustement = 19;
+			myTask.getBackProgressBar().setProperties(x + widthBackspace, y + yAdjustement, true);	// 170 = width of backspace
 		
 
 			myTask.getProgressBar().setWidth((int)progressRatio);            ///(int)progressRatio );        //Animation ?        y toujours la m�me chose
-            myTask.getProgressBar().setProperties(x + 175, y + 2, true);
+            myTask.getProgressBar().setProperties(x + widthBackspace + 5, y + yAdjustement + 2, true);
             
             myTask.getFrontProgressBar().setProperties(x, y, true);
-			myTask.getCircleProgressBar().setProperties(x + 170 + (int)progressRatio, y + 10, true);
+			myTask.getCircleProgressBar().setProperties(x + widthBackspace + (int)progressRatio, y + yAdjustement + 10, true);
 		
 			
 			myTask.getLeftReminderString().setVisible(false);
@@ -387,19 +391,19 @@ public class Presentation extends JPanel{
 						
 				
 				
-				/*if(myTask.getVersion() == 5 && myTask.getnBack() == 0){
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0){
 					
-				}else{*/
+				}else{
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[0];
 						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[0].setProperties(x, y, true);
 						tempImageBox.setProperties(x, y, true);
-				//}
+				}
 				
 				
-				/*if(myTask.getVersion() == 5 && myTask.getnBack() == 0)
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0)
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[2].getName())[1];
-				else*/
+				else
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[1];
 						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
 						myTask.getBlackSquareSmall()[1].setProperties(x, y, true);
@@ -423,18 +427,18 @@ public class Presentation extends JPanel{
 						
 					y = yOrigin+ 2 * 200;
 					
-				/*if(myTask.getVersion() == 5 && myTask.getnBack() == 0){
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0){
 					
-				}else{	*/
+				}else{	
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[0].getName())[2];
 					x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (1 ) - tempImageBox.getWidth()/2 + xOrigin;
 					myTask.getBlackSquareSmall()[2].setProperties(x, y, true);
 					tempImageBox.setProperties(x, y, true);
-				//}	
+				}	
 						
-				/*if(myTask.getVersion() == 5 && myTask.getnBack() == 0)
+				if(myTask.getVersion() == 5 && myTask.getnBack() == 0)
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[6].getName())[2];
-				else*/
+				else
 					tempImageBox =  myTask.getMySmallImages().get(ActualStimulus[1].getName())[2];
 						
 						x = (int)((Main.getInstance().getMainPanel().getWidth())/(4)) * (2 ) - tempImageBox.getWidth()/2 + xOrigin;
@@ -1390,6 +1394,7 @@ GraphicEngine.setModifying(false);
 			}
 			
 			/*
+			//test raccourci d'affichage pour Phillips
 			if(myTask.getVersion() == 5 && this.tic < myTask.getAnswerT() && this.tic > myTask.getStimT()){
 				if(myTask.getMySlide().getSoloStimulus().getIsAnswered()){
 					this.tic = myTask.getAnswerT();
