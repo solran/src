@@ -335,10 +335,14 @@ public class WriteLog {
 			Pattern p_log = Pattern.compile("^data/log_[0-9]+$");
 			Pattern p_data = Pattern.compile("^data/donnees_[0-9]+$");
 			Pattern p_console = Pattern.compile("^data/console_[0-9]+$");
+			Pattern p_bloc = Pattern.compile("^data/bloc_[0-9]+$");
+			
 			
 			Matcher m_log = p_log.matcher(location);
 			Matcher m_data = p_data.matcher(location);
 			Matcher m_console = p_console.matcher(location);
+			Matcher m_bloc = p_bloc.matcher(location);
+			
 			
 			if(m_log.find() == true){
 				output = "app_log.php";
@@ -347,6 +351,9 @@ public class WriteLog {
 			}else if(m_console.find() == true){
 				//output = "app_console.php";  //test
 				output= "test.php";
+			}else if(m_bloc.find() == true){
+				output = "app_bloc.php";
+				
 			}else{
 				System.out.println("Format incorrect de fichier de sortie");
 			}
@@ -385,5 +392,4 @@ public class WriteLog {
 	        }
 		}
 	}
-
 }

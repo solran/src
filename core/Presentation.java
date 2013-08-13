@@ -462,10 +462,11 @@ public class Presentation extends JPanel{
 			}
 			else if (myTask.getMySlide().getSlideName() == "feedback"){
 				// Feedback & Priorite
-				tempImageBox =  myTask.getFeedback();
+				/*tempImageBox =  myTask.getFeedback();
 				x =(int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 				y = yOrigin + 180;
 				tempImageBox.setProperties(x, y, true);
+				*/
 				
 			}
 			else if (myTask.getMySlide().getSlideName() == "priorite"){
@@ -478,22 +479,24 @@ public class Presentation extends JPanel{
 				
 				if (i > 1.20)	//Philippe
 				{
-					SoundClip.play(myTask.getBadSound());
+					
+					myTask.getBadSound().playMe();
+					
 					Langue.setPriority("left");
-					tempImageBox = myTask.getSpeed();
+					/*tempImageBox = myTask.getSpeed();
 					x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 					y = yOrigin + 150;
 					
-					/*x = xOrigin + 400;
-					y = yOrigin + 150;*/
+					
 					tempImageBox.setProperties(x, y, true);
 					
 					
 					new Animate(new String[]{"translation", (xOrigin + 400) + "," + (yOrigin + 150)}, 2000, tempImageBox, Main.getInstance().getMainPanel());
-
+					 */
 				}
 				else if (i < 0.80)	//Philippe
 				{
+					/*
 					SoundClip.play(myTask.getBadSound());
 					Langue.setPriority("right");
 					tempImageBox = myTask.getSpeed();
@@ -502,11 +505,12 @@ public class Presentation extends JPanel{
 					tempImageBox.setProperties(x, y, true);
 					
 					new Animate(new String[]{"translation", (xOrigin + 200) + "," + (yOrigin + 150)}, 2000, tempImageBox, Main.getInstance().getMainPanel());
-
+					 */
 				}
 				else
 				{
-					SoundClip.play(myTask.getGoodSound());
+					myTask.getGoodSound().playMe();
+					
 					Langue.setPriority("equal");
 					tempImageBox =  myTask.getGood();
 					x = (int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
@@ -1228,7 +1232,8 @@ GraphicEngine.setModifying(false);
 				else if (!ignore.contains(""+key))
 				{
 					if(! myTask.isStimsAreSounds())
-						SoundClip.play(myTask.getErrorSound());
+						myTask.getErrorSound().playMe();
+					
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "isMatching"){Signal.sendSignal("badAnsMatch", myTask.getImagerie());}
 					if (myTask.getImagerie() == "EEG" & stimulus.getMatch() == "notMatching"){Signal.sendSignal("badAnsNotMatch", myTask.getImagerie());}
 
@@ -1411,21 +1416,21 @@ GraphicEngine.setModifying(false);
 					//label.setVisible(false);
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
 					if(! myTask.isStimsAreSounds())
-						SoundClip.play(myTask.getErrorSound());
+						myTask.getErrorSound().playMe();
 					new Animate(new String[]{"color", "255,0,0, 255"}, 100, label, myTask.getMyGUI());					
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
 				}
 				if ((myTask.getMySlide().getSoloOtherStimulus().getSPG_SPD_SM_DM() == "SPD" || myTask.getMySlide().getSoloOtherStimulus().getSPG_SPD_SM_DM() == "DM")  && !myTask.getMySlide().getSoloOtherStimulus().getIsAnswered()) 
 				{
 					if(! myTask.isStimsAreSounds())
-						SoundClip.play(myTask.getErrorSound());
+						myTask.getErrorSound().playMe();
 					new Animate(new String[]{"color", "255,0,0, 255"}, 100, otherLabel, myTask.getMyGUI());
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloOtherStimulus());
 				}
 				if (myTask.getMySlide().getSoloStimulus().getSPG_SPD_SM_DM() == "SM" && !myTask.getMySlide().getSoloStimulus().getIsLeft() && !myTask.getMySlide().getSoloStimulus().getIsAnswered())
 				{
 					if(! myTask.isStimsAreSounds())
-						SoundClip.play(myTask.getErrorSound());
+						myTask.getErrorSound().playMe();
 					new Animate(new String[]{"color", "255,0,0, 255"}, 100, otherLabel, myTask.getMyGUI());
 					writeStimInfo(true, 9999.0, 9999.0, '&', System.currentTimeMillis(), myTask.getMySlide().getSoloStimulus());
 				}

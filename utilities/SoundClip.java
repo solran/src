@@ -14,13 +14,14 @@ public class SoundClip {
 	private URL u;
 	private Clip clip;
 	private String name = "";
-
+	private AudioInputStream sample;
+	
 	public SoundClip(String path, String name)
 	{
 		this.name = name;
 		
 		if(! Main.isApplet){
-			this.u = Main.myWindow.getClass().getClassLoader().getResource( "sounds/" + path);
+			this.u = Main.getInstance().getClass().getClassLoader().getResource( "sounds/" + path);
 			
 			//this.u = Main.getInstance().getClass().getClassLoader().getResource( "sounds/" + path);
 			//System.out.println("Intro Sound Path: " + u.getPath());
@@ -34,26 +35,18 @@ public class SoundClip {
 			}
 			//*/
 		}
-	}
-	
-	public void playMe(){
-		play(this);
-	}
-	
-	
-	//"./sounds/"
-	public static void play (SoundClip sc)
-	{
 		
 		
+		// Preload the sounds, to avoid lag in applet mode
 		try {
-		    // Open an audio input stream.
-		    AudioInputStream audioIn = AudioSystem.getAudioInputStream(sc.getURL());
+			 // Open an audio input stream.
+		    sample = AudioSystem.getAudioInputStream(this.u);
 		    // Get a sound clip resource.
-		    sc.setClip(AudioSystem.getClip());
+		    this.setClip(AudioSystem.getClip());
 		    // Open audio clip and load samples from the audio input stream.
-		    sc.getClip().open(audioIn);
-		    sc.getClip().start();
+		    this.getClip().open(sample);
+		    
+		    
 		 } catch (UnsupportedAudioFileException e) {
 			 System.out.print("playing sounds UNS");
 		    e.printStackTrace();
@@ -63,10 +56,23 @@ public class SoundClip {
 		 } catch (LineUnavailableException e) {
 			 System.out.print("playing soundsLIN");
 		    e.printStackTrace();
-	 	} catch (NullPointerException e) {
+	 	 } catch (NullPointerException e) {
 	 		System.out.print("playing soundsNULL");
 		    e.printStackTrace();
 		 }
+	}
+	
+	public void playMe(){
+		play(this);
+	}
+	
+	
+	//"./sounds/"
+	public void play (SoundClip sc)
+	{
+		sc.getClip().stop();
+		sc.getClip().setFramePosition(0);
+		sc.getClip().start();
 	}
 	
 	public URL getURL() {

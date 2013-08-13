@@ -192,8 +192,9 @@ public class Menu {
     private SoundClip introSong = new SoundClip("intro.wav", "intro");
 
 	public Menu(){
+
+		introSong.playMe();
 		
-		SoundClip.play(introSong);
 		
  		Langue.setMenuLangue("francais");
 		refreshLangue();

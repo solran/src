@@ -90,8 +90,8 @@ public class Task {
     private  HashMap<String, ImageBox[]> mySmallerImages = new HashMap<String, ImageBox[]> ();
     private  HashMap<String, SoundClip> mySounds = new HashMap<String, SoundClip> ();
     
-    private ImageBox speed = new ImageBox(0, 0, 300, 243, ENVIRONNEMENT + "speedmeter.png", "speedometer");
-    private ImageBox feedback = new ImageBox(0, 0, 800, 299, ENVIRONNEMENT + "feedback1.png", "feedback");
+    //private ImageBox speed = new ImageBox(0, 0, 300, 243, ENVIRONNEMENT + "speedmeter.png", "speedometer");
+    //private ImageBox feedback = new ImageBox(0, 0, 800, 299, ENVIRONNEMENT + "feedback1.png", "feedback");
     private ImageBox[] equal = new ImageBox[] { new ImageBox (0, 0, 50, 50, ENVIRONNEMENT + "equal.png", "equal1"), new ImageBox (0, 0, 50, 50, ENVIRONNEMENT + "equal.png", "equal2")};
     private ImageBox cross = new ImageBox(0, 0, 160, 160, ENVIRONNEMENT + "cross.png", "cross");
     private ImageBox good = new ImageBox(0, 0, 275, 275, ENVIRONNEMENT + "good.png", "good");
@@ -106,7 +106,8 @@ public class Task {
     private SoundClip errorSound = new SoundClip( "error.wav", "error");
     private SoundClip badSound = new SoundClip( "bad.wav", "bad");
 	private SoundClip goodSound = new SoundClip("good.wav", "goodSound");
-	private SoundClip overviewSound = new SoundClip("overview.wav", "overviewSound");
+	
+	//private SoundClip overviewSound = new SoundClip("overview.wav", "overviewSound");
 
 
 
@@ -648,16 +649,10 @@ public class Task {
 		Signal.sendSignal("start", this.imagerie);
 		this.session = ReadLog.trouveSession(this.sujetID, "data/log_" ) + 1;
 		String firstColumns = "";
-		firstColumns = WriteLog.writeLogFirstColumn (this, "data/log_");
-		System.out.println("First Columns: " + firstColumns);
 		
+		firstColumns = WriteLog.writeLogFirstColumn (this, "data/log_");
 		WriteLog.writeMeans( this, "data/log_", firstColumns);
 
-		/*  //test temp
-		this.session = ReadLog.trouveSession(this.sujetID, "data/log_" )+1;
-		WriteLog.writing (this, "data/log_");
-		WriteLog.writeMeans( this, "data/log_");
-		//*/
 		
 		
 		//first slide
@@ -1146,10 +1141,10 @@ public class Task {
 	public int getVersion() {
 		return version;
 	}
-	
+	/*
 	public  ImageBox getSpeed() {
 		return speed;
-	}
+	}*/
 
 	public ImageBox getGood() {
 		return good;
@@ -1159,9 +1154,9 @@ public class Task {
 		return langue;
 	}
 
-	public  ImageBox getFeedback() {
+	/*public  ImageBox getFeedback() {
 		return feedback;
-	}
+	}*/
 	
 	public  ImageBox getCross() {
 		return cross;
