@@ -534,8 +534,14 @@ public class Task {
 			}
 		}
 		
-		leftReminderString = new ImageBox(Color.WHITE, 24, leftReminder, 0, 0, 90, "leftReminder");
-		rightReminderString = new ImageBox(Color.WHITE, 24, rightReminder, 0, 0, 90, "rightReminder");
+		
+		int fontSize = 24;
+		if(this.qte == 4)
+			fontSize = 18;
+		
+		leftReminderString = new ImageBox(Color.WHITE, fontSize, leftReminder, 0, 0, 90, "leftReminder");
+		rightReminderString = new ImageBox(Color.WHITE, fontSize, rightReminder, 0, 0, 90, "rightReminder");
+		
 		
 		leftReminderString.setProperties(25, Main.getInstance().getBigPanel().getHeight() - 70, true);
 		rightReminderString.setProperties(Main.getInstance().getBigPanel().getWidth() - (rightReminderString.getWidth() + 25), Main.getInstance().getBigPanel().getHeight() - 70, true);
