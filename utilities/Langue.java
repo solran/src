@@ -388,7 +388,7 @@ public class Langue extends HashMap {
 			});
 
 			stims.put("taskName2", new String[][]{
-					{"bas", "haut", "gauche",  "droite", },  
+					{"bas", "haut", "droite",  "gauche", },  
 					{"rouge", "bleu", "jaune", "vert"}, 
 					{"cercle", "carré", "losange", "octogone"}, 
 					{"unie", "ondulée", "quadrillée", "rayée"}, 
@@ -408,7 +408,7 @@ public class Langue extends HashMap {
 			});
 
 			stims.put("taskFullName2", new String[][]{
-					{"une flèche dont le rouge pointe vers le bas", "une flèche dont le rouge pointe vers le haut", "une flèche dont le rouge pointe vers la gauche", "une flèche dont le rouge pointe vers la droite"}, 
+					{"une flèche dont le rouge pointe vers le bas", "une flèche dont le rouge pointe vers le haut", "une flèche dont le rouge pointe vers la droite", "une flèche dont le rouge pointe vers la gauche"}, 
 					{"le rouge", "le bleu", "le jaune", "le vert"},
 					{"un cercle", "un carré", "un losange", "un octogone"}, 
 					{"une forme unie", "une forme ondulée", "une forme quadrillée", "une forme rayée"},
@@ -627,7 +627,7 @@ public class Langue extends HashMap {
 			});
 			
 			stims.put("taskName2", new String[][]{
-					{"down", "right", "left",  "up"},  
+					{"down", "up", "right",  "left"},  
 					{"red", "blue", "yellow", "green"}, 
 					{"circle", "square", "diamond", "octogon"}, 
 					{"plain", "rippled", "squared", "striped"}, 
@@ -647,7 +647,7 @@ public class Langue extends HashMap {
 			});
 
 			stims.put("taskFullName2", new String[][]{
-					{"an arrow pointing down", "an arrow pointing right", "an arrow pointing left", "an arrow pointing top"}, 
+					{"an arrow pointing down", "an arrow pointing up", "an arrow pointing right", "an arrow pointing left"}, 
 					{"a red shape", "a blue shape", "a yellow shape", "a green shape"},
 					{"a circle", "a square", "a diamond", "an octogon"}, 
 					{"a plain form", "a rippled form", "a squared form", "a striped form "},
