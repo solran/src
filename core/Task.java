@@ -173,7 +173,7 @@ public class Task {
 		this.version = myParameters.get("version");
 		
 
-		if(this.version == 6)
+		if(this.version == 6 || this.version == 7)
 			stimsAreSounds = true;
 
 		
@@ -471,12 +471,25 @@ public class Task {
 					this.myOtherExpectedKeys+= rightKeys[i];
 				}
 				
-				if(i == 0){
-					mySounds.put(name[i], new SoundClip("6/A/left.wav", "left"));
-					mySounds.put(name2[i], new SoundClip("6/B/go.wav", "go"));
-				}else if(i == 1){
-					mySounds.put(name[i], new SoundClip("6/A/right.wav", "right"));
-					mySounds.put(name2[i], new SoundClip("6/B/stop.wav", "stop"));
+				if(this.version == 6){
+					if(i == 0){
+						mySounds.put(name[i], new SoundClip("6/A/left.wav", "left"));
+						mySounds.put(name2[i], new SoundClip("6/B/go.wav", "go"));
+					}else if(i == 1){
+						mySounds.put(name[i], new SoundClip("6/A/right.wav", "right"));
+						mySounds.put(name2[i], new SoundClip("6/B/stop.wav", "stop"));
+					}
+				}else if(this.version == 7){
+					if(i == 0){
+						mySounds.put(name[i], new SoundClip("7/A/400.wav", "400"));
+						mySounds.put(name2[i], new SoundClip("7/B/i.wav", "i"));
+					}else if(i == 1){
+						mySounds.put(name[i], new SoundClip("7/A/1000.wav", "1000"));
+						mySounds.put(name2[i], new SoundClip("7/B/o.wav", "o"));
+					}else if(i == 2){
+						mySounds.put(name[i], new SoundClip("7/A/700.wav", "700"));
+						mySounds.put(name2[i], new SoundClip("7/B/a.wav", "a"));
+					}
 				}
 			}
 			
