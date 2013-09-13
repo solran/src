@@ -138,6 +138,7 @@ public class Task {
 	private int qte;
 	private String type;	
 	private int nBack;
+	private int nBackKey;
 	private String typeNback = "na";
 	private String langue;
 	private boolean isTimeUnlock;
@@ -156,6 +157,8 @@ public class Task {
 	private String[] fullName2;
 	private String[] rightKeys;
 
+	
+	
 	private Presentation myGUI;
 	
 	private GraphicEngine ge;
@@ -247,6 +250,11 @@ public class Task {
 			this.nBack = -2;
 		else if (myParameters.get("nBack") == 4)
 			this.nBack = -3;
+		
+		
+	
+		this.nBackKey = myParameters.get("nBackKey");
+		
 		
 		if (myParameters.get("format") == 1)
 			this.format = "normal";
@@ -362,10 +370,23 @@ public class Task {
 		// key assignation
 		if(this.format == "noNumpad" || this.typeNback == "matching"){
 			if (this.typeNback == "matching"){
-				leftKeys = new String[2];
-				rightKeys = new String[2];
-				leftKeys = Arrays.copyOfRange(NORMAL_LEFT_KEY, 4 - 2, 4);
-				rightKeys = Arrays.copyOfRange(NO_NUMPAD_RIGHT_KEY, 0, 2);
+				if(nBackKey == 1){
+					leftKeys = new String[2];
+					//rightKeys = new String[1];
+					
+					//leftKeys =
+							
+					
+					leftKeys = Arrays.copyOfRange(NORMAL_LEFT_KEY, 4 - 3, 4);
+					rightKeys = Arrays.copyOfRange(NO_NUMPAD_RIGHT_KEY, 0, 1);
+					
+					
+				}else{
+					leftKeys = new String[2];
+					rightKeys = new String[2];
+					leftKeys = Arrays.copyOfRange(NORMAL_LEFT_KEY, 4 - 2, 4);
+					rightKeys = Arrays.copyOfRange(NO_NUMPAD_RIGHT_KEY, 0, 2);
+				}
 			}
 			else
 			{
@@ -437,10 +458,19 @@ public class Task {
 			if(! stimsAreSounds){
 				if (this.typeNback == "matching")
 				{
-					myStimulus[i] = new Stimulus(name[i] , fullName[i], "n/a", version, true, i, qte, nBack , typeNback);
-					myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], "n/a", version, false, i, qte, nBack, typeNback);
-					this.myExpectedKeys += leftKeys[0];		this.myExpectedKeys += leftKeys[1];
-					this.myOtherExpectedKeys+= rightKeys[0];		this.myOtherExpectedKeys+= rightKeys[1];
+					if(nBackKey == 1){
+						myStimulus[i] = new Stimulus(name[i] , fullName[i], "n/a", version, true, i, qte, nBack , typeNback);
+						myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], "n/a", version, false, i, qte, nBack, typeNback);
+						this.myExpectedKeys += leftKeys[0];		this.myExpectedKeys += rightKeys[0];
+
+					
+						
+					}else{
+						myStimulus[i] = new Stimulus(name[i] , fullName[i], "n/a", version, true, i, qte, nBack , typeNback);
+						myOtherStimulus[i] = new Stimulus(name2[i] , fullName2[i], "n/a", version, false, i, qte, nBack, typeNback);
+						this.myExpectedKeys += leftKeys[0];		this.myExpectedKeys += leftKeys[1];
+						this.myOtherExpectedKeys+= rightKeys[0];		this.myOtherExpectedKeys+= rightKeys[1];
+					}
 				}
 				else
 				{
@@ -527,7 +557,7 @@ public class Task {
 //--------------------------------------------------------------------------------		
 		
 		
-		// les rappels sont sett�s ici
+		// les rappels sont settés ici
 		leftReminder = "";
 		rightReminder = "";
 
@@ -566,7 +596,7 @@ public class Task {
 		int d;
 		switch(myParameters.get("duree")){
 			case 1: 	d=0;	break;	case 2:	d=2;	break;	case 3:	d=4;	break;	case 4:	d=6;	break;	case 5:	d=8;	break; case 6:	d=10;	break;
-			default : d = 1; break;
+			case 24: d=40; default : d = 1; break;
 		}
 		
 		
@@ -1351,6 +1381,13 @@ public class Task {
 	}
 	public void setStimsAreSounds(boolean stimsAreSounds) {
 		this.stimsAreSounds = stimsAreSounds;
+	}
+
+	public int getnBackKey() {
+		return nBackKey;
+	}
+	public void setnBackKey(int nBackKey) {
+		this.nBackKey = nBackKey;
 	}
   }
 

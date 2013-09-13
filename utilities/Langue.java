@@ -34,10 +34,12 @@ public class Langue extends HashMap {
 		if (langue == "francais")
 		{			
 			expression.put("title", "Programme d'entraînement cognitif");
+			expression.put("nBackKeyLabel", "Deux mains");
+			
 			
 			if(! Main.isApplet){
-				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE", "FRÉQUENCE"});				
-				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f", "GO/STOP", "VOYELLE"});
+				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE", "FRÉQUENCES"});				
+				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES", "f", "GO/STOP", "VOYELLES"});
 			
 				Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5", "6", "7"}, new String[]{"<html><font size = 4>Version de la tâche</font></html>", "1: " + Langue.translate(new String[] {"tasksNames", "0"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "0"}),  
 						"2: " + Langue.translate(new String[] {"tasksNames", "1"}) + "  / " + Langue.translate(new String[] {"otherTasksNames", "1"}), 
@@ -107,6 +109,9 @@ public class Langue extends HashMap {
 			expression.put("windows", "Cognitive training program");
 
 			expression.put("title", "Cognitive training program");
+			expression.put("nBackKeyLabel", "Both hands");
+			
+			
 			
 			expression.put("sujetID", "<html><p align=\"center\"><font size = 4>Participant<br />ID (#)</font></p></html>");
 			
@@ -173,8 +178,8 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "links", new String[]{"&", "|"}, new String[]{"ET", "OU"});				
 
 			if(Main.isApplet){
-				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE", "FRÉQUENCE"});				
-				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES","f", "GO/STOP", "VOYELLE"});		
+				Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"ASTRES", "LETTRES", "LETTRES GRECQUES", "QUANTITÉS", "PHILLIPS", "SON GAUCHE/DROITE", "FRÉQUENCES"});				
+				Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"FLÈCHES", "COULEURS", "FORMES", "STYLES","f", "GO/STOP", "VOYELLES"});		
 			
 				Utilities.iniHashMap(expression, "radioVersion", new String[]{"0", "1", "2", "3" , "4", "5", "6", "7"}, new String[]{"<html><font size = 4>Version de la tâche</font></html>", "1: " + Langue.translate(new String[] {"tasksNames", "0"}) + " / " + Langue.translate(new String[] {"otherTasksNames", "0"}),  
 						"2: " + Langue.translate(new String[] {"tasksNames", "1"}) + "  / " + Langue.translate(new String[] {"otherTasksNames", "1"}), 
@@ -422,8 +427,8 @@ public class Langue extends HashMap {
 		{		
 			Utilities.iniHashMap(expression, "links", new String[]{"&", "|"}, new String[]{"AND", "OR"});				
 
-			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"HEAVENLY BODY", "LETTERS", "GREEK LETTERS", "QUANTITY", "PHILLIPS", "LEFT/RIGHT SOUND", "PITCH"});				
-			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"ARROWS", "COLORS", "SHAPES", "STYLES", "f", "GO/STOP", "VOWEL"});		
+			Utilities.iniHashMap(expression, "tasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"HEAVENLY BODY", "LETTERS", "GREEK LETTERS", "QUANTITY", "PHILLIPS", "LEFT/RIGHT SOUND", "PITCHES"});				
+			Utilities.iniHashMap(expression, "otherTasksNames", new String[]{"0", "1", "2", "3", "4", "5", "6"}, new String[]{"ARROWS", "COLORS", "SHAPES", "STYLES", "f", "GO/STOP", "VOWELS"});		
 			
 			
 			Utilities.iniHashMap(expression, "intro", new String[]{"introCenter", "noIRMFooter", "IRMFooter"}, new String[]{

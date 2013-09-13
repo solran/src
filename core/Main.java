@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,19 +45,19 @@ import javax.swing.SwingConstants;
 
 
 //Alternate
-/* %!#Desktop
+///* %!#Desktop
 public class Main {
 //*/
-///* %!#Applet	
-public class Main extends JApplet {
+/* %!#Applet	
+public class Main extends JApplet  {
 //*/
 	
-	/* %!#Desktop
+	///* %!#Desktop
 	public static Fenetre getInstance() {
 		return Main.myWindow;
 	}
 	//*/
-	///* %!#Applet
+	/* %!#Applet
 	public static Main getInstance() {
 	    return instance;
     }
@@ -247,6 +248,11 @@ public class Main extends JApplet {
   		 
    		this.setContentPane(windowPanel);
  		this.setFocusable(true);
+ 		
+ 		
+ 		//this.requestFocus();
+ 		
+ 		this.requestFocusInWindow();
 	}
 	
 	
@@ -296,7 +302,7 @@ public class Main extends JApplet {
 		
 		myTask = new Task(myParameters);
 	}
-	
+
 	
 	// ----- GETTER AND SETTER ----- //
 	public Graphics2D getG2() {
@@ -367,4 +373,6 @@ public class Main extends JApplet {
 	}
 	
 	public void destroy(){}
+	
+	
 }

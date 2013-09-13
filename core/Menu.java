@@ -121,6 +121,11 @@ public class Menu {
 			private JLabel boxLabelNback = new JLabel();
 			private JComboBox boxNback = new JComboBox();
 			
+			private JCheckBox nBackKey = new JCheckBox ();
+			
+			
+			
+			
 			private JPanel radioPanelisDT = new JPanel();
 			private JCheckBox withSP = new JCheckBox ();
 			private JCheckBox withSM = new JCheckBox ();
@@ -393,7 +398,7 @@ public class Menu {
 	        radio1Langue.addActionListener(new RadioListener());	radio2Langue.addActionListener(new RadioListener());	
 	        radio1Langue.setSelected(true); 
 	        radioPanelLangue.setLayout(new GridLayout(3,1));
-	        radioPanelLangue.setPreferredSize(new Dimension(170, 180));
+	        radioPanelLangue.setPreferredSize(new Dimension(170, 220));
 	        radioPanelLangue.add(radioLabelLangue);	radioPanelLangue.add(radio1Langue);	radioPanelLangue.add(radio2Langue);	
 	        radioLabelLangue.setHorizontalAlignment(SwingConstants.CENTER);
 	        radioLabelLangue.setVerticalAlignment(SwingConstants.TOP);
@@ -403,14 +408,20 @@ public class Menu {
 	        radio1NBack.addActionListener(new RadioNBackListener());	radio2Version.addActionListener(new RadioNBackListener());	radio3Version.addActionListener(new RadioNBackListener());	
 	        radio1NBack.setSelected(true);
 	        boxNback.setSelectedIndex(0);
-	        boxNback.setPreferredSize(new Dimension (80,20));
+	        boxNback.setPreferredSize(new Dimension(80, 20));
 	        boxNback.addActionListener( new ComboBoxListener());
-	        radioPanelNBack.setLayout(new GridLayout(7,1));
-	        radioPanelNBack.setPreferredSize(new Dimension(210, 180));
+	        radioPanelNBack.setLayout(new GridLayout(8,1));
+	        radioPanelNBack.setPreferredSize(new Dimension(210, 220));
 	        radioPanelNBack.add(radioLabelNBack);	radioPanelNBack.add(radio1NBack);	radioPanelNBack.add(radio2NBack);	radioPanelNBack.add(radio3NBack); 	radioPanelNBack.add(radio4NBack);	radioPanelNBack.add(boxLabelNback); radioPanelNBack.add(boxNback);
-;
+	        radioPanelNBack.add(nBackKey);
+
+
 	        radioLabelNBack.setVerticalAlignment(SwingConstants.TOP);
 	        radioLabelNBack.setHorizontalAlignment(SwingConstants.CENTER);
+	        
+	        
+	        
+	        
 	        
 	        // Radio isDT  radioPanelisDT
 	        
@@ -421,7 +432,7 @@ public class Menu {
 	        withDM.addActionListener(new CheckBoxListener());
 	        withDM.setSelected(true);
 	        radioPanelisDT.setLayout(new GridLayout(4,1));
-	        radioPanelisDT.setPreferredSize(new Dimension(150, 180));
+	        radioPanelisDT.setPreferredSize(new Dimension(150, 220));
 	        radioPanelisDT.add(radioLabelisDT);	radioPanelisDT.add(withSP);	radioPanelisDT.add(withSM);	radioPanelisDT.add(withDM);
 	        radioLabelisDT.setVerticalAlignment(SwingConstants.TOP);
 	        radioLabelisDT.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -431,7 +442,7 @@ public class Menu {
 	        radio1Format.addActionListener(new RadioListener());	radio2Format.addActionListener(new RadioListener());	radio3Format.addActionListener(new RadioListener());	
 	        radio1Format.setSelected(true);
 	        radioPanelFormat.setLayout(new GridLayout(4,1));
-	        radioPanelFormat.setPreferredSize(new Dimension(200, 180));
+	        radioPanelFormat.setPreferredSize(new Dimension(200, 220));
 	        radioPanelFormat.add(radioLabelFormat);	radioPanelFormat.add(radio1Format);	radioPanelFormat.add(radio2Format);	radioPanelFormat.add(radio3Format);
 	        radioLabelFormat.setHorizontalAlignment(SwingConstants.CENTER);
 	        radioLabelFormat.setVerticalAlignment(SwingConstants.TOP);
@@ -442,7 +453,7 @@ public class Menu {
 	        radio1isIO.addActionListener(new RadioListener());	radio2isIO.addActionListener(new RadioListener());	
 	        radio1isIO.setSelected(true);
 	        //radioPanelisIO.setLayout(new GridLayout(6,1));
-	        radioPanelisIO.setPreferredSize(new Dimension(200, 180));
+	        radioPanelisIO.setPreferredSize(new Dimension(200, 220));
 	        radioPanelisIO.add(radioLabelisIO);	radioPanelisIO.add(radio1isIO);	radioPanelisIO.add(radio2isIO);	radioPanelisIO.add(radio3isIO);	radioPanelisIO.add(radio4isIO);	radioPanelisIO.add(boxIsIOLabel);		radioPanelisIO.add(boxIsIO);	
 	        radioLabelisIO.setHorizontalAlignment(SwingConstants.CENTER);
 	        radioLabelisIO.setVerticalAlignment(SwingConstants.TOP);
@@ -450,7 +461,7 @@ public class Menu {
 	                    
 		    //Config Panel 3
 	        configPanel3.setLayout(new FlowLayout());
-	        configPanel3.setPreferredSize(new Dimension(1000, 200));
+	        configPanel3.setPreferredSize(new Dimension(1000, 240));
 	        configPanel3.setBackground(myLightBlueLesca);
 	        configPanel3.add(radioPanelLangue); configPanel3.add(radioPanelNBack); configPanel3.add(radioPanelisDT); configPanel3.add(radioPanelFormat); configPanel3.add(radioPanelisIO); 
 	        configPanel3.setBorder(empty);
@@ -482,7 +493,7 @@ public class Menu {
 	       
 	        
 	        footer.setLayout(new BorderLayout());
-	//Philippe - 1  
+
 	        
 	        northFooter.setBackground(myBlueLesca);
 	        northFooter.add(labelOutput);
@@ -495,7 +506,7 @@ public class Menu {
 	        southFooter.add(labelFooter);
 	        southFooter.add(executeButton);
 	        footer.add(southFooter, BorderLayout.SOUTH);
-	 //Philippe
+
 	        
 	        /*footer.setBackground(myBlueLesca);
 	        footer.setOpaque(true);*/
@@ -768,6 +779,7 @@ public class Menu {
 			radioSetParam(bgVersion , "version", myParameters);
 			radioSetParam(bgQte , "qte", myParameters);
 			radioSetParam(bgNBack , "nBack", myParameters);
+			
 			if (withSP.isSelected())
 				myParameters.put("withSP", 1);	
 			else 
@@ -782,6 +794,10 @@ public class Menu {
 				myParameters.put("withDM", 0);
 			radioSetParam(bgFormat , "format", myParameters);
 			radioSetParam(bgisIO , "isIO", myParameters);
+			
+
+			
+			
 			myParameters.put("duree", boxQteBlocDM.getSelectedIndex()+1);
 			myParameters.put("essai", boxQteEssai.getSelectedIndex()+1);
 			myParameters.put("boxNback", boxNback.getSelectedIndex()+1);
@@ -795,6 +811,11 @@ public class Menu {
 				myParameters.put("isTimeUnlock", 1);	
 			else 
 				myParameters.put("isTimeUnlock", 0);
+			
+			if (nBackKey.isSelected())
+				myParameters.put("nBackKey", 1);	
+			else 
+				myParameters.put("nBackKey", 0);
 
 		}
 	
@@ -893,6 +914,7 @@ public class Menu {
 		this.boxNback.addItem(Langue.translate(new String[] {"radioNBack", "box1"}));
 		this.boxNback.addItem(Langue.translate(new String[] {"radioNBack", "box2"}));
 		this.boxNback.addItem(Langue.translate(new String[] {"radioNBack", "box3"}));
+		this.nBackKey.setText(Langue.translate("nBackKeyLabel"));
 		
 		this.radioLabelisDT .setText(Langue.translate(new String[] {"radioisDT", "info"}));
 		this.withSP .setText(Langue.translate(new String[] {"radioisDT", "0"}));

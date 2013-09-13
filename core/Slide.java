@@ -164,7 +164,11 @@ public class Slide {
 					
 					if (Task.mainTask.getnBack() == -1)
 					{
-						if (myStimulus[0].getnBackType() == "matching" && myStimulus[0].getIsLeft() )
+						if(Task.mainTask.getnBackKey() == 1 && myStimulus[0].getIsLeft()){
+							txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key1"},   new String[]{Task.mainTask.getLeftKeys()[0].toUpperCase()}));
+						}else if(Task.mainTask.getnBackKey() == 1 && !myStimulus[0].getIsLeft()){
+							txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key2"},   new String[]{Task.mainTask.getRightKeys()[0].toUpperCase()}));
+						}else if (myStimulus[0].getnBackType() == "matching" && myStimulus[0].getIsLeft() )
 						{txtHeader = Langue.translate("nBackExplanationHeader1Back", Utilities.iniHashMap (new String[]{"key1", "key2"},  new String[]{Task.mainTask.getLeftKeys()[0].toUpperCase(), Task.mainTask.getLeftKeys()[1].toUpperCase()}))  ;}
 						else if (myStimulus[0].getnBackType() == "matching" && !myStimulus[0].getIsLeft() )
 						{txtHeader = Langue.translate("nBackExplanationHeader1Back", Utilities.iniHashMap (new String[]{"key1", "key2"},   new String[]{Task.mainTask.getRightKeys()[0].toUpperCase(), Task.mainTask.getRightKeys()[1].toUpperCase()}))  ;}
@@ -173,7 +177,11 @@ public class Slide {
 					}
 					else if (Task.mainTask.getnBack() == -2)
 					{
-						if (myStimulus[0].getnBackType() == "matching" && myStimulus[0].getIsLeft() )
+						if(Task.mainTask.getnBackKey() == 1 && myStimulus[0].getIsLeft()){
+							txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key1"},   new String[]{Task.mainTask.getLeftKeys()[0].toUpperCase()}));
+						}else if(Task.mainTask.getnBackKey() == 1 && !myStimulus[0].getIsLeft()){
+							txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key2"},   new String[]{Task.mainTask.getLeftKeys()[1].toUpperCase()}));
+						}else if (myStimulus[0].getnBackType() == "matching" && myStimulus[0].getIsLeft() )
 						{txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key1", "key2"},  new String[]{Task.mainTask.getLeftKeys()[0].toUpperCase(), Task.mainTask.getLeftKeys()[1].toUpperCase()}))  ;}
 						else if (myStimulus[0].getnBackType() == "matching" && !myStimulus[0].getIsLeft() )
 						{txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key1", "key2"},   new String[]{Task.mainTask.getRightKeys()[0].toUpperCase(), Task.mainTask.getRightKeys()[1].toUpperCase()}))  ;}
@@ -182,7 +190,11 @@ public class Slide {
 					}	
 					else if (Task.mainTask.getnBack() == -3)
 					{
-						if (myStimulus[0].getnBackType() == "matching" && myStimulus[0].getIsLeft() )
+						if(Task.mainTask.getnBackKey() == 1 && myStimulus[0].getIsLeft()){
+							txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key1"},   new String[]{Task.mainTask.getLeftKeys()[0].toUpperCase()}));
+						}else if(Task.mainTask.getnBackKey() == 1 && !myStimulus[0].getIsLeft()){
+							txtHeader = Langue.translate("nBackExplanationHeader2Back", Utilities.iniHashMap (new String[]{"key2"},   new String[]{Task.mainTask.getRightKeys()[0].toUpperCase()}));
+						}else if (myStimulus[0].getnBackType() == "matching" && myStimulus[0].getIsLeft() )
 						{txtHeader = Langue.translate("nBackExplanationHeader3Back", Utilities.iniHashMap (new String[]{"key1", "key2"},  new String[]{Task.mainTask.getLeftKeys()[0].toUpperCase(), Task.mainTask.getLeftKeys()[1].toUpperCase()}))  ;}
 						else if (myStimulus[0].getnBackType() == "matching" && !myStimulus[0].getIsLeft() )
 						{txtHeader = Langue.translate("nBackExplanationHeader3Back", Utilities.iniHashMap (new String[]{"key1", "key2"},   new String[]{Task.mainTask.getRightKeys()[0].toUpperCase(), Task.mainTask.getRightKeys()[1].toUpperCase()}))  ;}
