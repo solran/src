@@ -1,4 +1,6 @@
 package core;
+
+
 import java.awt.Color;
 import java.util.HashMap;
 
@@ -113,8 +115,12 @@ public class Slide {
 				case "keyDetailedExplanation":
 					if (myStimulus[cardinal].getIsLeft())
 						txtHeader = Langue.translate("keyDetailedExplanationHeader", Utilities.iniHashMap (new String[]{"fullname", "key", "finger"},  new String[]{myStimulus[cardinal].getFullName(), myStimulus[cardinal].getKey().toUpperCase(), Langue.translate(new String[]{"finger",  ""+ (cardinal + (4 - myStimulus[cardinal].getStimulusLength()))})}))  ;
-					else
+					else{
 						txtHeader = Langue.translate("keyDetailedExplanationHeader", Utilities.iniHashMap (new String[]{"fullname", "key", "finger"},  new String[]{myStimulus[cardinal].getFullName(), myStimulus[cardinal].getKey().toUpperCase(), Langue.translate(new String[]{"finger",  ""+ (4 - (cardinal+1))})}))  ;
+						
+					}
+					
+					
 					txtFooter = Langue.translate("keyDetailedExplanationFooter", Utilities.iniHashMap (new String[]{"key"},  new String[]{myStimulus[cardinal].getKey().toUpperCase()}))  ;
 					expectedKey[0] = myStimulus[cardinal].getKey().charAt(0);
 				break;

@@ -15,6 +15,8 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -93,9 +95,9 @@ public class Presentation extends JPanel{
 	
 	public Presentation(Task myTask){
 		//hide cursor only if desktop version
-		if(! Main.isApplet)
+		/*if(! Main.isApplet)
 			Main.getInstance().hideCursor();
-		
+		*/
 		this.myTask = myTask;
 		
 		//Initialize buffImage and graphic
@@ -246,6 +248,14 @@ public class Presentation extends JPanel{
 				myTask.getBlackSquareSmall()[index].setProperties(x, y, true);
 				tempImageBox.setProperties(x, y, true);
 				
+				//Play sounds for audio task
+				if(myTask.isStimsAreSounds()){
+					myTask.getMySounds().get(ActualStimulus[index].getName()).playMe();
+					
+					Main.getInstance().addMouseListener(new ClickListener(tempImageBox));
+				}
+				
+				
 				tempImageBox =  myTask.getMyImgKeyboard().get(ActualStimulus[index].getKey());
 				x =(int)(Main.getInstance().getBigPanel().getWidth()/2 - tempImageBox.getWidth()/2);
 				y = yOrigin + 220;
@@ -266,6 +276,9 @@ public class Presentation extends JPanel{
 					}
 				}
 				tempImageBox.setProperties(x, y, true);
+				
+				
+			
 		}
 			
 		else if (myTask.getMySlide().getSlideName() == "keySimpleMixte" || myTask.getMySlide().getSlideName() == "keyDoubleTask" ){
@@ -1117,6 +1130,55 @@ GraphicEngine.setModifying(false);
 		@Override
 		public void keyTyped(KeyEvent e) {}
 	};
+	
+	
+	class ClickListener implements MouseListener {
+		private ImageBox box;
+		
+		public ClickListener(ImageBox myBox){
+			box = myBox;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent event) {
+			// TODO Auto-generated method stub
+
+			if(myTask.getMySlide().getSlideName() == "keyDetailedExplanation"){
+
+				if((box.getX() < event.getX()) && ((box.getX() + box.getWidth()) > event.getX()) && (box.getY() < event.getY()) && ((box.getY() + box.getHeight()) > event.getY())){
+					//Play sounds for audio task
+					if(myTask.isStimsAreSounds())
+						myTask.getMySounds().get(ActualStimulus[index].getName()).playMe();
+
+				}
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
 	
 	
 	class TaskListener implements KeyListener {
