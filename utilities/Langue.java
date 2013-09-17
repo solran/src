@@ -234,7 +234,7 @@ public class Langue extends HashMap {
 			}else{
 				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">Dans cet exercice, des %taskName% <b>%link%</b> des %otherTaskName% vont se faire entendre</p>" +
 						"<br />" +
-						"<p align=\"center\">Vous devez identifier le symbole en appuyant sur la touche<br />" +
+						"<p align=\"center\">Vous devez identifier le son en appuyant sur la touche<br />" +
 						"correspondante.</p></html>");
 			}
 			expression.put("keyS&DMixteFooter", "<html><p align=\"center\">Vous devez répondre <b>le plus vite possible et faire le moins<br />" +
@@ -351,7 +351,7 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression.get("taskName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"dé-3", "dé-1", "dé-6", "dé-2"});
 			Utilities.iniHashMap(expression.get("taskName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
 			Utilities.iniHashMap(expression.get("taskName1"), "5", new String[]{"0", "1"}, new String[]{"son à gauche", "son à droite"});
-			Utilities.iniHashMap(expression.get("taskName1"), "6", new String[]{"0", "1", "2"}, new String[]{"son grave", "son aigu", "son moyen"});
+			Utilities.iniHashMap(expression.get("taskName1"), "6", new String[]{"0", "1", "2"}, new String[]{"grave", "aigu", "moyen"});
 			
 			
 			expression.put("taskName2", new  HashMap <String, Object>() );
@@ -389,7 +389,7 @@ public class Langue extends HashMap {
 					{"dé-3", "dé-1", "dé-6", "dé-2"}, 
 					{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
 					{"son à gauche", "son à droite"},
-					{"son grave", "son aigu", "son moyen"}
+					{"grave", "aigu", "moyen"}
 			});
 
 			stims.put("taskName2", new String[][]{
@@ -588,7 +588,7 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression.get("taskName1"), "3", new String[]{"0", "1", "2", "3"}, new String[]{"3 dots dice", "1 dots dice", "6 dots dice", "2 dots dice"});
 			Utilities.iniHashMap(expression.get("taskName1"), "4", new String[]{"0", "1", "2", "3"}, new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
 			Utilities.iniHashMap(expression.get("taskName1"), "5", new String[]{"0", "1"}, new String[]{"left sound", "right sound"});
-			Utilities.iniHashMap(expression.get("taskName1"), "6", new String[]{"0", "1", "2"}, new String[]{"low note", "high note", "medium note"});
+			Utilities.iniHashMap(expression.get("taskName1"), "6", new String[]{"0", "1", "2"}, new String[]{"low", "high", "medium"});
 
 			
 			expression.put("taskName2", new  HashMap <String, Object>() );
@@ -628,7 +628,7 @@ public class Langue extends HashMap {
 					{"3 dots dice", "1 dots dice", "6 dots dice", "2 dots dice"}, 
 					{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
 					{"left sound", "right sound"},
-					{"low note", "high note", "medium note"}
+					{"low", "high", "medium"}
 			});
 			
 			stims.put("taskName2", new String[][]{

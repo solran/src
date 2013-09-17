@@ -26,7 +26,7 @@ public class SoundClip {
 			//this.u = Main.getInstance().getClass().getClassLoader().getResource( "sounds/" + path);
 			//System.out.println("Intro Sound Path: " + u.getPath());
 		}else if(Main.isApplet){
-			/* %!#Applet
+			///* %!#Applet
 			try {
 				this.u = new URL(Main.getInstance().getDocumentBase(),"../sounds/" + path);
 			} catch (MalformedURLException e) {

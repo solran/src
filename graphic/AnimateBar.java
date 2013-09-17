@@ -283,6 +283,50 @@ public class AnimateBar {
 		{return -2;}
 	}
 	
+	
+	//recoit une array de stim, si isMean = true donne la moyenne sinon donne la quantité, if left doit être "true", "false" ou "both"
+	public static double getStdDeviation(Stimulus[] allStim, String leftRightOrBoth, String seekGoodErrorLateOrAll, double mean)
+		{
+			int n = 0;
+			double sum = 0;
+			double std = 0;
+			
+			if (allStim!= null)
+			{
+				for (int i = 0; i < allStim.length; i++)
+				{
+					if (allStim[i]!= null && allStim[i].getKeyPressed() != '!' && (leftRightOrBoth=="both" || ((leftRightOrBoth=="right" && !allStim[i].getIsLeft()) || (allStim[i].getIsLeft())&&leftRightOrBoth=="left")))
+					{
+						
+						if ((seekGoodErrorLateOrAll=="all" && allStim[i].getIsAnswered())  || ((seekGoodErrorLateOrAll=="late" && allStim[i].getKeyPressed() == '&')|| (seekGoodErrorLateOrAll!="late" && allStim[i].getRt()>MINMS && MAXMS>=allStim[i].getRt()))){ 
+
+							if (seekGoodErrorLateOrAll=="late" ||(seekGoodErrorLateOrAll=="all" && allStim[i].getIsAnswered()) || ((seekGoodErrorLateOrAll == "good" && allStim[i].getIsAcc())|| (seekGoodErrorLateOrAll == "error" && !allStim[i].getIsAcc())))
+							{
+								//sum += allStim[i].getRt();
+								//n++;
+								
+								std += Math.pow((allStim[i].getRt() - mean), 2)/(n - 1);
+								
+							}
+						}
+					}
+				}
+				
+				
+				std = Math.sqrt(std);
+
+				return std;	
+			}
+			else
+			{return -2;}
+		}
+	
+	
+	
+	
+	
+	
+	
 	public static double getWeightValue(Stimulus [] stimulus)
 	{
 		double values = 0;

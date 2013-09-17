@@ -130,7 +130,7 @@ public class Task {
 	public Bloc[] blocsDM;
 	public Bloc[] otherBlocsDM;
 	
-    private Slide[] slideStack = new Slide[500];				//hum!?... Mettre un arraylist???
+    private Slide[] slideStack = new Slide[2000];				//hum!?... Mettre un arraylist???
 	
     private int sujetID;
     private int session;
@@ -253,7 +253,7 @@ public class Task {
 		
 		
 	
-		this.nBackKey = myParameters.get("nBackKey");
+		//this.nBackKey = myParameters.get("nBackKey");
 		
 		
 		if (myParameters.get("format") == 1)
@@ -511,13 +511,13 @@ public class Task {
 					}
 				}else if(this.version == 7){
 					if(i == 0){
-						mySounds.put(name[i], new SoundClip("7/A/400.wav", "400"));
+						mySounds.put(name[i], new SoundClip("7/A/350.wav", "350"));
 						mySounds.put(name2[i], new SoundClip("7/B/i.wav", "i"));
 					}else if(i == 1){
-						mySounds.put(name[i], new SoundClip("7/A/1000.wav", "1000"));
+						mySounds.put(name[i], new SoundClip("7/A/1650.wav", "1650"));
 						mySounds.put(name2[i], new SoundClip("7/B/o.wav", "o"));
 					}else if(i == 2){
-						mySounds.put(name[i], new SoundClip("7/A/700.wav", "700"));
+						mySounds.put(name[i], new SoundClip("7/A/900.wav", "900"));
 						mySounds.put(name2[i], new SoundClip("7/B/a.wav", "a"));
 					}
 				}
@@ -596,7 +596,7 @@ public class Task {
 		int d;
 		switch(myParameters.get("duree")){
 			case 1: 	d=0;	break;	case 2:	d=2;	break;	case 3:	d=4;	break;	case 4:	d=6;	break;	case 5:	d=8;	break; case 6:	d=10;	break;
-			case 24: d=40; default : d = 1; break;
+			case 24: d=40; break; default : d = 1; break;
 		}
 		
 		

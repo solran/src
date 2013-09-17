@@ -153,6 +153,19 @@ public class WriteLog {
 		
 		//fullFile.set(fullFile.size()-1, s);	//append s to file
 
+		// Only for app_log
+		Pattern p_log = Pattern.compile("^data/log_[0-9]+$");
+		Matcher m_log = p_log.matcher(location);
+		String tempS = "";
+		
+		if(m_log.find() == true){
+			//tempS = AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right", "all") + "";
+			System.out.println(tempS);
+		}	
+		
+		
+		
+		
 		if(! Main.isApplet){
 			if(first){
 				writeString(s, location + task.getSujetID());
