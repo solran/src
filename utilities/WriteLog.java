@@ -154,13 +154,43 @@ public class WriteLog {
 		//fullFile.set(fullFile.size()-1, s);	//append s to file
 
 		// Only for app_log
-		Pattern p_log = Pattern.compile("^data/log_[0-9]+$");
+		Pattern p_log = Pattern.compile("^data/log_$");
 		Matcher m_log = p_log.matcher(location);
 		String tempS = "";
+		double mean; 
+		
+		System.out.println("Location: " + location);
 		
 		if(m_log.find() == true){
-			//tempS = AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right", "all") + "";
-			System.out.println(tempS);
+			mean = AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good");
+			
+			
+			
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good")) + sTab; ;
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good")) + sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good"))+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good"))+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good"))+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good"))+ sTab; 
+			
+			//acc
+			/*s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left","error")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left", "error")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left", "error")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right", "error")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right", "error")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right", "error")+ sTab; 
+			
+			//retard
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left", "late")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left", "late")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left", "late")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right", "late")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right", "late")+ sTab; 
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right", "late")+ sTab;
+			*/
+
+			//System.out.println("Standard deviation: " + tempS);
 		}	
 		
 		

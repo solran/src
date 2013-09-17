@@ -45,19 +45,19 @@ import javax.swing.SwingConstants;
 
 
 //Alternate
-/* %!#Desktop
+///* %!#Desktop
 public class Main {
 //*/
-///* %!#Applet	
+/* %!#Applet	
 public class Main extends JApplet  {
 //*/
 	
-	/* %!#Desktop
+	///* %!#Desktop
 	public static Fenetre getInstance() {
 		return Main.myWindow;
 	}
 	//*/
-	///* %!#Applet
+	/* %!#Applet
 	public static Main getInstance() {
 	    return instance;
     }

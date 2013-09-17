@@ -303,17 +303,18 @@ public class AnimateBar {
 							if (seekGoodErrorLateOrAll=="late" ||(seekGoodErrorLateOrAll=="all" && allStim[i].getIsAnswered()) || ((seekGoodErrorLateOrAll == "good" && allStim[i].getIsAcc())|| (seekGoodErrorLateOrAll == "error" && !allStim[i].getIsAcc())))
 							{
 								//sum += allStim[i].getRt();
-								//n++;
+								n++;
 								
-								std += Math.pow((allStim[i].getRt() - mean), 2)/(n - 1);
+								std += Math.pow((allStim[i].getRt() - mean), 2);
 								
+								System.out.println("STD: " + (allStim[i].getRt() - mean));
 							}
 						}
 					}
 				}
 				
 				
-				std = Math.sqrt(std);
+				std = Math.sqrt(std/(n - 1));
 
 				return std;	
 			}
