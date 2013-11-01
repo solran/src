@@ -53,7 +53,8 @@ public class ReadLog {
 				System.out.print("première session");
 				//Write title for `log` and `donnee`
 				WriteLog.writeTitle("log", ID);
-				WriteLog.writeTitle("donnee", ID);
+				WriteLog.writeTitle("donnees", ID);
+				WriteLog.writeTitle("blocs", ID);
 			}
 		}else if(Main.isApplet){
 			/* %!#Applet

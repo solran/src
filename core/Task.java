@@ -700,8 +700,8 @@ public class Task {
 		String firstColumns = "";
 		
 		firstColumns = WriteLog.writeLogFirstColumn (this, "data/log_");
-		WriteLog.writeMeans( this, "data/log_", firstColumns);
-
+		WriteLog.writeMeans( this, "data/", "_log", firstColumns);
+		System.out.println("Début Bloc2");
 		
 		
 		//first slide

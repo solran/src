@@ -2,6 +2,7 @@ package utilities;
 import graphic.AnimateBar;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +20,7 @@ import java.util.regex.Pattern;
 
 import overview.SimplifiedTask;
 
+import core.Bloc;
 import core.Main;
 import core.Stimulus;
 import core.Task;
@@ -36,7 +38,7 @@ public class WriteLog {
 	private static Date date = new Date();
 	//private static ArrayList fullFile = new ArrayList();
 
-	public static void writing (Stimulus stim, Task task, String location)	//??? Renommer WriteData  ?
+	public static void writing (Stimulus stim, Task task, String location, String filename)	//??? Renommer WriteData  ?
 	{
 		String s = "";
 		
@@ -96,16 +98,95 @@ public class WriteLog {
 		s += stim.getWeight() + sTab;
 		
 		
-		writeString(s + sChariot, location + task.getSujetID());
+		writeString(s + sChariot, location + task.getSujetID() + filename);
 	}
 	
 	public static String firstCol;
-	public static void writeMeans(Task task, String location){
-		System.out.println("test");
-		writeMeans(task, location, firstCol);
+	
+	
+	//Ajouter une entête pour les blocs
+	public static void writeMeansOfBlock(Task task, Bloc currentBloc, String location, String filename){
+		//Ajouter Location 
+		ArrayList<ArrayList<Double>> allRts = new ArrayList<ArrayList<Double>>();
+		ArrayList<ArrayList<Double>> allAcc = new ArrayList<ArrayList<Double>>();
+		ArrayList<Double> tempArrayList = new ArrayList<Double>();
+		
+		//Doit savoir quel bloc faire...
+
+		allRts = AnimateBar.getAllRtOfBloc(currentBloc);
+		allAcc = AnimateBar.getAllAccOfBloc(currentBloc);
+		
+		String s = new String();
+		
+		
+		for(int i=0; i< allRts.size(); i++){
+			
+			if (allRts.get(i).size() > 0){
+				s += task.getSujetID() + sTab; 
+				s += task.getSession() + sTab;
+				s += dateFormat.format(date) + sTab;
+				s += task.getType() + sTab; 
+				s += "non-applicable"+ sTab; 
+				s += Langue.translate(new String[] {"radioVersion",""+ task.getVersion()}) + sTab;
+				s += task.getQte() + sTab; 
+				s += task.getLangue() + sTab;
+				s += task.getStimT()*100 + sTab;
+				s += task.getAnswerT()*100 + sTab;
+				s += task.getISI()*100 + sTab;
+				s += task.getnBack() + sTab;
+				s += task.getTypeNback() + sTab;
+				s += task.getMixedPourc() + sTab;
+				s += currentBloc.getBlocID() + sTab;
+				
+				if(currentBloc.getSp_sm_dm() == "SM" || currentBloc.getSp_sm_dm() == "DM")
+					if(i == 0)
+						s += currentBloc.getSp_sm_dm() + "G" + sTab;
+					else
+						s += currentBloc.getSp_sm_dm() + "D" + sTab;
+				else
+					s += currentBloc.getSp_sm_dm() + sTab;
+			
+				double mean = AnimateBar.getMeanOfBlock(allRts.get(i));
+				double acc = AnimateBar.getMeanOfBlock(allAcc.get(i));
+				
+				
+				s += mean + sTab;
+				s += AnimateBar.getStdOfBlock(allRts.get(i), mean) + sTab;
+				s += acc;
+				
+				if(! Main.isApplet){
+					s += sChariot;
+				}else{
+					s += "stopsign";
+				}
+				
+				//Ajouter les erreurs ?!!!
+			}
+		}
+		
+		//test
+		System.out.println("this is it : " + s);
+
+
+		if(! Main.isApplet){
+			File f = new File(location + task.getSujetID());
+			if(f.exists()) { 
+				System.out.println("Location: " + location + task.getSujetID());
+				writeString(s, location + task.getSujetID() + filename, false, task);
+			}else{
+				writeString(s, location + task.getSujetID() + filename, true, task);
+			}
+		}else{
+			writeString(s, location + task.getSujetID() + filename);
+		}
+
 	}
 	
-	public static void writeMeans (Task task, String location, String firstColumns)
+	public static void writeMeans(Task task, String location, String filename){ // 
+		System.out.println("test");
+		writeMeans(task, location, filename, firstCol);
+	}
+	public static void writeMeans (Task task, String location, String filename, String firstColumns)
 	{
 		//ArrayList<String> fullFile = ReadLog.readFullFile (task, location);
 		//String lastline =  (String) fullFile.get(fullFile.size()-1);
@@ -127,6 +208,8 @@ public class WriteLog {
 		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good")+ sTab; 
 		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good")+ sTab; 
 		
+		
+				
 		//acc
 		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left","error")+ sTab; 
 		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "error")+ sTab; 
@@ -154,43 +237,18 @@ public class WriteLog {
 		//fullFile.set(fullFile.size()-1, s);	//append s to file
 
 		// Only for app_log
-		Pattern p_log = Pattern.compile("^data/log_$");
-		Matcher m_log = p_log.matcher(location);
 		String tempS = "";
 		double mean; 
 		
-		System.out.println("Location: " + location);
-		
-		if(m_log.find() == true){
+		if(filename.equals("_log")){
 			mean = AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good");
-			
-			
 			
 			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good")) + sTab; ;
 			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good")) + sTab; 
 			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good"))+ sTab; 
 			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good"))+ sTab; 
 			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good"))+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good"))+ sTab; 
-			
-			//acc
-			/*s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left","error")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left", "error")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left", "error")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right", "error")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right", "error")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right", "error")+ sTab; 
-			
-			//retard
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left", "late")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left", "late")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left", "late")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right", "late")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right", "late")+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right", "late")+ sTab;
-			*/
-
-			//System.out.println("Standard deviation: " + tempS);
+			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good"))+ sTab;
 		}	
 		
 		
@@ -198,12 +256,12 @@ public class WriteLog {
 		
 		if(! Main.isApplet){
 			if(first){
-				writeString(s, location + task.getSujetID());
+				writeString(s, location + task.getSujetID() + filename);
 				first = false;
 			}else
-				writeString(s, location + task.getSujetID(), false, task);
+				writeString(s, location + task.getSujetID() + filename, false, task);
 		}else
-			writeString(s, location + task.getSujetID());
+			writeString(s, location + task.getSujetID() + filename);
 	}
 	
 	// écriture du Log
@@ -227,13 +285,8 @@ public class WriteLog {
 		s += task.getnBack() + sTab;  		nbColomn ++;
 		s += task.getTypeNback() + sTab;	nbColomn ++;
 		s += task.getMixedPourc() + sTab;	nbColomn ++;
-		
-		
-		System.out.println("NbColomn: " + nbColomn);
-		
-		
+	
 		return s;
-		//writeString(s + sChariot, location + task.getSujetID());
 	}
 	
 	public static void writeTitle(String type, int ID){
@@ -241,78 +294,87 @@ public class WriteLog {
 		String t = "";
 		
 		if(! Main.isApplet){
+			s +="sujetId" + sTab; 
+			s +="session" + sTab;
+			s +="date" + sTab;
+			s +="type" + sTab; 
+			s +="completed" + sTab; 
+			s +="version" + sTab;
+			s += "qte" + sTab;
+			s += "langue" + sTab;
+			s += "tempsStim" + sTab;
+			s += "tempsAnswer" + sTab;
+			s += "tempsIsi" + sTab;
+			s += "nBack" + sTab;	
+			s += "typedeNBack" + sTab;	
+			s += "%mixed" + sTab;
+			
 			if(type.equals("log")){
-					s +="sujetId" + sTab; 
-					s +="session" + sTab;
-					s +="date" + sTab;
-					s +="type" + sTab; 
-					s +="completed" + sTab; 
-					s +="version" + sTab;
-					s += "qte" + sTab;
-					s += "langue" + sTab;
-					s += "tempsStim" + sTab;
-					s += "tempsAnswer" + sTab;
-					s += "tempsIsi" + sTab;
-					s += "nBack" + sTab;	
-					s += "typedeNBack" + sTab;	
-					s += "%mixed" + sTab;
-					
-					t += "spgRt" + sTab;
-					t += "smgRt" + sTab;
-					t += "dmgRt" + sTab;
-					t += "spdRt" + sTab;
-					t += "smdRt" + sTab;
-					t += "dmdRt" + sTab;
-					t += "spgError" + sTab;
-					t += "smgError" + sTab;
-					t += "dmgError" + sTab;
-					t += "spdError" + sTab;
-					t += "smdError" + sTab;
-					t += "dmdError" + sTab;
-					t += "spgLate" + sTab;
-					t += "smgLate" + sTab;
-					t += "dmgLate" + sTab;
-					t += "spdLate" + sTab;
-					t += "smdLate" + sTab;
-					t += "dmdLate" + sTab;
-					t += "spgAll" + sTab;
-					t += "smgAll" + sTab;
-					t += "dmgAll" + sTab;
-					t += "spdAll" + sTab;
-					t += "smdAll" + sTab;
-					t += "dmdAll" + sTab;
-		
-				//	writing  + sTab + true + sTab + monTrial.getAttendu() + sTab + myKey + sTab + clock2Fleche +  sTab + ISIRTFleche + sTab + this.erreur, "statsForExcel");
-					writeString(s + t + sChariot, "data/log_" + ID);
-	
-			}else if(type.equals("donnee")){
-					s += "bloc" + sTab;
-					s += "trialLoc" + sTab;
-					s += "trialUnique" + sTab;
-					s += "trialAbsLoc" + sTab;
-					s += "trialAbsUnique" + sTab;
-					s += "SpgSpdSmDm" + sTab;
-					s += "isMixed" + sTab;
-					s += "isDouble" + sTab;
-					s += "isLeft" + sTab;
-					s += "stimName" + sTab;
-					s += "isMatch" + sTab;
-					s += "expectedKey" + sTab;
-					s += "pressedKey" + sTab;
-					s += "accuracy" + sTab;
-					s += "rt" + sTab;
-					s += "rtTotal" + sTab;
-					s += "rtSync" + sTab;
-					s += "stimDisplaySync" + sTab;
-					s += "stimRemovedSync" + sTab;
-					s += "barRang" + sTab;
-					s += "percentiles" + sTab;
-					s += "valeurGraph" + sTab;
-	
-				//	writing  + sTab + true + sTab + monTrial.getAttendu() + sTab + myKey + sTab + clock2Fleche +  sTab + ISIRTFleche + sTab + this.erreur, "statsForExcel");
-				    writeString(s + t, "data/donnees_" + ID);
-				    //+ sChariot
+				t += "spgRt" + sTab;
+				t += "smgRt" + sTab;
+				t += "dmgRt" + sTab;
+				t += "spdRt" + sTab;
+				t += "smdRt" + sTab;
+				t += "dmdRt" + sTab;
+				t += "spgError" + sTab;
+				t += "smgError" + sTab;
+				t += "dmgError" + sTab;
+				t += "spdError" + sTab;
+				t += "smdError" + sTab;
+				t += "dmdError" + sTab;
+				t += "spgLate" + sTab;
+				t += "smgLate" + sTab;
+				t += "dmgLate" + sTab;
+				t += "spdLate" + sTab;
+				t += "smdLate" + sTab;
+				t += "dmdLate" + sTab;
+				t += "spgAll" + sTab;
+				t += "smgAll" + sTab;
+				t += "dmgAll" + sTab;
+				t += "spdAll" + sTab;
+				t += "smdAll" + sTab;
+				t += "dmdAll" + sTab;
+				
+				t += "spg_std" + sTab;
+				t += "smg_std" + sTab;
+				t += "dmg_std" + sTab;
+				t += "spd_std" + sTab;
+				t += "smd_std" + sTab;
+				t += "dmd_std" + sTab;
+			
+			}else if(type.equals("donnees")){
+				t += "bloc" + sTab;
+				t += "trialLoc" + sTab;
+				t += "trialUnique" + sTab;
+				t += "trialAbsLoc" + sTab;
+				t += "trialAbsUnique" + sTab;
+				t += "SpgSpdSmDm" + sTab;
+				t += "isMixed" + sTab;
+				t += "isDouble" + sTab;
+				t += "isLeft" + sTab;
+				t += "stimName" + sTab;
+				t += "isMatch" + sTab;
+				t += "expectedKey" + sTab;
+				t += "pressedKey" + sTab;
+				t += "accuracy" + sTab;
+				t += "rt" + sTab;
+				t += "rtTotal" + sTab;
+				t += "rtSync" + sTab;
+				t += "stimDisplaySync" + sTab;
+				t += "stimRemovedSync" + sTab;
+				t += "barRang" + sTab;
+				t += "percentiles" + sTab;
+				t += "valeurGraph" + sTab;
+
+			}else if(type.equals("blocs")){
+				t += "bloc" + sTab;
+				t += "SpgSpdSmDm" + sTab;
+				t += "rt" + sTab;
+				t += "std_rt" + sTab;
+				t += "accuracy" + sTab;
 			}
+			
+			writeString(s + t + sChariot, "data/" + ID + "_" + type);
 		}
 	}
 	
@@ -341,11 +403,11 @@ public class WriteLog {
 				{
 					Utilities.msgErreur(writeError);
 				}
-			}else{
+			}else{	// écrase la dernière ligne
 				
 				ArrayList fullFile = ReadLog.readFullFile (task, location);
 				String lastline =  (String) fullFile.get(fullFile.size()-1);
-				String[] aLastline = lastline.split("\t");
+				String[] aLastline = lastline.split(sTab);
 				
 				
 				
@@ -375,10 +437,10 @@ public class WriteLog {
 			
 			String output = "";
 			
-			Pattern p_log = Pattern.compile("^data/log_[0-9]+$");
-			Pattern p_data = Pattern.compile("^data/donnees_[0-9]+$");
-			Pattern p_console = Pattern.compile("^data/console_[0-9]+$");
-			Pattern p_bloc = Pattern.compile("^data/bloc_[0-9]+$");
+			Pattern p_log = Pattern.compile("^data/[0-9]+_log$");
+			Pattern p_data = Pattern.compile("^data/[0-9]+_donnees$");
+			Pattern p_console = Pattern.compile("^data/[0-9]+_console$");
+			Pattern p_bloc = Pattern.compile("^data/[0-9]+_blocs$");
 			
 			
 			Matcher m_log = p_log.matcher(location);
@@ -396,12 +458,10 @@ public class WriteLog {
 				output= "test.php";
 			}else if(m_bloc.find() == true){
 				output = "app_bloc.php";
-				
 			}else{
 				System.out.println("Format incorrect de fichier de sortie");
 			}
-			
-			System.out.println(s);
+
 			
 
 		    try {

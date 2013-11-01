@@ -194,7 +194,7 @@ public class Menu {
 	
 	date = new Date();
 	private JLabel dateLabel = new JLabel();
-    private SoundClip introSong = new SoundClip("intro.wav", "intro");
+    private SoundClip introSong = new SoundClip("good.wav", "intro");	//intro
 
 	public Menu(){
 

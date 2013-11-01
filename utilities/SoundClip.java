@@ -57,7 +57,7 @@ public class SoundClip {
 			 System.out.print("playing soundsLIN");
 		    e.printStackTrace();
 	 	 } catch (NullPointerException e) {
-	 		System.out.print("playing soundsNULL");
+	 		System.out.print("playing soundsNULL " + this.u);
 		    e.printStackTrace();
 		 }
 	}

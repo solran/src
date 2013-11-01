@@ -244,6 +244,117 @@ public class AnimateBar {
 		return allRts;
 	}
 	
+	// Return all the reaction time (for each trial) separated left/right for the bloc sended in parameter
+	public static ArrayList<ArrayList<Double>> getAllRtOfBloc (Bloc currentBloc)
+	{
+		
+		Stimulus[] allStim;
+		ArrayList<Double> allLeftRts = new ArrayList<Double>();
+		ArrayList<Double> allRightRts = new ArrayList<Double>();
+		ArrayList<ArrayList<Double>> blocLeftAndRight = new ArrayList<ArrayList<Double>>();
+		
+		allStim = currentBloc.getStimulusComplet();
+		for (int i = 0; i < allStim.length; i++)
+		{
+			if (allStim[i]!= null && allStim[i].getIsAcc()== true && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==true)
+			{
+				allLeftRts.add(allStim[i].getRt());
+			}
+			if (allStim[i]!= null && allStim[i].getIsAcc()== true && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==false)
+			{
+				allRightRts.add(allStim[i].getRt());
+			}
+		}
+		
+		blocLeftAndRight.add(allLeftRts);
+		blocLeftAndRight.add(allRightRts);
+	
+		return blocLeftAndRight;
+	}
+	
+	// Return all the accuracy (for each trial) separated left/right for the bloc sended in parameter
+	public static ArrayList<ArrayList<Double>> getAllAccOfBloc (Bloc currentBloc)
+	{
+		Stimulus[] allStim;
+		ArrayList<Double> allLeftRts = new ArrayList<Double>();
+		ArrayList<Double> allRightRts = new ArrayList<Double>();
+		ArrayList<ArrayList<Double>> blocLeftAndRight = new ArrayList<ArrayList<Double>>();
+		
+		allStim = currentBloc.getStimulusComplet();
+		for (int i = 0; i < allStim.length; i++)
+		{
+			if (allStim[i]!= null && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==true)
+			{
+				if(allStim[i].getIsAcc() == true)
+					allLeftRts.add(1.0);
+				else
+					allLeftRts.add(0.0);
+			}
+			if (allStim[i]!= null && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==false)
+			{
+				if(allStim[i].getIsAcc() == true)
+					allRightRts.add(1.0);
+				else
+					allRightRts.add(0.0);
+			}
+		}
+		
+		blocLeftAndRight.add(allLeftRts);
+		blocLeftAndRight.add(allRightRts);
+	
+		return blocLeftAndRight;
+	}
+	
+	// Return the standard deviation for the bloc sended in parameter
+	public static double getStdOfBlock(ArrayList<Double> allStim){ return getStdOfBlock(allStim, 0); } //overload
+	public static double getStdOfBlock(ArrayList<Double> allStim, double mean)
+	{
+		int cpt = 0;
+		double sum = 0;
+		
+		if (mean == 0){
+			for (int i = 0; i < allStim.size(); i++)
+			{
+				sum += allStim.get(i);
+				cpt++;
+			}
+			mean = sum/cpt;
+		}
+		sum = 0; cpt = 0;
+		
+		for (int i = 0; i < allStim.size(); i++)
+		{
+			sum += Math.pow(allStim.get(i) - mean, 2);
+			cpt++;
+		}
+		
+		return Math.sqrt(sum/cpt);
+	}
+
+	// Return the mean of an array of reaction time (to be use after getAllRtOfBloc)
+	public static double getMeanOfBlock(ArrayList<Double> allStim)
+	{
+		double cpt = 0;
+		double sum = 0;
+		
+		if (allStim != null)
+		{
+			for (int i = 0; i < allStim.size(); i++)
+			{
+				sum += allStim.get(i);
+				cpt++;
+			}
+		
+			return sum/cpt;
+		}
+		else
+		{return -1;}
+	}
+	
+	
+	
+	
+	
 	//recoit une array de stim, si isMean = true donne la moyenne sinon donne la quantité, if left doit être "true", "false" ou "both"
 	public static double getStimQteOrMean(Stimulus[] allStim, boolean isMeanOrQte, String leftRightOrBoth, String seekGoodErrorLateOrAll)
 	{
@@ -306,15 +417,13 @@ public class AnimateBar {
 								n++;
 								
 								std += Math.pow((allStim[i].getRt() - mean), 2);
-								
-								System.out.println("STD: " + (allStim[i].getRt() - mean));
 							}
 						}
 					}
 				}
 				
 				
-				std = Math.sqrt(std/(n - 1));
+				std = Math.sqrt(std/n);
 
 				return std;	
 			}

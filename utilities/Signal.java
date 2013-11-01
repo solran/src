@@ -24,7 +24,7 @@ public class Signal {
 					String cmd = "C:\\Ruby186\\bin\\ruby.exe C:/ruby_executable/send.rb " + converter(type, imagerie);
 					Runtime.getRuntime().exec(cmd);
 					time = System.currentTimeMillis();
-					WriteLog.writeString("Signal : " + converter(type, imagerie), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+					WriteLog.writeString("Signal : " + converter(type, imagerie), "data/" + Task.mainTask.getSujetID() + "_console.txt");
 					
 					if(imagerie == "EEG"){
 						EegMask = new Timer();
@@ -37,7 +37,7 @@ public class Signal {
 					}
 					
 				} catch (IOException e) {
-					WriteLog.writeString("Signal : " + converter(type, imagerie) + " " +  e.getMessage(), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+					WriteLog.writeString("Signal : " + converter(type, imagerie) + " " +  e.getMessage(), "data/" + Task.mainTask.getSujetID() + "_console.txt");
 				}
 				if (imagerie == "IO"){ lastSignal = type;}
 				
@@ -53,10 +53,10 @@ public class Signal {
 			String cmd = "C:\\Ruby186\\bin\\ruby.exe C:/ruby_executable/send.rb " + 0;
 			Runtime.getRuntime().exec(cmd);
 			//test_temp
-			WriteLog.writeString("Masque : " + (time - System.currentTimeMillis()), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+			WriteLog.writeString("Masque : " + (time - System.currentTimeMillis()), "data/" + Task.mainTask.getSujetID() + "_console.txt");
 			
 		} catch (IOException e) {
-			WriteLog.writeString("Masque : " +  e.getMessage(), "data/console_" + Task.mainTask.getSujetID() + ".txt");
+			WriteLog.writeString("Masque : " +  e.getMessage(), "data/" + Task.mainTask.getSujetID() + "_console.txt");
 		}
 	}
 

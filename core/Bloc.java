@@ -15,6 +15,7 @@ public class Bloc {
 	
 	//Phil
 	private int nbSmDmStimuli = 0;
+	private String sp_sm_dm = "";
 	
 	private int blocID;
 	private int nBack;
@@ -22,6 +23,7 @@ public class Bloc {
 
 	//constructeur de bloc SM
 	public Bloc (Stimulus[] myStimulus, Stimulus[] myOtherStimulus, String sPG_SPD_SM_DM, int nBack, String typeNback, int version){
+		sp_sm_dm = sPG_SPD_SM_DM;
 		Random rgen = new Random();
 		//this.typeNback = typeNback;
 		int compteur=0;
@@ -34,12 +36,12 @@ public class Bloc {
 		{
 		     for (int i = 0; i<SMLength ; i+=myOtherStimulus.length )
 		     {
-		    	 for (int j = 0 ; j <myStimulus.length & (i+j)<stimulusComplet.length; j ++)
+		    	 for (int j = 0 ; j <myStimulus.length & (i+j) < stimulusComplet.length; j ++)
 		    	 {
 		    		 stimulusComplet[i+j] = CopieSansPointeur(myStimulus[j]);
 		    	 }
 		    	 i+=myStimulus.length;
-		    	 for (int j = 0 ; j <myOtherStimulus.length & (i+j)<stimulusComplet.length; j ++)
+		    	 for (int j = 0 ; j <myOtherStimulus.length & (i+j) < stimulusComplet.length; j ++)
 		    	 {
 		    		 stimulusComplet[i+j] = CopieSansPointeur(myOtherStimulus[j]);
 		    	 }
@@ -118,6 +120,7 @@ public class Bloc {
 
 	public Bloc (Stimulus[] myStimulus, String sPG_SPD_SM_DM, int nBack, String typeNback, String main, int version){
 		
+		sp_sm_dm = sPG_SPD_SM_DM;
 		Random rgen = new Random();
 		int compteur=0;
 		int hasard;
@@ -457,5 +460,13 @@ public class Bloc {
 	}
 	public void incrementNbSmDmStimuli() {
 		nbSmDmStimuli++;
+	}
+
+	public String getSp_sm_dm() {
+		return sp_sm_dm;
+	}
+
+	public void setSp_sm_dm(String sp_sm_dm) {
+		this.sp_sm_dm = sp_sm_dm;
 	}
 }

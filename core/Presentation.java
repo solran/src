@@ -125,7 +125,10 @@ public class Presentation extends JPanel{
 	
 	private Animate reminderExplanation1, reminderExplanation2, reminderExplanation3;
 
-
+	
+	boolean hadStimuli = false;
+	Bloc actualBloc, actualBloc2;
+	
 	public void paintSlide(){
 		float progressRatio;
 		ImageBox tempImageBox, tempImageBox2;
@@ -145,12 +148,35 @@ public class Presentation extends JPanel{
 		GraphicEngine.clearAll();
 		
 		
+		
+		
+		if(myTask.getMySlide().isStimulus()){
+			hadStimuli = true;
+			
+			actualBloc = myTask.getMySlide().getSoloStimulus().getBloc();
+			actualBloc2 = myTask.getMySlide().getSoloOtherStimulus().getBloc();
+		}
+		
 		if(!myTask.getMySlide().isStimulus() && myTask.getMySlide().getSlideName() != "reminderExplanation" && myTask.getMySlide().getSlideName() != "countdown" && myTask.getMySlide().getSlideName() != "pause"){
 
-			System.out.println("New Block");
-			
-			if(! finished)
-				WriteLog.writeMeans( myTask, "data/log_");
+
+			if(hadStimuli && (! finished)){
+				WriteLog.writeMeans( myTask, "data/", "_log");
+				
+				// write each block
+				//actualBloc.getStimulusComplet() ajouter écart-types
+				if(actualBloc != null){
+					WriteLog.writeMeansOfBlock(myTask, actualBloc,"data/", "_blocs");
+					actualBloc = null;
+				}
+				if(actualBloc2 != null){
+					WriteLog.writeMeansOfBlock(myTask, actualBloc2,"data/", "_blocs");
+					actualBloc2 = null;
+				}
+				
+				// "Début Bloc"
+				hadStimuli = false;
+			}
 			
 			if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}
 			
@@ -1508,12 +1534,12 @@ GraphicEngine.setModifying(false);
 			{				
 				if (myTask.getMySlide().getSoloStimulus().getName() != "")
 				{
-					WriteLog.writing (myTask.getMySlide().getSoloStimulus(), myTask, "data/donnees_");
+					WriteLog.writing (myTask.getMySlide().getSoloStimulus(), myTask, "data/", "_donnees");
 				}
 				if (myTask.getMySlide().getSoloOtherStimulus().getName() != "")
 				{
 					//System.out.print("version" + myTask.getMySlide().getSoloOtherStimulus().getVersion());
-					WriteLog.writing (myTask.getMySlide().getSoloOtherStimulus(), myTask, "data/donnees_");
+					WriteLog.writing (myTask.getMySlide().getSoloOtherStimulus(), myTask, "data/", "_donnees");
 				}
 				GraphicEngine.clearAll();
 				//ici on met x juste parce ' ' = une slide s'instruction et x n'est pas ' '.... that's it
@@ -1605,7 +1631,7 @@ GraphicEngine.setModifying(false);
 		//Session terminée
 		myTask.setIsCompleted(true);
 		myFirstColumns = WriteLog.writeLogFirstColumn(myTask, "data/log_");
-		WriteLog.writeMeans(myTask, "data/log_", myFirstColumns);
+		WriteLog.writeMeans(myTask, "data/", "_log", myFirstColumns);
 		myTask.setIsCompleted(false);
 		
 		System.out.println("SessionFinished");
