@@ -30,7 +30,7 @@ public class ReadLog {
 	private static Date date = new Date();
 	
 	//permet de de vérifier dans le log si une session n'a pas été écrite précédemment
-	public static int trouveSession (int ID, String location)
+	public static int trouveSession (int ID, String folder, String location)
 	{
 		int session = 0;
 		String line, lineSep[];	
@@ -38,7 +38,7 @@ public class ReadLog {
 		if(! Main.isApplet){
 			try
 			{           
-				FileReader fic = new FileReader(location + ID + ".txt");
+				FileReader fic = new FileReader(folder + ID + "_" + location + ".txt");
 				BufferedReader in = new BufferedReader(fic);				
 				in.readLine();		// saut de la ligne de l'entête
 				while (in.ready()) 

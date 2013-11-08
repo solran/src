@@ -1301,6 +1301,12 @@ GraphicEngine.setModifying(false);
 							int barLeft = AnimateBar.getRang(AnimateBar.percentilesLeft, barValueLeft);
 							this.stimulus.setBarRang(barLeft);
 							GraphicEngine.updateBar1(barLeft * 20);
+							
+							//testbar
+							System.out.println("AnimateBar.percentilesLeft: " + AnimateBar.percentilesLeft);
+							System.out.println("barValueLeft: " + barValueLeft);
+							System.out.println("height: " + (AnimateBar.getRang(AnimateBar.percentilesLeft, barValueLeft) * 20));
+					
 						}
 					}else if(!this.stimulus.getIsLeft()){
 						
@@ -1630,7 +1636,7 @@ GraphicEngine.setModifying(false);
 		
 		//Session terminée
 		myTask.setIsCompleted(true);
-		myFirstColumns = WriteLog.writeLogFirstColumn(myTask, "data/log_");
+		myFirstColumns = WriteLog.writeLogFirstColumn(myTask);
 		WriteLog.writeMeans(myTask, "data/", "_log", myFirstColumns);
 		myTask.setIsCompleted(false);
 		

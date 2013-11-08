@@ -879,7 +879,8 @@ public class Menu {
 		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "5"}));
 		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "6"}));
 		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "7"}));
-
+		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "8"}));
+		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "9"}));
 		
 		this.radioLabelType.setText(Langue.translate(new String[] {"radioType", "0"}));	
 		this.radio1Type.setText(Langue.translate(new String[] {"radioType", "1"}));

@@ -138,13 +138,26 @@ public class WriteLog {
 				s += task.getMixedPourc() + sTab;
 				s += currentBloc.getBlocID() + sTab;
 				
+				/*
 				if(currentBloc.getSp_sm_dm() == "SM" || currentBloc.getSp_sm_dm() == "DM")
 					if(i == 0)
 						s += currentBloc.getSp_sm_dm() + "G" + sTab;
 					else
 						s += currentBloc.getSp_sm_dm() + "D" + sTab;
 				else
+					s += currentBloc.getSp_sm_dm() + sTab;*/
+				
+				if(i == 2){
+					s += "SMG" + sTab;
+				}else if(i == 3){
+					s += "SMD" + sTab;
+				}else if(i == 4){
+					s += "DMG" + sTab;
+				}else if(i == 5){
+					s += "DMD" + sTab;
+				}else{
 					s += currentBloc.getSp_sm_dm() + sTab;
+				}
 			
 				double mean = AnimateBar.getMeanOfBlock(allRts.get(i));
 				double acc = AnimateBar.getMeanOfBlock(allAcc.get(i));
@@ -265,7 +278,7 @@ public class WriteLog {
 	}
 	
 	// écriture du Log
-	public static String writeLogFirstColumn (Task task, String location)
+	public static String writeLogFirstColumn (Task task)
 	{
 		String s = "";
 		nbColomn = 0;

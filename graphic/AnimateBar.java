@@ -249,8 +249,13 @@ public class AnimateBar {
 	{
 		
 		Stimulus[] allStim;
-		ArrayList<Double> allLeftRts = new ArrayList<Double>();
-		ArrayList<Double> allRightRts = new ArrayList<Double>();
+		ArrayList<Double> allLeftRts_sp = new ArrayList<Double>();
+		ArrayList<Double> allRightRts_sp = new ArrayList<Double>();
+		ArrayList<Double> allLeftRts_sm = new ArrayList<Double>();
+		ArrayList<Double> allRightRts_sm = new ArrayList<Double>();
+		ArrayList<Double> allLeftRts_dm = new ArrayList<Double>();
+		ArrayList<Double> allRightRts_dm = new ArrayList<Double>();
+		
 		ArrayList<ArrayList<Double>> blocLeftAndRight = new ArrayList<ArrayList<Double>>();
 		
 		allStim = currentBloc.getStimulusComplet();
@@ -258,16 +263,34 @@ public class AnimateBar {
 		{
 			if (allStim[i]!= null && allStim[i].getIsAcc()== true && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==true)
 			{
-				allLeftRts.add(allStim[i].getRt());
+				if(allStim[i].getSPG_SPD_SM_DM() == "SPG"){
+					allLeftRts_sp.add(allStim[i].getRt());
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "SM"){
+					allLeftRts_sm.add(allStim[i].getRt());
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "DM"){
+					allLeftRts_dm.add(allStim[i].getRt());
+				}
+
 			}
 			if (allStim[i]!= null && allStim[i].getIsAcc()== true && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==false)
 			{
-				allRightRts.add(allStim[i].getRt());
+				if(allStim[i].getSPG_SPD_SM_DM() == "SPD"){
+					allRightRts_sp.add(allStim[i].getRt());
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "SM"){
+					allRightRts_sm.add(allStim[i].getRt());
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "DM"){
+					allRightRts_dm.add(allStim[i].getRt());
+				}
 			}
 		}
 		
-		blocLeftAndRight.add(allLeftRts);
-		blocLeftAndRight.add(allRightRts);
+
+		blocLeftAndRight.add(allLeftRts_sp);
+		blocLeftAndRight.add(allRightRts_sp);
+		blocLeftAndRight.add(allLeftRts_sm);
+		blocLeftAndRight.add(allRightRts_sm);
+		blocLeftAndRight.add(allLeftRts_dm);
+		blocLeftAndRight.add(allRightRts_dm);
 	
 		return blocLeftAndRight;
 	}
@@ -276,8 +299,13 @@ public class AnimateBar {
 	public static ArrayList<ArrayList<Double>> getAllAccOfBloc (Bloc currentBloc)
 	{
 		Stimulus[] allStim;
-		ArrayList<Double> allLeftRts = new ArrayList<Double>();
-		ArrayList<Double> allRightRts = new ArrayList<Double>();
+		ArrayList<Double> allLeftRts_sp = new ArrayList<Double>();
+		ArrayList<Double> allRightRts_sp = new ArrayList<Double>();
+		ArrayList<Double> allLeftRts_sm = new ArrayList<Double>();
+		ArrayList<Double> allRightRts_sm = new ArrayList<Double>();
+		ArrayList<Double> allLeftRts_dm = new ArrayList<Double>();
+		ArrayList<Double> allRightRts_dm = new ArrayList<Double>();
+		
 		ArrayList<ArrayList<Double>> blocLeftAndRight = new ArrayList<ArrayList<Double>>();
 		
 		allStim = currentBloc.getStimulusComplet();
@@ -285,23 +313,52 @@ public class AnimateBar {
 		{
 			if (allStim[i]!= null && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==true)
 			{
-				if(allStim[i].getIsAcc() == true)
-					allLeftRts.add(1.0);
-				else
-					allLeftRts.add(0.0);
+				if(allStim[i].getSPG_SPD_SM_DM() == "SPG"){
+					if(allStim[i].getIsAcc() == true)
+						allLeftRts_sp.add(1.0);
+					else
+						allLeftRts_sp.add(0.0);
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "SM"){
+					if(allStim[i].getIsAcc() == true)
+						allLeftRts_sm.add(1.0);
+					else
+						allLeftRts_sm.add(0.0);
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "DM"){
+					if(allStim[i].getIsAcc() == true)
+						allLeftRts_dm.add(1.0);
+					else
+						allLeftRts_dm.add(0.0);
+				}
 			}
 			if (allStim[i]!= null && 5000>allStim[i].getRt() && allStim[i].getRt()>200 && allStim[i].getIsLeft()==false)
 			{
-				if(allStim[i].getIsAcc() == true)
-					allRightRts.add(1.0);
-				else
-					allRightRts.add(0.0);
+				
+				if(allStim[i].getSPG_SPD_SM_DM() == "SPD"){
+					if(allStim[i].getIsAcc() == true)
+						allRightRts_sp.add(1.0);
+					else
+						allRightRts_sp.add(0.0);
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "SM"){
+					if(allStim[i].getIsAcc() == true)
+						allRightRts_sm.add(1.0);
+					else
+						allRightRts_sm.add(0.0);
+				}else if(allStim[i].getSPG_SPD_SM_DM() == "DM"){
+					if(allStim[i].getIsAcc() == true)
+						allRightRts_dm.add(1.0);
+					else
+						allRightRts_dm.add(0.0);
+				}
 			}
 		}
 		
-		blocLeftAndRight.add(allLeftRts);
-		blocLeftAndRight.add(allRightRts);
-	
+		blocLeftAndRight.add(allLeftRts_sp);
+		blocLeftAndRight.add(allRightRts_sp);
+		blocLeftAndRight.add(allLeftRts_sm);
+		blocLeftAndRight.add(allRightRts_sm);
+		blocLeftAndRight.add(allLeftRts_dm);
+		blocLeftAndRight.add(allRightRts_dm);
+		
 		return blocLeftAndRight;
 	}
 	

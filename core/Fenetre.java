@@ -115,7 +115,7 @@ public class Fenetre extends JFrame{
         this.setResizable(false);
         
 
-        bigPanel.setPreferredSize(new Dimension(this.getWidth() - 10, this.getHeight() - 30));
+        bigPanel.setPreferredSize(new Dimension(this.getWidth() - 10, this.getHeight() - 50)); //30
         bigPanel.setOpaque(false);
   
         

@@ -209,6 +209,7 @@ public class Task {
 		if (myParameters.get("essai") == 1)
 		{
 			Bloc.setSPLength(10);	Bloc.setSMLength(16);	Bloc.setDMLength(20);
+			
 		}
 		else if (myParameters.get("essai") == 2)
 		{
@@ -233,6 +234,16 @@ public class Task {
 		else if (myParameters.get("essai") == 7)
 		{
 			Bloc.setSPLength(48);	Bloc.setSMLength(48);	Bloc.setDMLength(48);
+		}
+		else if (myParameters.get("essai") == 8)
+		{
+			// Tâche projet fréquence, 15 min.
+			Bloc.setSPLength(15);	Bloc.setDMLength(100);
+		}
+		else if (myParameters.get("essai") == 9)
+		{
+			// Tâche projet fréquence, 60 min.
+			Bloc.setSPLength(60);	Bloc.setDMLength(100);
 		}
 		
 		//Harcodé pour la tâche de Phillips
@@ -523,7 +534,7 @@ public class Task {
 				}
 			}
 			
-			//création unique de toute les images
+			//création unique de toutes les images
 			if(!stimsAreSounds){
 				myImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 160,160,  "images/" + version + "/A/" + (i + departGauche + 1) + "a.png", "images1" + name[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/A/" + (i + departGauche + 1) + "b.png", "images2" + name[i]), new ImageBox(0, 0, 160,160, "images/" + version + "/A/" + (i + departGauche + 1) + "c.png", "images3" + name[i])});
 				mySmallImages.put(name[i], new ImageBox[] {new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "a.png", "smallImages1" + name[i]), new ImageBox(0, 0, 90, 90,160, 160,  "images/" + version + "/A/" + (i + departGauche +1) + "b.png", "smallImages2" + name[i]), new ImageBox(0, 0, 90, 90,160, 160, "images/" + version + "/A/" + (i + departGauche +1) + "c.png", "smallImages3" + name[i])});
@@ -696,10 +707,10 @@ public class Task {
 		//note du départ
 		//test temp
 		Signal.sendSignal("start", this.imagerie);
-		this.session = ReadLog.trouveSession(this.sujetID, "data/log_" ) + 1;
+		this.session = ReadLog.trouveSession(this.sujetID, "data/", "log" ) + 1;
 		String firstColumns = "";
 		
-		firstColumns = WriteLog.writeLogFirstColumn (this, "data/log_");
+		firstColumns = WriteLog.writeLogFirstColumn (this);
 		WriteLog.writeMeans( this, "data/", "_log", firstColumns);
 		System.out.println("Début Bloc2");
 		
