@@ -203,13 +203,19 @@ public class Langue extends HashMap {
 			if(! Task.mainTask.isStimsAreSounds())
 				expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">Pour ce bloc, %stim1% vont apparaître au<br /> centre de l’écran.</p><br /><p align=\"center\">Vous devez identifier le symbole (%stim2%)<br />en appuyant sur la touche du clavier correspondante.</p></html>");	
 			else{
-				expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier d'où provient le son (gauche ou droite)<br />en appuyant sur la touche du clavier correspondante.</p></html>");
+				if(Task.mainTask.getVersion() == 6)	// gauche/droite
+					expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier d'où provient le son (gauche ou droite)<br />en appuyant sur la touche du clavier correspondante.</p></html>");
+				else if(Task.mainTask.getVersion() == 7)	//fréquence
+					expression.put("keyGeneralExplanationHeader", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier les sons<br />en appuyant sur la touche du clavier correspondante.</p></html>");
+				
 			}
 			
 			expression.put("keyGeneralExplanationFooter", "<html><p align=\"center\">Vous devez répondre <b>le plus vite possible et faire le moins<br />d’erreurs possible.</b></p></html>");
 			
-			expression.put("keyGeneralExplanationHeader2", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier le mot (GO ou STOP)<br />en appuyant sur la touche du clavier correspondante.</p></html>");
-			
+			if(Task.mainTask.getVersion() == 6)
+				expression.put("keyGeneralExplanationHeader2", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier le mot (GO ou STOP)<br />en appuyant sur la touche du clavier correspondante.</p></html>");
+			else
+				expression.put("keyGeneralExplanationHeader2", "<html><p align=\"center\">Pour ce bloc, %stim1% se feront entendre.</p><br /><p align=\"center\">Vous devez identifier les sons<br />en appuyant sur la touche du clavier correspondante.</p></html>");
 			
 			
 			// DetailedExplanation
@@ -229,7 +235,7 @@ public class Langue extends HashMap {
 				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">Dans cet exercice, des %taskName% <b>%link%</b> des %otherTaskName% vont apparaître au<br />" +
 						"centre de l'écran.</p>" +
 						"<br />" +
-						"<p align=\"center\">Vous devez identifier le son en appuyant sur la touche<br />" +
+						"<p align=\"center\">Vous devez identifier le symbole en appuyant sur les touches correpondantes<br />" +
 						"correspondante.</p></html>");
 			}else{
 				expression.put("keyS&DMixteHeader", "<html><p align=\"center\">Dans cet exercice, des %taskName% <b>%link%</b> des %otherTaskName% vont se faire entendre</p>" +
