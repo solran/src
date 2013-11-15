@@ -95,10 +95,16 @@ public class Menu {
 			private ButtonGroup bgLangue  = new ButtonGroup();	
 			private JLabel radioLabelLangue = new JLabel();
 						
-			private JPanel radioPanelTypeQteEssai = new JPanel();
-			private JLabel radioLabelType= new JLabel();
-			private JLabel radioLabelQteEssai= new JLabel();
-			private JComboBox boxQteEssai = new JComboBox();
+			private JPanel bigPanelTypeQteEssai = new JPanel();
+			private JPanel smallPanelTypeQteEssai = new JPanel();
+			private JLabel labelType= new JLabel();
+			private JLabel labelQteEssai= new JLabel();
+			private JLabel labelQteEssaiSP= new JLabel();
+			private JTextField textQteEssaiSP = new JTextField("10");
+			private JLabel labelQteEssaiSM= new JLabel();
+			private JTextField textQteEssaiSM = new JTextField("10");
+			private JLabel labelQteEssaiDM= new JLabel();
+			private JTextField textQteEssaiDM = new JTextField("10");
 			private JRadioButton radio1Type= new JRadioButton (),	radio2Type= new JRadioButton ();
 			private ButtonGroup bgType = new ButtonGroup();
 						
@@ -292,31 +298,24 @@ public class Menu {
 	        boxQteBlocDM.addActionListener( new ComboBoxListener());
 	        
 	      //QteEssai
-	        boxQteEssai.setSelectedIndex(0);
-	        boxQteEssai.setPreferredSize(new Dimension(10, 10));
-	        boxQteEssai.addActionListener( new ComboBoxListener());
+	        textQteEssaiSP.setPreferredSize(new Dimension(60, 30));
+	        textQteEssaiSM.setPreferredSize(new Dimension(60, 30));
+	        textQteEssaiDM.setPreferredSize(new Dimension(60, 30));
 	        
 	        panelSujetIDQteBlocDM.setPreferredSize(new Dimension(120, 220));	
 	        panelSujetIDQteBlocDM.add(labelSujetID); 	panelSujetIDQteBlocDM.add(textSujetID);	panelSujetIDQteBlocDM.add(radioLabelQteBlocDM);	panelSujetIDQteBlocDM.add(boxQteBlocDM);	
-	        
-	        //Config Panel 1
-	       /* configPanel1.setLayout(new FlowLayout());
-	        configPanel1.setPreferredSize(new Dimension(600, 70));
-	        configPanel1.setBackground(myLightBlueLesca);
-	        configPanel1.add(panelSujetID);	 configPanel1.add(radioPanelDuree);	
-	        configPanel1.setBorder(empty);
-	        center.add(configPanel1);*/
 	        	        
 	        // Radio Button Main
 	        bgType.add(radio1Type);		bgType.add(radio2Type);		
 	        radio1Type.addActionListener(new RadioListener());	radio2Type.addActionListener(new RadioListener());	
 	        radio2Type.setSelected(true);
-	        radioPanelTypeQteEssai.setLayout(new GridLayout(5,1));
-	        radioPanelTypeQteEssai.setPreferredSize(new Dimension(150, 220));
-	        
-	        radioPanelTypeQteEssai.add(radioLabelType);	radioPanelTypeQteEssai.add(radio1Type);		radioPanelTypeQteEssai.add(radio2Type);	radioPanelTypeQteEssai.add(radioLabelQteEssai); radioPanelTypeQteEssai.add(boxQteEssai);
-	        radioLabelType.setVerticalAlignment(SwingConstants.TOP);
-	        radioLabelType.setHorizontalAlignment(SwingConstants.CENTER);
+	        //radioPanelTypeQteEssai.setLayout(new GridLayout(7,1));
+	        bigPanelTypeQteEssai.setPreferredSize(new Dimension(150, 220));
+	        smallPanelTypeQteEssai.setLayout(new GridLayout(3,2));
+	        smallPanelTypeQteEssai.add(labelQteEssaiSP); smallPanelTypeQteEssai.add(textQteEssaiSP);smallPanelTypeQteEssai.add(labelQteEssaiSM); smallPanelTypeQteEssai.add(textQteEssaiSM);smallPanelTypeQteEssai.add(labelQteEssaiDM); smallPanelTypeQteEssai.add(textQteEssaiDM);
+	        bigPanelTypeQteEssai.add(labelType);	bigPanelTypeQteEssai.add(radio1Type);		bigPanelTypeQteEssai.add(radio2Type);	bigPanelTypeQteEssai.add(smallPanelTypeQteEssai);
+	        labelType.setVerticalAlignment(SwingConstants.TOP);
+	        labelType.setHorizontalAlignment(SwingConstants.CENTER);
 
 	        // Radio Button Version
 	    	/*
@@ -389,7 +388,7 @@ public class Menu {
 	        configPanel2.setLayout(new FlowLayout());
 	        configPanel2.setPreferredSize(new Dimension(1100, 240));
 	        configPanel2.setBackground(myLightBlueLesca);
-	        configPanel2.add(panelSujetIDQteBlocDM);	configPanel2.add(radioPanelTypeQteEssai);  configPanel2.add(radioPanelVersion); configPanel2.add(radioPanelQte); 	configPanel2.add(radioPanelTiming); 	configPanel2.add(radioPanelMixed); 
+	        configPanel2.add(panelSujetIDQteBlocDM);	configPanel2.add(bigPanelTypeQteEssai);  configPanel2.add(radioPanelVersion); configPanel2.add(radioPanelQte); 	configPanel2.add(radioPanelTiming); 	configPanel2.add(radioPanelMixed); 
 	        configPanel2.setBorder(empty);
 	        center.add(configPanel2);
 	        
@@ -757,7 +756,9 @@ public class Menu {
 	    			else if (myInputParameters.get("isTimeUnlock") == 1)
 	    				checkBoxIsTimeUnlock.setSelected(true);
 	    			boxQteBlocDM.setSelectedIndex(myInputParameters.get("duree")-1);
-	    			boxQteEssai.setSelectedIndex(myInputParameters.get("essai")-1);
+	    			textQteEssaiSP.setText(""+ myInputParameters.get("qteEssaiSP"));
+	    			textQteEssaiSM.setText(""+ myInputParameters.get("qteEssaiSM"));
+	    			textQteEssaiDM.setText(""+ myInputParameters.get("qteEssaiDM"));
 	    			boxNback.setSelectedIndex(myInputParameters.get("boxNback")-1);
 	    			boxISI.setSelectedIndex(myInputParameters.get("ISI")-1);
 	    			boxStimT.setSelectedIndex(myInputParameters.get("stimT")-1);
@@ -799,7 +800,9 @@ public class Menu {
 			
 			
 			myParameters.put("duree", boxQteBlocDM.getSelectedIndex()+1);
-			myParameters.put("essai", boxQteEssai.getSelectedIndex()+1);
+			myParameters.put("qteEssaiSP", Integer.parseInt(textQteEssaiSP.getText()));
+			myParameters.put("qteEssaiSM", Integer.parseInt(textQteEssaiSM.getText()));
+			myParameters.put("qteEssaiDM", Integer.parseInt(textQteEssaiDM.getText()));
 			myParameters.put("boxNback", boxNback.getSelectedIndex()+1);
 			myParameters.put("ISI", boxISI.getSelectedIndex()+1);
 			myParameters.put("stimT", boxStimT.getSelectedIndex()+1);
@@ -870,19 +873,12 @@ public class Menu {
 		this.boxQteBlocDM.addItem(Langue.translate(new String[] {"radioDuree", "6"}));
 		
 		
-		this.radioLabelQteEssai.setText(Langue.translate(new String[] {"radioQteEssai", "0"}));
-		this.boxQteEssai.removeAllItems();
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "1"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "2"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "3"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "4"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "5"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "6"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "7"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "8"}));
-		this.boxQteEssai.addItem(Langue.translate(new String[] {"radioQteEssai", "9"}));
+		this.labelQteEssai.setText(Langue.translate(new String[] {"radioQteEssai", "0"}));
+		this.labelQteEssaiSP.setText(Langue.translate(new String[] {"radioQteEssai", "1"}));
+		this.labelQteEssaiSM.setText(Langue.translate(new String[] {"radioQteEssai", "2"}));
+		this.labelQteEssaiDM.setText(Langue.translate(new String[] {"radioQteEssai", "3"}));
 		
-		this.radioLabelType.setText(Langue.translate(new String[] {"radioType", "0"}));	
+		this.labelType.setText(Langue.translate(new String[] {"radioType", "0"}));	
 		this.radio1Type.setText(Langue.translate(new String[] {"radioType", "1"}));
 		this.radio2Type.setText(Langue.translate(new String[] {"radioType", "2"}));
 		
@@ -898,8 +894,6 @@ public class Menu {
 		this.radio5Version.setText(Langue.translate(new String[] {"radioVersion", "5"}));
 		this.radio6Version.setText(Langue.translate(new String[] {"radioVersion", "6"}));
 		this.radio7Version.setText(Langue.translate(new String[] {"radioVersion", "7"}));
-		
-		
 		
 		this.radioLabelQte.setText(Langue.translate(new String[] {"radioQte", "0"}));
 		this.radio1Qte.setText(Langue.translate(new String[] {"radioQte", "1"}));

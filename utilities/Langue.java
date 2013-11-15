@@ -57,9 +57,9 @@ public class Langue extends HashMap {
 
 			expression.put("sujetID", "<html><p align=\"center\"><font size = 4>Numéro (#) de <br />participant</font></p></html>");
 			
-			Utilities.iniHashMap(expression, "radioDuree", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4><p align=\"center\"><br /><br /># de blocs DM</font></html>", "0", "2", "4", "6", "8", "10"});
+			Utilities.iniHashMap(expression, "radioDuree", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4><p align=\"center\"><br /><br /># de blocs </font></html>", "0", "2", "4", "6", "8", "10"});
 			
-			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><font size = 4><p align=\"center\"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;# d'essais</font></p></html>", "10SP/16SM/20DM", "10SP/16SM/24DM", "12SP/20SM/24DM", "16SP/26SM/36DM", "24SP/36SM/48DM", "36SP/36SM/36DM", "48SP/48SM/48DM", "10SP/100DM", "40SP/400DM"});
+			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3"}, new String[]{"<html><font size = 4><p align=\"center\"> # d'essais</font></p></html>", "#-SP", "#-SM", "#-DM"});
 			
 			Utilities.iniHashMap(expression, "radioType", new String[]{"0", "1", "2"}, new String[]{"<html><font size = 4>Type de session</font></html>", "Évaluation",  "Entrainement"});
 			
@@ -74,7 +74,7 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "radioNBack", new String[]{"0", "1", "2", "3", "4",  "boxLabel", "box1", "box2", "box3" }, new String[]{"<html><font size = 4>Réponse à rebours (n-back)</font></html>", "Débutant : 0 rebours",
 					"Intermédiaire : 1 rebours","Avancé : 2 rebours", "Expert : 3 rebours", "Type de n-back", "Aucun N-back", "Matching", "Retrieval"});
 			
-			Utilities.iniHashMap(expression, "radioisDT", new String[]{"info", "0", "1", "2"}, new String[]{"<html><p align=\"center\"><font size = 4>Blocs</font></p></html>", 
+			Utilities.iniHashMap(expression, "radioisDT", new String[]{"info", "0", "1", "2"}, new String[]{"<html><p align=\"center\"><font size = 4># of blocs</font></p></html>", 
 					"<html>Avec simple pur</html>", "<html>Avec simple mixte</html>", "<html>Avec double mixte<br/></html>" });
 	
 			Utilities.iniHashMap(expression, "radioTimeUnlock", new String[]{"0", "1", "tooltip"}, new String[]{"<html><p align=\"center\"><font size = 4>Paramètres de temps</font></p></html>", 
@@ -117,9 +117,9 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "input", new String[]{"0", "1"}, new String[]{"My settings (optionnal): ", "Run/Select..."});		
 			
-			Utilities.iniHashMap(expression, "radioDuree", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 3><br /><br /># of DM blocs</font></html>", "0", "2", "4", "6", "8", "10"});
+			Utilities.iniHashMap(expression, "radioDuree", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4><p align=\"center\"><br /><br /># of blocs </font></html>", "0", "2", "4", "6", "8", "10"});
 			
-			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><font size = 4><p align=\"center\"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;# of trials</font></p></html>", "10SP/16SM/20DM", "10SP/16SM/24DM", "12SP/20SM/24DM", "16SP/26SM/36DM", "24SP/36SM/48DM", "36SP/36SM/36DM", "48SP/48SM/48DM", "10SP/100DM", "40SP/400DM"});
+			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3"}, new String[]{"<html><font size = 4><p align=\"center\"> # of trials</font></p></html>", "#-SP", "#-SM", "#-DM"});
 			
 			Utilities.iniHashMap(expression, "radioType", new String[]{"0", "1", "2"}, new String[]{"<html><font size = 4>Type of Session</font></html>", "Evaluation",  "Training"});
 			
