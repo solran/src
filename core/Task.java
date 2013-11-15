@@ -383,14 +383,9 @@ public class Task {
 			if (this.typeNback == "matching"){
 				if(nBackKey == 1){
 					leftKeys = new String[2];
-					//rightKeys = new String[1];
-					
-					//leftKeys =
-							
-					
+
 					leftKeys = Arrays.copyOfRange(NORMAL_LEFT_KEY, 4 - 3, 4);
 					rightKeys = Arrays.copyOfRange(NO_NUMPAD_RIGHT_KEY, 0, 1);
-					
 					
 				}else{
 					leftKeys = new String[2];

@@ -88,7 +88,7 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "radioStimT", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}, new String[]{"<html><p align=\"center\"><font size = 3>Stimuli On-screen Display</font></p></html>", 
 					"Variable", "200ms", "500ms", "1000ms", "1500ms", "2000ms", "2400ms", "3000ms", "3500ms", "4000ms" });
 			
-			Utilities.iniHashMap(expression, "radioAnswerT", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><p align=\"center\"><font size = 3>Temps suppl. pour réponde</font></p></html>", 
+			Utilities.iniHashMap(expression, "radioAnswerT", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><p align=\"center\"><font size = 3>Temps suppl. pour répondre</font></p></html>", 
 					"aucun","+500ms", "+1000ms", "+1500ms", "+2000ms", "+2500ms", "+3000ms", "+3500ms", "+4000ms" });
 			
 			Utilities.iniHashMap(expression, "radioisPrio", new String[]{"0", "1", "2"}, new String[]{"<html><p align=\"center\"><font size = 4>Priorisation des tâches</font></p></html>", 

@@ -15,6 +15,7 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -94,10 +95,7 @@ public class Presentation extends JPanel{
 	
 	
 	public Presentation(Task myTask){
-		//hide cursor only if desktop version
-		/*if(! Main.isApplet)
-			Main.getInstance().hideCursor();
-		*/
+
 		this.myTask = myTask;
 		
 		//Initialize buffImage and graphic
@@ -128,6 +126,7 @@ public class Presentation extends JPanel{
 	
 	boolean hadStimuli = false;
 	Bloc actualBloc, actualBloc2;
+	boolean isDM = false;
 	
 	public void paintSlide(){
 		float progressRatio;
@@ -153,8 +152,16 @@ public class Presentation extends JPanel{
 		if(myTask.getMySlide().isStimulus()){
 			hadStimuli = true;
 			
-			actualBloc = myTask.getMySlide().getSoloStimulus().getBloc();
-			actualBloc2 = myTask.getMySlide().getSoloOtherStimulus().getBloc();
+			if((myTask.getMySlide().getSoloStimulus().getBloc() != null) && (myTask.getMySlide().getSoloOtherStimulus().getBloc() != null)){
+				isDM = true;
+				actualBloc = myTask.getMySlide().getSoloStimulus().getBloc();
+				actualBloc2 = myTask.getMySlide().getSoloOtherStimulus().getBloc();
+			}
+				
+			if(! isDM){
+				actualBloc = myTask.getMySlide().getSoloStimulus().getBloc();
+				actualBloc2 = myTask.getMySlide().getSoloOtherStimulus().getBloc();
+			}
 		}
 		
 		if(!myTask.getMySlide().isStimulus() && myTask.getMySlide().getSlideName() != "reminderExplanation" && myTask.getMySlide().getSlideName() != "countdown" && myTask.getMySlide().getSlideName() != "pause"){
@@ -164,10 +171,10 @@ public class Presentation extends JPanel{
 				WriteLog.writeMeans( myTask, "data/", "_log");
 				
 				// write each block
-				//actualBloc.getStimulusComplet() ajouter écart-types
 				if(actualBloc != null){
 					WriteLog.writeMeansOfBlock(myTask, actualBloc,"data/", "_blocs");
 					actualBloc = null;
+					
 				}
 				if(actualBloc2 != null){
 					WriteLog.writeMeansOfBlock(myTask, actualBloc2,"data/", "_blocs");
@@ -176,6 +183,7 @@ public class Presentation extends JPanel{
 				
 				// "Début Bloc"
 				hadStimuli = false;
+				isDM = false;
 			}
 			
 			if (myTask.getImagerie() == "IO"){Signal.sendSignal("instruction", myTask.getImagerie());}
@@ -509,9 +517,20 @@ public class Presentation extends JPanel{
 				
 			}
 			else if (myTask.getMySlide().getSlideName() == "priorite"){
-			
-				double d = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "left", "good");
-				double e = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "right", "good");
+				double d = 1000.0;
+				double e = 1000.0;
+				
+				if(myTask.getMixedPourc() == 0){
+					d = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "left", "good");
+					e = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "right", "good");
+				}else if(myTask.getMixedPourc() > 0){
+					//todo - special case when there is no SM block prior to the DM block
+					// take the double of the SP trials...
+					d = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSPG), true, "left", "good") * 2;
+					e = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSPD), true, "right", "good") * 2;
+				}
+				
+				
 				double f = AnimateBar.getStimQteOrMean(myTask.getMySlide().getMyStimulus(), true, "both", "good");
 				double g = AnimateBar.getStimQteOrMean(myTask.getMySlide().getMyOtherStimulus(), true, "both", "good");
 				double i = (d/e)/(f/g);		
@@ -1157,6 +1176,7 @@ GraphicEngine.setModifying(false);
 		public void keyTyped(KeyEvent e) {}
 	};
 	
+
 	
 	class ClickListener implements MouseListener {
 		private ImageBox box;
@@ -1179,6 +1199,9 @@ GraphicEngine.setModifying(false);
 				}
 			}
 		}
+		
+		
+		
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {

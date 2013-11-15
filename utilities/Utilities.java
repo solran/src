@@ -46,7 +46,7 @@ public class Utilities {
 		{
 			Stimulus[] allStimulus = new Stimulus[getStimLength(blocs)];
 			int i = 0;
-			for (int i2 = 0; i2<blocs.length; i2++)
+			for (int i2 = 0; i2 < blocs.length; i2++)
 			{
 			     System.arraycopy(blocs[i2].getStimulusComplet(), 0, allStimulus, i, blocs[i2].getStimulusComplet().length); 
 			     i+=blocs[i2].getStimulusComplet().length;
@@ -55,6 +55,46 @@ public class Utilities {
 		}
 		else return null;
 	}
+	
+	
+	public static Stimulus[] getallStim(Bloc[] blocs, String type) {
+		if (blocs!= null)
+		{
+			Stimulus[] allStimulus = new Stimulus[getStimLength(blocs)];
+			int i = 0;
+			//todo
+			// for each bloc
+			for (int i2 = 0; i2 < blocs.length; i2++)
+			{
+				if(type.equals("SP")){
+					System.arraycopy(blocs[i2].getStimulusComplet(), 0, allStimulus, i, blocs[i2].getStimulusComplet().length); 
+					i+=blocs[i2].getStimulusComplet().length;
+				}else{
+					
+					// for each simulus in the bloc
+					for(int i3 = 0; i3 < blocs[i2].getStimulusComplet().length; i3++){
+						if(type.equals("SM")){
+							if(blocs[i2].getStimulusComplet()[i3].getSPG_SPD_SM_DM().equals("SM")){
+								allStimulus[i] = blocs[i2].getStimulusComplet()[i3];
+								i++;
+							}
+						}else if(type.equals("DM")){
+							if(blocs[i2].getStimulusComplet()[i3].getSPG_SPD_SM_DM().equals("DM")){
+								allStimulus[i] = blocs[i2].getStimulusComplet()[i3];
+								i++;
+							}
+						}
+					} 
+				}
+			    
+			    
+			}
+			return allStimulus;
+		}
+		else return null;
+	}
+	
+	
 	
 	
 	

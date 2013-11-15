@@ -1,4 +1,6 @@
 package core;
+import graphic.ImageBox;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -18,11 +20,17 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -31,6 +39,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.event.MouseInputAdapter;
+
+import core.Presentation.ClickListener;
+import core.Presentation.addNbackImage;
 
 import overview.Overview;
 import overview.SimplifiedTask;
@@ -208,6 +220,11 @@ public class Fenetre extends JFrame{
 	
   		gbc.anchor = GridBagConstraints.LINE_END;
   		 this.windowPanel.add(rightLabel, gbc);
+  		 
+  		 
+  		MouseMoveListener myListener = new MouseMoveListener();
+ 		this.windowPanel.addMouseListener(myListener);
+  		this.windowPanel.addMouseMotionListener(myListener);
 
 	}
 
@@ -280,19 +297,61 @@ public class Fenetre extends JFrame{
 	public void hideCursor(){
 		// Transparent 16 x 16 pixel cursor image.
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-	
 		// Create a new blank cursor.
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-		    cursorImg, new Point(0, 0), "blank cursor");
-	
+		cursorImg, new Point(0, 0), "blank cursor");
 		// Set the blank cursor to the JFrame.
 		getContentPane().setCursor(blankCursor);
-		
 	}
 	
 	public void showCursor(JPanel panel){
 		//setCursor(Cursor.getDefaultCursor());
 		panel.setCursor(Cursor.getDefaultCursor());
+	}
+	
+	
+	boolean moved = false;
+	boolean hidden = false;
+	
+	private class MouseMoveListener extends MouseInputAdapter {
+		Timer notMovedTimer;
+		
+		public MouseMoveListener(){
+	    	notMovedTimer = new Timer();
+	    	notMovedTimer.schedule(new displayCursorManager(), 0, 3000);
+		}
+		
+	    public void mousePressed(MouseEvent e) {
+	    }
+
+	    public void mouseDragged(MouseEvent e) {
+	    }
+
+	    public void mouseReleased(MouseEvent e) {
+	    }
+
+	    public void mouseMoved(MouseEvent e) {
+	    	moved = true;
+	    	if(hidden){
+	    		showCursor(windowPanel);
+	    		hidden = false;
+	    	}
+	    }
+	}
+	
+	class displayCursorManager extends TimerTask{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			System.out.println("cursor!");
+			if(! moved){
+				hideCursor();
+				hidden =true;
+			}else{
+				moved = false;
+			}
+		}
 	}
 	
 }

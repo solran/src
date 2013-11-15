@@ -178,7 +178,8 @@ public class WriteLog {
 		}
 		
 		//test
-		System.out.println("this is it : " + s);
+		System.out.println("this is it : ");
+		System.out.println(s);
 
 
 		if(! Main.isApplet){
@@ -206,62 +207,98 @@ public class WriteLog {
 		firstCol = firstColumns;
 		String[] aLastline = firstColumns.split(sTab);
 			
-		
+
 		
 		String s = "";
 		for (int i = 0; i < nbColomn; i++)
 		{
 			s += aLastline[i] + sTab;
 		}	
-		//rt
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good") + sTab; ;
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good") + sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good")+ sTab; 
 		
-		
-				
-		//acc
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left","error")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "error")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "error")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "error")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "error")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "error")+ sTab; 
-		
-		//retard
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left", "late")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "late")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "late")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "late")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "late")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "late")+ sTab;
-		
-		//total
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left", "all")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "all")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "all")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "all")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "all")+ sTab; 
-		s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "all")+ sTab;
-		
+		if(task.getMixedPourc() == 0){
+			//rt
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good") + sTab; ;
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good") + sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good")+ sTab; 
+			
+			//acc
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left","error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "error")+ sTab; 
+			
+			//retard
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "late")+ sTab;
+			
+			//total
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), false, "left", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "left", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), false, "left", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), false, "right", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), false, "right", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), false, "right", "all")+ sTab;
+		}else if(task.getMixedPourc() > 0){	// special case for mixed SM & DM
+			//rt
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG, "SP"), true, "left","good") + sTab; ;
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "SM"), true, "left","good") + sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "DM"), true, "left","good")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD, "SP"), true, "right","good")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "SM"), true, "right","good")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "DM"), true, "right","good")+ sTab; 
+			
+			//acc
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG, "SP"), false, "left","error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "SM"), false, "left", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "DM"), false, "left", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD, "SP"), false, "right", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "SM"), false, "right", "error")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "DM"), false, "right", "error")+ sTab; 
+			
+			//retard
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG, "SP"), false, "left", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "SM"), false, "left", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "DM"), false, "left", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD, "SP"), false, "right", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "SM"), false, "right", "late")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "DM"), false, "right", "late")+ sTab;
+			
+			//total
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG, "SP"), false, "left", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "SM"), false, "left", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "DM"), false, "left", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD, "SP"), false, "right", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "SM"), false, "right", "all")+ sTab; 
+			s +=AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "DM"), false, "right", "all")+ sTab;
+		}
 		//fullFile.set(fullFile.size()-1, s);	//append s to file
 
 		// Only for app_log
-		String tempS = "";
-		double mean; 
-		
 		if(filename.equals("_log")){
-			mean = AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good");
-			
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good")) + sTab; ;
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good")) + sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good"))+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good"))+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good"))+ sTab; 
-			s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good"))+ sTab;
+			if(task.getMixedPourc() == 0){
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG), true, "left","good")) + sTab; ;
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "left","good")) + sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM), true, "left","good"))+ sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD), true, "right","good"))+ sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSM), true, "right","good"))+ sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM), true, "right","good"))+ sTab;
+			}else if(task.getMixedPourc() > 0){	// special case for mixed SM & DM
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPG, "SP"), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPG, "SP"), true, "left","good")) + sTab; ;
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM, "SM"), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "SM"), true, "left","good")) + sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsDM, "DM"), "left","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsDM, "DM"), true, "left","good"))+ sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.blocsSPD, "SP"), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.blocsSPD, "SP"), true, "right","good"))+ sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM, "SM"), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "SM"), true, "right","good"))+ sTab; 
+				s +=AnimateBar.getStdDeviation(Utilities.getallStim(task.otherBlocsDM, "DM"), "right","good", AnimateBar.getStimQteOrMean(Utilities.getallStim(task.otherBlocsDM, "DM"), true, "right","good"))+ sTab;
+			}
 		}	
 		
 		

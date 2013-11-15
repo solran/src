@@ -81,7 +81,7 @@ public class Menu {
 		
 	private JPanel center = new JPanel();	
 		
-			private JTextField textSujetID = new JTextField("1");
+			private JTextField textSujetID = new JTextField(""); //testing - mettre 1
 			private JLabel labelSujetID= new JLabel();
 			
 			private JLabel radioLabelQteBlocDM= new JLabel();
