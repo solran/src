@@ -188,6 +188,8 @@ public class Menu {
 		
 	private Color myBlueLesca = new Color(53, 85, 143);	
 	private Color myLightBlueLesca = new Color(132, 174, 224);	
+	private Color myRedWarning = new Color(255, 0, 0);	
+
 	
 	private HashMap<String, Integer> myInputParameters= new HashMap<String, Integer> ();
 	private HashMap<String,  Integer> myParameters = new HashMap<String, Integer>();
@@ -547,30 +549,35 @@ public class Menu {
          */
 		
         public void actionPerformed(ActionEvent arg0){
-        	int ID = 0;
-        	boolean isIDOK;
         	try { 
-        		ID = Integer.parseInt(textSujetID.getText()); 
-            	isIDOK= true;
+        		Integer.parseInt(textSujetID.getText()); 
             	Integer.parseInt(textMixed.getText());
+            	Integer.parseInt(textQteEssaiSP.getText());
+            	Integer.parseInt(textQteEssaiSM.getText());
+            	Integer.parseInt(textQteEssaiDM.getText());
     		} 
     		catch(NumberFormatException nFE) { 
-    			labelFooter.setText(Langue.translate(new String[] {"execute", "warning"}, Utilities.iniHashMap ("idSujet", textSujetID.getText())))  ; 
-            	isIDOK = false;
+        		labelFooter.setText(Langue.translate(new String[] {"execute", "warning"})); 
+    	        southFooter.setBackground(myRedWarning);      
+            	return;
     		}
-        	if (isIDOK){
-	        	if(ID > 10000 || ID <0 || Integer.parseInt(textMixed.getText())<0 || Integer.parseInt(textMixed.getText())>100){
-	        		labelFooter.setText(Langue.translate(new String[] {"execute", "warning"})); 
-	        	}else{
-		        	//set parameters
-		        	myParameters.put("sujetID", Integer.parseInt(textSujetID.getText()));		
-		        	verificationDesradiosEtBox();
-	        		labelFooter.setText(Langue.translate(new String[] {"execute", "waiting"}));
-	        		
-	                manager.removeKeyEventDispatcher(enterListener);
+        	if(Integer.parseInt(textSujetID.getText()) > 10000 || Integer.parseInt(textSujetID.getText()) <0 
+        			|| Integer.parseInt(textMixed.getText())<0 || Integer.parseInt(textMixed.getText())>100
+        			|| Integer.parseInt(textQteEssaiSP.getText())<1 || Integer.parseInt(textQteEssaiSP.getText())>100
+        			|| Integer.parseInt(textQteEssaiSM.getText())<1 || Integer.parseInt(textQteEssaiSM.getText())>100
+        			|| Integer.parseInt(textQteEssaiDM.getText())<1 || Integer.parseInt(textQteEssaiDM.getText())>100
 
-		        	Main.startDesktop(myParameters);
-	        	}
+        			){
+        		labelFooter.setText(Langue.translate(new String[] {"execute", "warning"})); 
+        	}else{
+	        	//set parameters
+	        	myParameters.put("sujetID", Integer.parseInt(textSujetID.getText()));		
+	        	verificationDesradiosEtBox();
+        		labelFooter.setText(Langue.translate(new String[] {"execute", "waiting"}));
+        		
+                manager.removeKeyEventDispatcher(enterListener);
+
+	        	Main.startDesktop(myParameters);
         	}
         }
 	}

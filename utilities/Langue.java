@@ -102,7 +102,7 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "output", new String[]{"0", "1"}, new String[]{"Indiquer une sortie si vous désirer enregistrer vos préférences: ", "Parcourir/Enregistrer..."});
 			
-			Utilities.iniHashMap(expression, "execute", new String[]{"instruction", "button", "waiting", "warning"}, new String[]{"Instruction: Choississez les caractéristiques de votre tâche puis cliquez sur Débuter", "Débuter", "Veuillez patientez...", "Désolé, \"%idSujet%\" n'est pas un numéro de participant valide. Veuillez recommencer S.V.P."});		
+			Utilities.iniHashMap(expression, "execute", new String[]{"instruction", "button", "waiting", "warning"}, new String[]{"Instruction: Choississez les caractéristiques de votre tâche puis cliquez sur Débuter", "Débuter", "Veuillez patientez...", "Désolé, vous avez entrez des caractères invalides dans un champs. Veuillez recommencer S.V.P."});		
 		}
 		else if (langue == "english")
 		{
@@ -165,7 +165,7 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "output", new String[]{"0", "1"}, new String[]{"Please choose a directory if you want to save your settings: ", "Run/Save..."});
 			
-			Utilities.iniHashMap(expression, "execute", new String[]{"instruction", "button", "waiting", "warning"}, new String[]{"Instructions : Choose the settings you want for this session and click on the Start button", "Start", "Please wait...", "Sorry, \"%idSujet%\" is not a valid number. Please enter another one and press 'Start' again."});
+			Utilities.iniHashMap(expression, "execute", new String[]{"instruction", "button", "waiting", "warning"}, new String[]{"Instructions : Choose the settings you want for this session and click on the Start button", "Start", "Please wait...", "Sorry, you've entered invalid symbols in a field. Please enter another one and press 'Start' again."});
 		}
 	}
 	

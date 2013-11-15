@@ -206,46 +206,10 @@ public class Task {
 		
 		Langue.setPriority("right");
 		
-		if (myParameters.get("essai") == 1)
-		{
-			Bloc.setSPLength(10);	Bloc.setSMLength(16);	Bloc.setDMLength(20);
-			
-		}
-		else if (myParameters.get("essai") == 2)
-		{
-			Bloc.setSPLength(10);	Bloc.setSMLength(16);	Bloc.setDMLength(24);
-		}
-		else if (myParameters.get("essai") == 3)
-		{
-			Bloc.setSPLength(12);	Bloc.setSMLength(20);	Bloc.setDMLength(24);
-		}
-		else if (myParameters.get("essai") == 4)
-		{
-			Bloc.setSPLength(16);	Bloc.setSMLength(26);	Bloc.setDMLength(36);
-		}
-		else if (myParameters.get("essai") == 5)
-		{
-			Bloc.setSPLength(24);	Bloc.setSMLength(36);	Bloc.setDMLength(42);
-		}
-		else if (myParameters.get("essai") == 6)
-		{
-			Bloc.setSPLength(36);	Bloc.setSMLength(36);	Bloc.setDMLength(36);
-		}
-		else if (myParameters.get("essai") == 7)
-		{
-			Bloc.setSPLength(48);	Bloc.setSMLength(48);	Bloc.setDMLength(48);
-		}
-		else if (myParameters.get("essai") == 8)
-		{
-			// Tâche projet fréquence, 15 min.
-			Bloc.setSPLength(15);	Bloc.setDMLength(100);
-		}
-		else if (myParameters.get("essai") == 9)
-		{
-			// Tâche projet fréquence, 60 min.
-			Bloc.setSPLength(60);	Bloc.setDMLength(100);
-		}
-		
+		Bloc.setSPLength(myParameters.get("qteEssaiSP"));
+		Bloc.setSMLength(myParameters.get("qteEssaiSM"));
+		Bloc.setDMLength(myParameters.get("qteEssaiDM"));
+
 		//Harcodé pour la tâche de Phillips
 		if(version == 5)
 			Bloc.setSPLength(61);  // Pourquoi pas 62???
@@ -261,8 +225,6 @@ public class Task {
 			this.nBack = -2;
 		else if (myParameters.get("nBack") == 4)
 			this.nBack = -3;
-		
-		
 	
 		//this.nBackKey = myParameters.get("nBackKey");
 		
