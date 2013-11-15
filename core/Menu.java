@@ -84,7 +84,7 @@ public class Menu {
 			private JTextField textSujetID = new JTextField(""); //testing - mettre 1
 			private JLabel labelSujetID= new JLabel();
 			
-			private JLabel radioLabelQteBlocDM= new JLabel();
+			private JLabel labelQteBlocDM= new JLabel();
 			private JComboBox boxQteBlocDM = new JComboBox();			
 			private JPanel panelSujetIDQteBlocDM = new JPanel();
 
@@ -123,20 +123,11 @@ public class Menu {
 			private JPanel radioPanelNBack = new JPanel();
 			private JRadioButton radio1NBack  = new JRadioButton (),radio2NBack  = new JRadioButton (),radio3NBack = new JRadioButton (), radio4NBack = new JRadioButton ();
 			private ButtonGroup bgNBack  = new ButtonGroup();	
-			private JLabel radioLabelNBack = new JLabel();
+			private JLabel labelNBack = new JLabel();
 			private JLabel boxLabelNback = new JLabel();
 			private JComboBox boxNback = new JComboBox();
 			
 			private JCheckBox nBackKey = new JCheckBox ();
-			
-			
-			
-			
-			private JPanel radioPanelisDT = new JPanel();
-			private JCheckBox withSP = new JCheckBox ();
-			private JCheckBox withSM = new JCheckBox ();
-			private JCheckBox withDM = new JCheckBox ();	
-			private JLabel radioLabelisDT = new JLabel();
 			
 			private JCheckBox checkBoxIsTimeUnlock = new JCheckBox ();
 			private JLabel radioLabelIsTimeUnlock = new JLabel();
@@ -305,7 +296,7 @@ public class Menu {
 	        textQteEssaiDM.setPreferredSize(new Dimension(60, 30));
 	        
 	        panelSujetIDQteBlocDM.setPreferredSize(new Dimension(120, 220));	
-	        panelSujetIDQteBlocDM.add(labelSujetID); 	panelSujetIDQteBlocDM.add(textSujetID);	panelSujetIDQteBlocDM.add(radioLabelQteBlocDM);	panelSujetIDQteBlocDM.add(boxQteBlocDM);	
+	        panelSujetIDQteBlocDM.add(labelSujetID); 	panelSujetIDQteBlocDM.add(textSujetID);	panelSujetIDQteBlocDM.add(labelQteBlocDM);	panelSujetIDQteBlocDM.add(boxQteBlocDM);	
 	        	        
 	        // Radio Button Main
 	        bgType.add(radio1Type);		bgType.add(radio2Type);		
@@ -413,30 +404,12 @@ public class Menu {
 	        boxNback.addActionListener( new ComboBoxListener());
 	        radioPanelNBack.setLayout(new GridLayout(8,1));
 	        radioPanelNBack.setPreferredSize(new Dimension(210, 220));
-	        radioPanelNBack.add(radioLabelNBack);	radioPanelNBack.add(radio1NBack);	radioPanelNBack.add(radio2NBack);	radioPanelNBack.add(radio3NBack); 	radioPanelNBack.add(radio4NBack);	radioPanelNBack.add(boxLabelNback); radioPanelNBack.add(boxNback);
+	        radioPanelNBack.add(labelNBack);	radioPanelNBack.add(radio1NBack);	radioPanelNBack.add(radio2NBack);	radioPanelNBack.add(radio3NBack); 	radioPanelNBack.add(radio4NBack);	radioPanelNBack.add(boxLabelNback); radioPanelNBack.add(boxNback);
 	        radioPanelNBack.add(nBackKey);
 
 
-	        radioLabelNBack.setVerticalAlignment(SwingConstants.TOP);
-	        radioLabelNBack.setHorizontalAlignment(SwingConstants.CENTER);
-	        
-	        
-	        
-	        
-	        
-	        // Radio isDT  radioPanelisDT
-	        
-	        withSP.addActionListener(new CheckBoxListener());
-	        withSP.setSelected(true);	 
-	        withSM.addActionListener(new CheckBoxListener());
-	        withSM.setSelected(true);
-	        withDM.addActionListener(new CheckBoxListener());
-	        withDM.setSelected(true);
-	        radioPanelisDT.setLayout(new GridLayout(4,1));
-	        radioPanelisDT.setPreferredSize(new Dimension(150, 220));
-	        radioPanelisDT.add(radioLabelisDT);	radioPanelisDT.add(withSP);	radioPanelisDT.add(withSM);	radioPanelisDT.add(withDM);
-	        radioLabelisDT.setVerticalAlignment(SwingConstants.TOP);
-	        radioLabelisDT.setHorizontalTextPosition(SwingConstants.CENTER);
+	        labelNBack.setVerticalAlignment(SwingConstants.TOP);
+	        labelNBack.setHorizontalAlignment(SwingConstants.CENTER);     
 	        
 	        // Radio Button Format
 	        bgFormat.add(radio1Format);		bgFormat.add(radio2Format);		bgFormat.add(radio3Format);		
@@ -462,9 +435,9 @@ public class Menu {
 	                    
 		    //Config Panel 3
 	        configPanel3.setLayout(new FlowLayout());
-	        configPanel3.setPreferredSize(new Dimension(1000, 240));
+	        configPanel3.setPreferredSize(new Dimension(825, 240));
 	        configPanel3.setBackground(myLightBlueLesca);
-	        configPanel3.add(radioPanelLangue); configPanel3.add(radioPanelNBack); configPanel3.add(radioPanelisDT); configPanel3.add(radioPanelFormat); configPanel3.add(radioPanelisIO); 
+	        configPanel3.add(radioPanelLangue); configPanel3.add(radioPanelNBack); configPanel3.add(radioPanelFormat); configPanel3.add(radioPanelisIO); 
 	        configPanel3.setBorder(empty);
 	        center.add(configPanel3);  
 	        
@@ -563,9 +536,9 @@ public class Menu {
     		}
         	if(Integer.parseInt(textSujetID.getText()) > 10000 || Integer.parseInt(textSujetID.getText()) <0 
         			|| Integer.parseInt(textMixed.getText())<0 || Integer.parseInt(textMixed.getText())>100
-        			|| Integer.parseInt(textQteEssaiSP.getText())<1 || Integer.parseInt(textQteEssaiSP.getText())>100
-        			|| Integer.parseInt(textQteEssaiSM.getText())<1 || Integer.parseInt(textQteEssaiSM.getText())>100
-        			|| Integer.parseInt(textQteEssaiDM.getText())<1 || Integer.parseInt(textQteEssaiDM.getText())>100
+        			|| Integer.parseInt(textQteEssaiSP.getText())<0 || Integer.parseInt(textQteEssaiSP.getText())>100
+        			|| Integer.parseInt(textQteEssaiSM.getText())<0 || Integer.parseInt(textQteEssaiSM.getText())>100
+        			|| Integer.parseInt(textQteEssaiDM.getText())<0 || Integer.parseInt(textQteEssaiDM.getText())>100
 
         			){
         		labelFooter.setText(Langue.translate(new String[] {"execute", "warning"})); 
@@ -744,18 +717,6 @@ public class Menu {
 	    			paramSetRadio(bgVersion , "version", myInputParameters);
 	    			paramSetRadio(bgQte , "qte", myInputParameters);
 	    			paramSetRadio(bgNBack , "nBack", myInputParameters);
-	    			if (myInputParameters.get("withSP") == 0)
-	    				withSP.setSelected(false);
-	    			else if (myInputParameters.get("withSP") == 1)
-	    				withSP.setSelected(true);
-	    			if (myInputParameters.get("withSM") == 0)
-	    				withSM.setSelected(false);
-	    			else if (myInputParameters.get("withSM") == 1)
-	    				withSM.setSelected(true);
-	    			if (myInputParameters.get("withDM") == 0)
-	    				withDM.setSelected(false);
-	    			else if (myInputParameters.get("withDM") == 1)
-	    				withDM.setSelected(true);
 	    			paramSetRadio(bgFormat , "format", myInputParameters);
 	    			paramSetRadio(bgisIO , "isIO", myInputParameters);
 	    			if (myInputParameters.get("isTimeUnlock") == 0)
@@ -787,19 +748,6 @@ public class Menu {
 			radioSetParam(bgVersion , "version", myParameters);
 			radioSetParam(bgQte , "qte", myParameters);
 			radioSetParam(bgNBack , "nBack", myParameters);
-			
-			if (withSP.isSelected())
-				myParameters.put("withSP", 1);	
-			else 
-				myParameters.put("withSP", 0);
-			if (withSM.isSelected())
-				myParameters.put("withSM", 1);	
-			else 
-				myParameters.put("withSM", 0);
-			if (withDM.isSelected())
-				myParameters.put("withDM", 1);	
-			else 
-				myParameters.put("withDM", 0);
 			radioSetParam(bgFormat , "format", myParameters);
 			radioSetParam(bgisIO , "isIO", myParameters);
 			
@@ -870,7 +818,7 @@ public class Menu {
 
 		this.labelSujetID.setText(Langue.translate("sujetID"));	
 			
-		this.radioLabelQteBlocDM.setText(Langue.translate(new String[] {"radioDuree", "0"}));
+		this.labelQteBlocDM.setText(Langue.translate(new String[] {"radioDuree", "0"}));
 		this.boxQteBlocDM.removeAllItems();
 		this.boxQteBlocDM.addItem(Langue.translate(new String[] {"radioDuree", "1"}));
 		this.boxQteBlocDM.addItem(Langue.translate(new String[] {"radioDuree", "2"}));
@@ -907,7 +855,7 @@ public class Menu {
 		this.radio2Qte.setText(Langue.translate(new String[] {"radioQte", "2"}));
 		this.radio3Qte.setText(Langue.translate(new String[] {"radioQte", "3"}));
 
-		this.radioLabelNBack .setText(Langue.translate(new String[] {"radioNBack", "0"}));
+		this.labelNBack .setText(Langue.translate(new String[] {"radioNBack", "0"}));
 		this.radio1NBack .setText(Langue.translate(new String[] {"radioNBack", "1"}));
 		this.radio2NBack .setText(Langue.translate(new String[] {"radioNBack", "2"}));
 		this.radio3NBack .setText(Langue.translate(new String[] {"radioNBack", "3"}));
@@ -918,12 +866,6 @@ public class Menu {
 		this.boxNback.addItem(Langue.translate(new String[] {"radioNBack", "box2"}));
 		this.boxNback.addItem(Langue.translate(new String[] {"radioNBack", "box3"}));
 		this.nBackKey.setText(Langue.translate("nBackKeyLabel"));
-		
-		this.radioLabelisDT .setText(Langue.translate(new String[] {"radioisDT", "info"}));
-		this.withSP .setText(Langue.translate(new String[] {"radioisDT", "0"}));
-		this.withSM .setText(Langue.translate(new String[] {"radioisDT", "1"}));
-		this.withDM .setText(Langue.translate(new String[] {"radioisDT", "2"}));
-
 
 		this.radioLabelIsTimeUnlock.setText(Langue.translate(new String[] {"radioTimeUnlock", "0"}));
 		this.checkBoxIsTimeUnlock .setText(Langue.translate(new String[] {"radioTimeUnlock", "1"}));

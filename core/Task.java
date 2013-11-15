@@ -69,9 +69,9 @@ public class Task {
 	//mettre une constante pour le dossier???   pas n�cessaire
 
 	private Stimulus VIDE = new Stimulus();
-	private boolean isThereSP;
-	private boolean isThereSM;
-	private boolean isThereDM;
+	private boolean isThereSP = true;
+	private boolean isThereSM = true;
+	private boolean isThereDM = true;
 
 	private boolean isMixed = true;
 	
@@ -205,10 +205,20 @@ public class Task {
 		}
 		
 		Langue.setPriority("right");
+				
+		if (myParameters.get("qteEssaiSP") == 0)
+			this.isThereSP = false;
+		else 
+			Bloc.setSPLength(myParameters.get("qteEssaiSP"));
+		if (myParameters.get("qteEssaiSM") == 0)
+			this.isThereSM = false;
+		else 
+			Bloc.setSMLength(myParameters.get("qteEssaiSM"));
+		if (myParameters.get("qteEssaiDM") == 0)
+			this.isThereDM = false;
+		else 
+			Bloc.setDMLength(myParameters.get("qteEssaiDM"));
 		
-		Bloc.setSPLength(myParameters.get("qteEssaiSP"));
-		Bloc.setSMLength(myParameters.get("qteEssaiSM"));
-		Bloc.setDMLength(myParameters.get("qteEssaiDM"));
 
 		//Harcodé pour la tâche de Phillips
 		if(version == 5)
@@ -248,18 +258,6 @@ public class Task {
 			else if (myParameters.get("boxNback") == 3)
 				this.typeNback = "retrival";
 		}
-		if (myParameters.get("withSP") == 1)
-			this.isThereSP = true;
-		else if (myParameters.get("withSP") == 0)
-			this.isThereSP = false;
-		if (myParameters.get("withSM") == 1)
-			this.isThereSM = true;
-		else if (myParameters.get("withSM") == 0)
-			this.isThereSM = false;
-		if (myParameters.get("withDM") == 1)
-			this.isThereDM = true;
-		else if (myParameters.get("withDM") == 0)
-			this.isThereDM = false;
 		
 		if (myParameters.get("isTimeUnlock") == 0)
 			this.isTimeUnlock = false;

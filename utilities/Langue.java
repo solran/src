@@ -72,10 +72,7 @@ public class Langue extends HashMap {
 					"Débutant : 2 par mains", "Intermédiaire : 3 par mains", "Expert : 4 par mains"});
 			
 			Utilities.iniHashMap(expression, "radioNBack", new String[]{"0", "1", "2", "3", "4",  "boxLabel", "box1", "box2", "box3" }, new String[]{"<html><font size = 4>Réponse à rebours (n-back)</font></html>", "Débutant : 0 rebours",
-					"Intermédiaire : 1 rebours","Avancé : 2 rebours", "Expert : 3 rebours", "Type de n-back", "Aucun N-back", "Matching", "Retrieval"});
-			
-			Utilities.iniHashMap(expression, "radioisDT", new String[]{"info", "0", "1", "2"}, new String[]{"<html><p align=\"center\"><font size = 4># of blocs</font></p></html>", 
-					"<html>Avec simple pur</html>", "<html>Avec simple mixte</html>", "<html>Avec double mixte<br/></html>" });
+					"Intermédiaire : 1 rebours","Avancé : 2 rebours", "Expert : 3 rebours", "Type de n-back", "Aucun N-back", "Matching", "Retrieval"});		
 	
 			Utilities.iniHashMap(expression, "radioTimeUnlock", new String[]{"0", "1", "tooltip"}, new String[]{"<html><p align=\"center\"><font size = 4>Paramètres de temps</font></p></html>", 
 					"Variable (sans limite)*", "<html><p align=\"center\">En mode \"v\", les essais durent aussi longtemps que le participant prend de temps pour y répondre.<br /> Le temps d'affichage des stimuli et le temps de réponse maximal est automatiquement \"Variable\".<br /> Seul l'intervalle inter-stimuli peut être modifier dans ce mode.</html></p>"});
@@ -135,8 +132,6 @@ public class Langue extends HashMap {
 			Utilities.iniHashMap(expression, "radioNBack", new String[]{"0", "1", "2", "3", "4", "box1", "box2", "box3" }, new String[]{"<html><font size = 4>Working Memory (N-back)</font></html>", "Begginer : 0-back",
 					"Intermediaire : 1-back","Advanced : 2-back", "Expert : 3-back", "no n-Back", "Matching", "Retrieval"});
 			
-			Utilities.iniHashMap(expression, "radioisDT", new String[]{"info", "0", "1", "2"}, new String[]{"<html><p align=\"center\"><font size = 4>Blocs</font></p></html>", 
-					"<html>Simple-pur</html>", "<html>Simple-mixed</html>", "<html>Dual-mixed</html>" });
 	
 			Utilities.iniHashMap(expression, "radioTimeUnlock", new String[]{"0", "1"}, new String[]{"<html><p align=\"center\"><font size = 4>Timing parameter</font></p></html>", 
 					"<html>Unlock<br /></html>"});
