@@ -117,7 +117,9 @@ public class Presentation extends JPanel{
         
         //center   to   mainPanel
         Main.getInstance().getBigPanel().setLayout(new BorderLayout());
-        Main.getInstance().getBigPanel().add(this, BorderLayout.CENTER);      
+        Main.getInstance().getBigPanel().add(this, BorderLayout.CENTER); 
+        
+        Main.getInstance().startCursorTimer();
 	}
 	
 	
@@ -521,18 +523,18 @@ public class Presentation extends JPanel{
 				double e = 1000.0;
 				
 				if(myTask.getMixedPourc() == 0){
-					d = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "left", "good");
-					e = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "right", "good");
+					d = Utilities.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "left", "good");
+					e = Utilities.getStimQteOrMean(Utilities.getallStim(myTask.blocsSM), true, "right", "good");
 				}else if(myTask.getMixedPourc() > 0){
 					//todo - special case when there is no SM block prior to the DM block
 					// take the double of the SP trials...
-					d = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSPG), true, "left", "good") * 2;
-					e = AnimateBar.getStimQteOrMean(Utilities.getallStim(myTask.blocsSPD), true, "right", "good") * 2;
+					d = Utilities.getStimQteOrMean(Utilities.getallStim(myTask.blocsSPG), true, "left", "good") * 2;
+					e = Utilities.getStimQteOrMean(Utilities.getallStim(myTask.blocsSPD), true, "right", "good") * 2;
 				}
 				
 				
-				double f = AnimateBar.getStimQteOrMean(myTask.getMySlide().getMyStimulus(), true, "both", "good");
-				double g = AnimateBar.getStimQteOrMean(myTask.getMySlide().getMyOtherStimulus(), true, "both", "good");
+				double f = Utilities.getStimQteOrMean(myTask.getMySlide().getMyStimulus(), true, "both", "good");
+				double g = Utilities.getStimQteOrMean(myTask.getMySlide().getMyOtherStimulus(), true, "both", "good");
 				double i = (d/e)/(f/g);		
 				
 				if (i > 1.20)	//Philippe
@@ -1637,9 +1639,9 @@ GraphicEngine.setModifying(false);
 			
 			if (task.lookNextStim().getSoloStimulus().getSPG_SPD_SM_DM() == "DM" && task.getType() == "training"&& task.getnBack() == 0)
 			{
-				AnimateBar.getAllStims(task.blocsSM, true);
-				AnimateBar.setPercentiles(AnimateBar.getAllStims(task.blocsSM, true), true);
-				AnimateBar.setPercentiles(AnimateBar.getAllStims(task.blocsSM, false), false);
+				Utilities.getAllStims(task.blocsSM, true);
+				AnimateBar.setPercentiles(Utilities.getAllStims(task.blocsSM, true), true);
+				AnimateBar.setPercentiles(Utilities.getAllStims(task.blocsSM, false), false);
 				//set Visible Bar
 				if (task.lookNextStim().getSoloStimulus().getnBack() == 0)
 				{

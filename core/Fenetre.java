@@ -85,6 +85,7 @@ public class Fenetre extends JFrame{
 	
 	
 	private GridBagConstraints gbc;
+	private MouseMoveListener myListener;
 	
 	private Font myFont = new Font("Verdana", Font.PLAIN, 18);
 	
@@ -222,7 +223,7 @@ public class Fenetre extends JFrame{
   		 this.windowPanel.add(rightLabel, gbc);
   		 
   		 
-  		MouseMoveListener myListener = new MouseMoveListener();
+  		myListener = new MouseMoveListener();
  		this.windowPanel.addMouseListener(myListener);
   		this.windowPanel.addMouseMotionListener(myListener);
 
@@ -309,6 +310,10 @@ public class Fenetre extends JFrame{
 		panel.setCursor(Cursor.getDefaultCursor());
 	}
 	
+	public void startCursorTimer(){
+		myListener.startTimer();
+	}
+	
 	
 	boolean moved = false;
 	boolean hidden = false;
@@ -317,7 +322,10 @@ public class Fenetre extends JFrame{
 		Timer notMovedTimer;
 		
 		public MouseMoveListener(){
-	    	notMovedTimer = new Timer();
+		}
+		
+		public void startTimer(){
+			notMovedTimer = new Timer();
 	    	notMovedTimer.schedule(new displayCursorManager(), 0, 3000);
 		}
 		
@@ -344,7 +352,6 @@ public class Fenetre extends JFrame{
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			System.out.println("cursor!");
 			if(! moved){
 				hideCursor();
 				hidden =true;

@@ -59,7 +59,7 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "radioDuree", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 4><p align=\"center\"><br /><br /># de blocs DM</font></html>", "0", "2", "4", "6", "8", "10"});
 			
-			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><font size = 4><p align=\"center\"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;# d'essais</font></p></html>", "10SP/16SM/20DM", "10SP/16SM/24DM", "12SP/20SM/24DM", "16SP/26SM/36DM", "24SP/36SM/48DM", "36SP/36SM/36DM", "48SP/48SM/48DM", "15SP/100DM", "60SP/400DM"});
+			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><font size = 4><p align=\"center\"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;# d'essais</font></p></html>", "10SP/16SM/20DM", "10SP/16SM/24DM", "12SP/20SM/24DM", "16SP/26SM/36DM", "24SP/36SM/48DM", "36SP/36SM/36DM", "48SP/48SM/48DM", "10SP/100DM", "40SP/400DM"});
 			
 			Utilities.iniHashMap(expression, "radioType", new String[]{"0", "1", "2"}, new String[]{"<html><font size = 4>Type de session</font></html>", "Évaluation",  "Entrainement"});
 			
@@ -119,7 +119,7 @@ public class Langue extends HashMap {
 			
 			Utilities.iniHashMap(expression, "radioDuree", new String[]{"0", "1", "2", "3" , "4", "5", "6"}, new String[]{"<html><font size = 3><br /><br /># of DM blocs</font></html>", "0", "2", "4", "6", "8", "10"});
 			
-			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><font size = 4><p align=\"center\"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;# of trials</font></p></html>", "10SP/16SM/20DM", "10SP/16SM/24DM", "12SP/20SM/24DM", "16SP/26SM/36DM", "24SP/36SM/48DM", "36SP/36SM/36DM", "48SP/48SM/48DM", "15SP/100DM", "60SP/400DM"});
+			Utilities.iniHashMap(expression, "radioQteEssai", new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, new String[]{"<html><font size = 4><p align=\"center\"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;# of trials</font></p></html>", "10SP/16SM/20DM", "10SP/16SM/24DM", "12SP/20SM/24DM", "16SP/26SM/36DM", "24SP/36SM/48DM", "36SP/36SM/36DM", "48SP/48SM/48DM", "10SP/100DM", "40SP/400DM"});
 			
 			Utilities.iniHashMap(expression, "radioType", new String[]{"0", "1", "2"}, new String[]{"<html><font size = 4>Type of Session</font></html>", "Evaluation",  "Training"});
 			
